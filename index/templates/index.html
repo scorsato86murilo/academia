@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>index</title>
-</head>
-<body>
-index
-</body>
-</html>
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block titulo %}{{ titulo.titulo }}{% endblock %}
+
+{% block head %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <!-- Coluna da esquerda (50%) -->
+            <div class="col-md-6">
+                <h2>Parte Esquerda</h2>
+                <p>Conteúdo da parte esquerda. Aqui você pode colocar qualquer coisa, como texto, imagens, etc.</p>
+            </div>
+
+            <!-- Coluna da direita (50%) -->
+            <div class="col-md-6">
+                <h2>Parte Direita</h2>
+                <p>Conteúdo da parte direita. Você pode colocar outro tipo de conteúdo aqui.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
