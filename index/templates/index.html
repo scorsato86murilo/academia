@@ -10,36 +10,42 @@
 {% endblock %}
 
 {% block body %}
- <div class="banner" style="background-color: {{ banner.background }}; padding: 0px;">
-                <center><img src="{{ banner.img_aviso.url }}" alt="Logo" width="{{ banner.largura }}" height="{{ banner.altura }}" class="img-fluid" style="border-radius: 1%; max-width: 100%;">
-                </center></div>
-<div class="container-fluid px-0">  <!-- Usar container-fluid e remover padding (px-0) -->
-    <div class="row">
-        <!-- Coluna da esquerda (50%) -->
-        <div class="col-md-6" style="background-color: {{ lado_esquerdo.background }};">
+    <div class="banner" style="background-color: {{ banner.background }}; padding: 0px;">
+        <center>
+            <img src="{{ banner.img_aviso.url }}" alt="Logo" width="{{ banner.largura }}" height="{{ banner.altura }}" class="img-fluid" style="border-radius: 1%; max-width: 100%;">
+        </center>
+    </div>
 
-            <h1 style="font-family: {{ nome_empresa.estilo_font }}; color: {{ nome_empresa.cor_titulo }}; font-size: {{ nome_empresa.fontSize }}px;">
-                {{ nome_empresa.nome }}
-            </h1>
-            <h2 style="font-family: {{ lado_esquerdo.titulo_estilo_font }}; color: {{ lado_esquerdo.titulo_cor }}; font-size: {{ lado_esquerdo.titulo_fontSize }}px;">
-                {{ lado_esquerdo.titulo }}
-            </h2>
-            <p style="font-family: {{ lado_esquerdo.texto_estilo_font }}; color: {{ lado_esquerdo.texto_cor }}; font-size: {{ lado_esquerdo.texto_fontSize }}px;">
-                {{ lado_esquerdo.texto }}
-            </p>
-        </div>
+    <div class="container-fluid px-0">  <!-- Usar container-fluid e remover padding (px-0) -->
+        <div class="row">
+            <!-- Coluna da esquerda (50%) -->
+            <div class="col-md-8" style="background-color: {{ lado_esquerdo.background }};">
+                <h1 style="font-family: {{ nome_empresa.estilo_font }}; color: {{ nome_empresa.cor_titulo }}; font-size: {{ nome_empresa.fontSize }}px;">
+                    <center>{{ nome_empresa.nome }}</center>
+                </h1>
 
-        <!-- Coluna da direita (50%) -->
-        <div class="col-md-6" style="background-color: {{ lado_direito.background }};">
-            <h2 style="font-family: {{ lado_direito.titulo_estilo_font }}; color: {{ lado_direito.titulo_cor }}; font-size: {{ lado_direito.titulo_fontSize }}px;">
-                {{ lado_direito.titulo }}
-            </h2>
-            <p style="font-family: {{ lado_direito.texto_estilo_font }}; color: {{ lado_direito.texto_cor }}; font-size: {{ lado_direito.texto_fontSize }}px;">
-                {{ lado_direito.texto }}
-            </p>
+                <h2 style="font-family: {{ lado_esquerdo.titulo_estilo_font }}; color: {{ lado_esquerdo.titulo_cor }}; font-size: {{ lado_esquerdo.titulo_fontSize }}px;">
+                    {{ lado_esquerdo.titulo }}
+                </h2>
+
+                <p style="font-family: {{ lado_esquerdo.texto_estilo_font }}; color: {{ lado_esquerdo.texto_cor }}; font-size: {{ lado_esquerdo.texto_fontSize }}px;">
+                    {{ lado_esquerdo.texto }}
+                </p>
+
+
+            </div>
+
+            <!-- Coluna da direita (50%) -->
+            <div class="col-md-4" style="background-color: {{ lado_direito.background }};">
+                <h2 style="font-family: {{ lado_direito.titulo_estilo_font }}; color: {{ lado_direito.titulo_cor }}; font-size: {{ lado_direito.titulo_fontSize }}px;">
+                    {{ lado_direito.titulo }}
+                </h2>
+                <p style="font-family: {{ lado_direito.texto_estilo_font }}; color: {{ lado_direito.texto_cor }}; font-size: {{ lado_direito.texto_fontSize }}px;">
+                    {{ lado_direito.texto }}
+                </p>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
