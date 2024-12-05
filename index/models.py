@@ -8,7 +8,6 @@ class NomeDaEmpresa(models.Model):
     fontSize = models.IntegerField(default=16)
 
 
-
 class LadoEsquerdo(models.Model):
     background = models.CharField(max_length=30, default='orange')
     titulo = models.CharField(max_length=100, default='Título Esquerdo')
@@ -33,6 +32,11 @@ class LadoDireito(models.Model):
     texto_cor = models.CharField(max_length=30, default='black')
     texto_estilo_font = models.CharField(max_length=255, default='Arial')
     texto_fontSize = models.IntegerField(default=14)
+    img_lado_direito = models.ImageField(upload_to='img_lado_direito')
+    altura = models.IntegerField(default=0)  # Altura da imagem, valor padrão 0
+    largura = models.IntegerField(default=40)  # Largura da imagem, valor padrão 40
+
+
 
 
 class NavBar(models.Model):
