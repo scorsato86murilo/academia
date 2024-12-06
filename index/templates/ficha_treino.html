@@ -6,7 +6,27 @@
 {% endblock %}
 
 {% block head %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'index/css/ficha_treino.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
 {% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    <div class="container mt-1">
+        <h3>{{ nome_empresa.nome }}</h3>
+    </div>
+    <div class="container mt-1">
+        <p>Escolha seu treino de acordo com seus objetivos<br>
+        <button>Masculino perder pesso</button><br>
+        <button>Masculino ganho de massa</button><br>
+        <button>Masculino atleta de alto rendimento</button><br>
+                <button>feminino perder pesso</button><br>
+        <button>feminino ganho de massa</button><br>
+        <button>feminino atleta de alto rendimento</button>
+    </div>
+
+
+
+{% endblock %}
