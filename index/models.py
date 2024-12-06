@@ -2,6 +2,7 @@ from django.db import models
 
 
 class NomeDaEmpresa(models.Model):
+    objects = None
     nome = models.CharField(max_length=255, default='Minha Empresa')
     estilo_font = models.CharField(max_length=100, default='Arial')
     cor_titulo = models.CharField(max_length=30, default='blue')
