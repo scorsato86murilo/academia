@@ -7,17 +7,20 @@
 
 /* Definir a cor de fundo do corpo */
 body {
-    background-color: #FFFAFA;
-    font-family: verdana, sans-serif;
-
+    background-color: #1c1c1c; /* Cor de fundo muito clara */
+    font-family: Verdana, sans-serif; /* Definindo a fonte do texto */
+    margin: 0; /* Remover margens padrão */
+    padding: 0; /* Remover padding padrão */
+    min-height: 100vh; /* Garantir que o fundo ocupe toda a altura da tela */
 }
+
 
 /* Estilo para o título principal */
 h1 {
     text-align: center;
     margin-top: 9px;
     font-size: 2rem;
-    color: #708090;
+    color: OliveDrab;
 }
 
 /* Container principal para o conteúdo */
@@ -59,11 +62,11 @@ button {
     background-color: #343a40; /* Cor de fundo do botão */
     color: white; /* Cor do texto do botão */
     border: none; /* Remove bordas */
-    padding: 10px 20px; /* Espaçamento interno */
+    padding: 10px 10px; /* Espaçamento interno */
     font-size: 1rem; /* Tamanho da fonte */
-    border-radius: 5px; /* Bordas arredondadas */
+    border-radius: 10px; /* Bordas arredondadas */
     cursor: pointer; /* Muda o cursor para uma mãozinha ao passar sobre o botão */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Animações */
+    transition: background-color 0.5s ease, transform 0.3s ease; /* Animações */
 }
 
 /* Estilo de hover para os botões */

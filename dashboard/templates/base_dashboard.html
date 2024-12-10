@@ -12,14 +12,16 @@
   <body>
     <h1>DASHBOARD</h1>
     <div class="btn">
-    <button type="button" class="btn btn-dark">Ficha de treino</button>
-    <button type="button" class="btn btn-dark">Alunos</button>
-    <button type="button" class="btn btn-dark">Academia</button>
-    <button type="button" class="btn btn-dark">Nossos produtos</button>
-    <button type="button" class="btn btn-dark">Personal treinner</button>
-    <button type="button" class="btn btn-dark">Aparelhos</button>
-    <button type="button" class="btn btn-dark">Professores</button>
-    <button type="button" class="btn btn-dark">Preços</button>
+    <button type="button" class="btn btn-light">Ficha de treino</button>
+    <button type="button" class="btn btn-light">Alunos</button>
+    <button type="button" class="btn btn-light">Academia</button>
+    <button type="button" class="btn btn-light">Nossos produtos</button>
+    <button type="button" class="btn btn-light">Personal treinner</button>
+    <button type="button" class="btn btn-light">Aparelhos</button>
+    <button type="button" class="btn btn-light">Professores</button>
+    <button type="button" class="btn btn-light">Preços</button>
+
+        <a href=" {% url 'index' %}"><button type="button" class="btn btn-light">Site</a></button>
     <button type="button" class="btn btn-danger">Sair</button>
     </div><hr>
        {% block body %}{% endblock %}
