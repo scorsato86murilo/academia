@@ -82,3 +82,48 @@ button:hover {
         font-size: 1.2rem; /* Aumenta o tamanho da fonte em telas menores */
     }
 }
+
+/* Estilo geral para o container da caixa de edição */
+.caixa-edicao {
+    background-color: #ffffff; /* Fundo branco para a área de edição */
+    padding: 20px; /* Adiciona um pouco de espaço interno */
+    border-radius: 8px; /* Bordas arredondadas para dar um efeito mais suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve ao redor da caixa */
+}
+
+/* Estilo para os títulos (Titulo1, Titulo2) */
+.caixa-edicao input[type="text"] {
+    width: 100%; /* Faz o campo de texto ocupar toda a largura disponível */
+    padding: 8px; /* Adiciona um pouco de espaçamento dentro do campo */
+    border: 1px solid #ccc; /* Borda leve de cor cinza */
+    border-radius: 4px; /* Bordas arredondadas para um efeito mais suave */
+    margin-bottom: 10px; /* Espaço entre o campo e o próximo elemento */
+    font-size: 16px; /* Define o tamanho da fonte para o texto do campo */
+}
+
+/* Estilo para as áreas de texto (textarea) */
+.caixa-edicao textarea {
+    width: 100%; /* Faz a área de texto ocupar toda a largura disponível */
+    padding: 8px; /* Adiciona um pouco de espaçamento dentro da área */
+    border: 1px solid #ccc; /* Borda leve de cor cinza */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 16px; /* Define o tamanho da fonte para o texto da área */
+    resize: vertical; /* Permite redimensionar a área de texto apenas na vertical */
+    margin-bottom: 15px; /* Espaço entre as áreas de texto */
+}
+
+/* Estilo para o título da caixa de edição */
+.caixa-edicao h2 {
+    font-size: 20px; /* Define o tamanho do título */
+    font-weight: bold; /* Torna o título em negrito */
+    color: #333; /* Cor escura para o título */
+    margin-bottom: 15px; /* Espaço abaixo do título */
+}
+
+/* Estilo do separador (hr) */
+.caixa-edicao hr {
+    border: 0;
+    height: 1px;
+    background-color: #ddd; /* Cor clara para a linha */
+    margin-bottom: 20px; /* Espaço abaixo da linha */
+}
