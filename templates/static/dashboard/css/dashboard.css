@@ -8,32 +8,25 @@
 /* Definir a cor de fundo do corpo */
 body {
     background-color: #FFFAFA;
-    font-family: Arial, sans-serif;
-    color: #333;
+    font-family: verdana, sans-serif;
+
 }
 
 /* Estilo para o título principal */
 h1 {
     text-align: center;
-    margin-top: 30px;
-    font-size: 3rem;
+    margin-top: 9px;
+    font-size: 2rem;
     color: #708090;
 }
 
 /* Container principal para o conteúdo */
 .container {
     width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
+    max-width: 1100px;
+    margin: 10px auto;
 }
 
-.card-header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 8px 8px 0 0;
-    font-weight: bold;
-}
 
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
@@ -47,7 +40,7 @@ h1 {
     }
 
     button {
-        width: 100%;
+        width: 90%;
         font-size: 1.1rem;
     }
 }
@@ -57,8 +50,8 @@ h1 {
     display: flex; /* Usa Flexbox para o layout */
     flex-wrap: wrap; /* Permite que os botões se ajustem na linha, se necessário */
     justify-content: center; /* Centraliza os botões horizontalmente */
-    gap: 10px; /* Espaçamento entre os botões */
-    margin-top: 20px; /* Espaçamento superior */
+    gap: 5px; /* Espaçamento entre os botões */
+    margin-top: 7px; /* Espaçamento superior */
 }
 
 /* Estilo para os botões */
