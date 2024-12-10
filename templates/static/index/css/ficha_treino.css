@@ -1,0 +1,32 @@
+
+select {
+    width: 100%;             /* Largura completa para o select */
+    padding: 10px;           /* Adiciona padding para o conforto do usuário */
+    font-size: 16px;         /* Tamanho de fonte das opções */
+    border-radius: 8px;      /* Bordas arredondadas */
+    border: 1px solid #ccc;  /* Borda cinza clara */
+    background-color: #f8f8f8; /* Cor de fundo do select */
+    color: #333;             /* Cor do texto */
+    transition: border-color 0.3s ease; /* Transição suave para a borda */
+}
+
+select:focus {
+    border-color: #007bff;   /* Cor da borda quando o select estiver em foco (clicado) */
+    outline: none;           /* Remover contorno padrão */
+}
+
+button#ok_button {
+    padding: 10px 20px;          /* Aumenta o tamanho do botão */
+    font-size: 16px;             /* Tamanho da fonte */
+    border-radius: 5px;          /* Borda arredondada */
+    background-color: #007bff;   /* Cor de fundo do botão */
+    color: white;                /* Cor do texto */
+    border: none;                /* Remove borda padrão */
+    cursor: pointer;             /* Cursor de mão para mostrar que é clicável */
+    transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+}
+
+button#ok_button:hover {
+    background-color: #0056b3;   /* Cor do fundo quando o botão for sobrevoado */
+}
+

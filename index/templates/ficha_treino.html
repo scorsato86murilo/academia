@@ -17,15 +17,22 @@
     <div class="container mt-1">
         <h3>{{ nome_empresa.nome }}</h3>
     </div>
-    <div class="container mt-1">
-        <p>Escolha seu treino de acordo com seus objetivos<br>
-        <button>Masculino perder pesso</button><br>
-        <button>Masculino ganho de massa</button><br>
-        <button>Masculino atleta de alto rendimento</button><br>
-                <button>feminino perder pesso</button><br>
-        <button>feminino ganho de massa</button><br>
-        <button>feminino atleta de alto rendimento</button>
-    </div>
+<div class="container mt-1">
+    <p>Escolha seu treino de acordo com seus objetivos</p>
+    <select id="treino">
+        <option value="masculino_perder_peso">Masculino perder peso</option>
+        <option value="masculino_ganho_massa">Masculino ganho de massa</option>
+        <option value="masculino_atleta_alto_rendimento">Masculino atleta de alto rendimento</option>
+        <option value="feminino_perder_peso">Feminino perder peso</option>
+        <option value="feminino_ganho_massa">Feminino ganho de massa</option>
+        <option value="feminino_atleta_alto_rendimento">Feminino atleta de alto rendimento</option>
+        <option value="treino_personalizado">Treino personalizado para alunos</option>
+    </select>
+    <button id="ok_button" class="btn btn-primary mt-3">OK</button>
+</div>
+<hr>
+
+
 
 
 
