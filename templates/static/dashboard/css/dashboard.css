@@ -1,0 +1,88 @@
+/* Reset básico para remover margens e preenchimentos padrões */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Definir a cor de fundo do corpo */
+body {
+    background-color: #FFFAFA;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Estilo para o título principal */
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 3rem;
+    color: #708090;
+}
+
+/* Container principal para o conteúdo */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px 8px 0 0;
+    font-weight: bold;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .card {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 1.1rem;
+    }
+}
+
+/* Estilo para o container dos botões */
+.btn {
+    display: flex; /* Usa Flexbox para o layout */
+    flex-wrap: wrap; /* Permite que os botões se ajustem na linha, se necessário */
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-top: 20px; /* Espaçamento superior */
+}
+
+/* Estilo para os botões */
+button {
+    background-color: #343a40; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove bordas */
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 1rem; /* Tamanho da fonte */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Muda o cursor para uma mãozinha ao passar sobre o botão */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Animações */
+}
+
+/* Estilo de hover para os botões */
+button:hover {
+    background-color: #007bff; /* Altera a cor do botão ao passar o mouse */
+    transform: scale(1.05); /* Aumenta ligeiramente o tamanho do botão */
+}
+
+/* Responsividade: ajusta o tamanho dos botões em telas menores */
+@media (max-width: 768px) {
+    button {
+        width: 100%; /* Faz os botões ocuparem toda a largura em telas pequenas */
+        font-size: 1.2rem; /* Aumenta o tamanho da fonte em telas menores */
+    }
+}
