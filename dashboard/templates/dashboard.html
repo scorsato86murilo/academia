@@ -15,35 +15,56 @@
             <div class="col-md-6 p-5" style="background-color: #F0FFFF;">
                 <h2>Cadastrar novo Aluno</h2>
                 <hr>
+
+                <div class="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                <center>{{ message }}</center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
                 <div class="caixa-edicao">
-                <form>
-                    Nome: <input type="text" name="nome" placeholder="Nome do aluno" required><br>
-                    CPF: <input type="number" name="cpf" placeholder="CPF" required><br>
-                    Cidade: <input type="text" name="Cidade " placeholder="Cidade" required><br>
-                    Bairro: <input type="text" name="Bairro" placeholder="Bairro" required><br>
-                    Rua/av: <input type="text" name="rua_av" placeholder="Rua/Avenida" required><br>
-                    Celular: <input type="number" name="Celular" placeholder="DDD+Número" required><br>
-                    Email: <input type="email" name="email" placeholder="E-Mail" required><br><br>
+                    <form method="post" action="{% url 'dashboard' %}">
+                        {% csrf_token %}
+                        Nome: <input type="text" name="nome" placeholder="Nome do aluno" value="{{ aluno_cpf.nome }}" required><br>
+                        CPF: <input type="text" name="cpf" placeholder="CPF" value="{{ aluno_cpf.cpf }}" required><br>
+                        Cidade: <input type="text" name="cidade" placeholder="Cidade" value="{{ aluno_cpf.cidade }}" required><br>
+                        Bairro: <input type="text" name="bairro" placeholder="Bairro" value="{{ aluno_cpf.bairro }}"required><br>
+                        Rua/av com número: <input type="text" name="rua_av" placeholder="Rua/Avenida/número" value="{{ aluno_cpf.rua_av }}" required><br>
+                        Celular: <input type="text" name="celular" placeholder="DDD+Número" value="{{ aluno_cpf.celular }}" required><br>
+                        Email: <input type="email" name="email" placeholder="E-Mail" value="{{ aluno_cpf.email }}"required><br><br>
 
-                    <input type="submit" value="CADASTRAR">
-                </form>
-
+                        <input type="submit" value="CADASTRAR" name="cadastrar">
+                    </form>
                 </div>
             </div>
             <!-- Coluna 2 -->
             <div class="col-md-6 p-5" style="background-color: #F5F5F5;">
                 <nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand">Procure pelo CPF</a>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="CPF" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Procurar</button>
-    </form>
-  </div>
-</nav>
+                    <div class="container-fluid">
+                        <a class="navbar-brand">Procure pelo CPF</a>
+                        <form method="post" action="{% url 'dashboard' %}" class="d-flex">
+                            {% csrf_token %}
+                            <input class="form-control me-2" type="search" name="cpf_pesquisa" placeholder="CPF" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit" name="buscar">Procurar</button>
+                        </form>
+                    </div>
+                </nav>
                 <h2>Listagem de alunos</h2><hr>
-               kçlçuio  tr  th th
 
+                {% if aluno or aluno_cpf %}
+                    <h4>Aluno Encontrado</h4>
+                    <p><strong>Nome:</strong> {{ aluno.nome }}{{ aluno_cpf.nome }}</p>
+                    <p><strong>CPF:</strong> {{ aluno.cpf }}{{ aluno_cpf.cpf }}</p>
+                    <p><strong>Cidade:</strong> {{ aluno.cidade }}{{ aluno_cpf.cidade }}</p>
+                    <p><strong>Bairro:</strong> {{ aluno.bairro }}{{ aluno_cpf.bairro }}</p>
+                    <p><strong>Rua/Avenida:</strong> {{ aluno.rua_av }}{{ aluno_cpf.rua_av }}</p>
+                    <p><strong>Celular:</strong> {{ aluno.celular }}{{ aluno_cpf.celular }}</p>
+                    <p><strong>Email:</strong> {{ aluno.email }}{{ aluno_cpf.email }}</p>
+                {% endif %}
             </div>
         </div>
     </div>
