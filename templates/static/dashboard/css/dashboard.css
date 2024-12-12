@@ -92,24 +92,13 @@ button:hover {
 }
 
 /* Estilo para os títulos (Titulo1, Titulo2) */
-.caixa-edicao input[type="text"] {
+.caixa-edicao input[type="text"],[type="number"],[type="email"] {
     width: 100%; /* Faz o campo de texto ocupar toda a largura disponível */
-    padding: 8px; /* Adiciona um pouco de espaçamento dentro do campo */
+    padding: 3px; /* Adiciona um pouco de espaçamento dentro do campo */
     border: 1px solid #ccc; /* Borda leve de cor cinza */
     border-radius: 4px; /* Bordas arredondadas para um efeito mais suave */
-    margin-bottom: 10px; /* Espaço entre o campo e o próximo elemento */
-    font-size: 16px; /* Define o tamanho da fonte para o texto do campo */
-}
-
-/* Estilo para as áreas de texto (textarea) */
-.caixa-edicao textarea {
-    width: 100%; /* Faz a área de texto ocupar toda a largura disponível */
-    padding: 8px; /* Adiciona um pouco de espaçamento dentro da área */
-    border: 1px solid #ccc; /* Borda leve de cor cinza */
-    border-radius: 4px; /* Bordas arredondadas */
-    font-size: 16px; /* Define o tamanho da fonte para o texto da área */
-    resize: vertical; /* Permite redimensionar a área de texto apenas na vertical */
-    margin-bottom: 15px; /* Espaço entre as áreas de texto */
+    margin-bottom: 9px; /* Espaço entre o campo e o próximo elemento */
+    font-size: 14px; /* Define o tamanho da fonte para o texto do campo */
 }
 
 /* Estilo para o título da caixa de edição */
@@ -120,10 +109,21 @@ button:hover {
     margin-bottom: 15px; /* Espaço abaixo do título */
 }
 
-/* Estilo do separador (hr) */
-.caixa-edicao hr {
-    border: 0;
-    height: 1px;
-    background-color: #ddd; /* Cor clara para a linha */
-    margin-bottom: 20px; /* Espaço abaixo da linha */
+input[type="submit"] {
+    background-color: blue; /* Cor de fundo */
+    color: white;              /* Cor do texto */
+    border: none;              /* Sem borda */
+    padding: 15px 32px;        /* Espaçamento interno (altura e largura) */
+    text-align: center;        /* Alinhar o texto */
+    text-decoration: none;     /* Remover sublinhado (caso tenha) */
+    display: inline-block;     /* Manter o botão em linha com outros elementos */
+    font-size: 16px;           /* Tamanho da fonte */
+    cursor: pointer;          /* Cursor em forma de mãozinha ao passar por cima */
+    border-radius: 8px;        /* Bordas arredondadas */
+    transition: background-color 0.3s ease; /* Efeito suave de transição ao passar o mouse */
+}
+
+/* Efeito quando o mouse passa por cima */
+input[type="submit"]:hover {
+    background-color: #45a049; /* Muda a cor do fundo quando o mouse passa */
 }

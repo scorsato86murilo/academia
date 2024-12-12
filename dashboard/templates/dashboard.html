@@ -8,6 +8,7 @@
 {% block head %}{% endblock %}
 
 {% block body %}
+{% block h1 %}DASHBOARD{% endblock %}
     <div class="container-fluid">
         <div class="row">
             <!-- Coluna 1 -->
@@ -15,20 +16,32 @@
                 <h2>Cadastrar novo Aluno</h2>
                 <hr>
                 <div class="caixa-edicao">
+                <form>
+                    Nome: <input type="text" name="nome" required><br>
+                    CPF: <input type="number" name="cpf" required><br>
+                    Cidade: <input type="text" name="Cidade " required><br>
+                    Bairro: <input type="text" name="Bairro" required><br>
+                    Rua/av: <input type="text" name="rua_av" required><br>
+                    Celular: <input type="number" name="Celular" required><br>
+                    email: <input type="email" name="email" required><br><br>
 
-                    Nome: <input type="text" name="nome"><br>
-                    Cidade: <input type="text" name="Cidade"><br>
-                    Bairro: <input type="text" name="Bairro"><br>
-                    Rua/av: <input type="text" name="ruaav"><br>
-                    Celular: <input type="text" name="Celular"><br>
-                    email: <input type="text" name="email"><br><br>
                     <input type="submit" value="CADASTRAR">
+                </form>
 
                 </div>
             </div>
             <!-- Coluna 2 -->
             <div class="col-md-6 p-5" style="background-color: #F5F5F5;">
-                <h2>AXXXxxxxx xx</h2><hr>
+                <nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">Procure pelo CPF</a>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="CPF" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Procurar</button>
+    </form>
+  </div>
+</nav>
+                <h2>Listagem de alunos</h2><hr>
                kçlçuio  tr  th th
 
             </div>
