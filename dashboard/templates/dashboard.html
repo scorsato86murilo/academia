@@ -55,16 +55,38 @@
                 </nav>
                 <h2>Listagem de alunos</h2><hr>
 
-                {% if aluno or aluno_cpf %}
-                    <h4>Aluno Encontrado</h4>
-                    <p><strong>Nome:</strong> {{ aluno.nome }}{{ aluno_cpf.nome }}</p>
-                    <p><strong>CPF:</strong> {{ aluno.cpf }}{{ aluno_cpf.cpf }}</p>
-                    <p><strong>Cidade:</strong> {{ aluno.cidade }}{{ aluno_cpf.cidade }}</p>
-                    <p><strong>Bairro:</strong> {{ aluno.bairro }}{{ aluno_cpf.bairro }}</p>
-                    <p><strong>Rua/Avenida:</strong> {{ aluno.rua_av }}{{ aluno_cpf.rua_av }}</p>
-                    <p><strong>Celular:</strong> {{ aluno.celular }}{{ aluno_cpf.celular }}</p>
-                    <p><strong>Email:</strong> {{ aluno.email }}{{ aluno_cpf.email }}</p>
-                {% endif %}
+{% if aluno %}
+    <h4>Aluno Encontrado</h4>
+    <p><strong>Nome:</strong> {{ aluno.nome }}</p>
+    <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+    <p><strong>Cidade:</strong> {{ aluno.cidade }}</p>
+    <p><strong>Bairro:</strong> {{ aluno.bairro }}</p>
+    <p><strong>Rua/Avenida:</strong> {{ aluno.rua_av }}</p>
+    <p><strong>Celular:</strong> {{ aluno.celular }}</p>
+    <p><strong>Email:</strong> {{ aluno.email }}</p>
+
+{% elif aluno_cpf %}
+    <h4>Aluno Encontrado</h4>
+    <p><strong>Nome:</strong> {{ aluno_cpf.nome }}</p>
+    <p><strong>CPF:</strong> {{ aluno_cpf.cpf }}</p>
+    <p><strong>Cidade:</strong> {{ aluno_cpf.cidade }}</p>
+    <p><strong>Bairro:</strong> {{ aluno_cpf.bairro }}</p>
+    <p><strong>Rua/Avenida:</strong> {{ aluno_cpf.rua_av }}</p>
+    <p><strong>Celular:</strong> {{ aluno_cpf.celular }}</p>
+    <p><strong>Email:</strong> {{ aluno_cpf.email }}</p>
+
+{% else %}
+    {% for item in cpf %}
+
+                <div class="card">
+                    <div class="card-body">
+                        <p>Nome: {{ item.nome }}, Cidade: {{ item.cidade }}, Celular: {{ item.celular }}, E-Mail: {{ item.email }}</p>
+                        <span class="badge text-bg-danger">Editar</span>
+                    </div>
+                </div>
+                {% endfor %}<br><b><a href="#">VOLTAR AO TOPO</a></b>
+{% endif %}
+
             </div>
         </div>
     </div>

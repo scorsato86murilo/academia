@@ -5,7 +5,8 @@ from django.contrib import messages
 def dashboard(request):
     aluno = None  # Variável para armazenar o aluno encontrado
     if request.method == 'GET':
-        return render(request, 'dashboard.html')
+        cpf = CadastroAluno.objects.all()
+        return render(request, 'dashboard.html', {'cpf': cpf})
 
     elif request.method == 'POST':
         # Verificar se é uma busca de CPF ou cadastro
@@ -21,7 +22,8 @@ def dashboard(request):
                 aluno_cpf = None
                 messages.error(request, 'Aluno não encontrado com esse CPF.')
                 # Redirecionar para a página de dashboard com as mensagens
-                return render(request, 'dashboard.html', {'aluno_cpf': aluno_cpf})
+                cpf = CadastroAluno.objects.all()
+                return render(request, 'dashboard.html', {'aluno_cpf': aluno_cpf, 'cpf': cpf})
         elif 'cadastrar' in request.POST:
             # Obter os dados do formulário de cadastro
             nome = request.POST.get('nome')
@@ -35,7 +37,8 @@ def dashboard(request):
             # Verificar se o CPF já existe no banco de dados
             if CadastroAluno.objects.filter(cpf=cpf).exists():
                 messages.error(request, 'Erro: CPF já cadastrado!')
-                return render(request, 'dashboard.html')  # Retorna ao formulário com mensagem de erro
+                cpf = CadastroAluno.objects.all()
+                return render(request, 'dashboard.html', {'cpf', cpf})  # Retorna ao formulário com mensagem de erro
 
             try:
                 # Criar uma instância do modelo CadastroAluno
@@ -56,4 +59,5 @@ def dashboard(request):
                 messages.error(request, f'Erro: {str(e)}')
 
         # Redirecionar para a página de dashboard com as mensagens
-        return render(request, 'dashboard.html', {'aluno': aluno})
+        cpf = CadastroAluno.objects.all()
+        return render(request, 'dashboard.html', {'aluno': aluno, 'cpf': cpf})
