@@ -33,6 +33,7 @@ def dashboard(request):
             rua_av = request.POST.get('rua_av')
             celular = request.POST.get('celular')
             email = request.POST.get('email')
+            id = request.POST.get('id')
 
             # Verificar se o CPF já existe no banco de dados
             if CadastroAluno.objects.filter(cpf=cpf).exists():
