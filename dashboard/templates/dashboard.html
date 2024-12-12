@@ -37,7 +37,7 @@
                         Celular: <input type="text" name="celular" placeholder="DDD+Número" value="{{ aluno_cpf.celular }}" required><br>
                         Email: <input type="email" name="email" placeholder="E-Mail" value="{{ aluno_cpf.email }}"required><br><br>
 
-                        <input type="submit" value="CADASTRAR" name="cadastrar">
+                        <input type="submit" value="CADASTRO/ATUALIZAR" name="cadastrar">
                     </form>
                 </div>
             </div>
@@ -80,8 +80,8 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <p>Nome: {{ item.nome }}, Cidade: {{ item.cidade }}, Celular: {{ item.celular }}, E-Mail: {{ item.email }}</p>
-                        <span class="badge text-bg-danger">Editar</span>
+                        <p>Nome: {{ item.nome }}, CPF: {{ item.cpf }}, Cidade: {{ item.cidade }}, Celular: {{ item.celular }}, E-Mail: {{ item.email }}</p>
+
                     </div>
                 </div>
                 {% endfor %}<br><b><a href="#">VOLTAR AO TOPO</a></b>

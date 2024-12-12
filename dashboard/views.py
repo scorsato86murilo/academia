@@ -38,7 +38,7 @@ def dashboard(request):
             if CadastroAluno.objects.filter(cpf=cpf).exists():
                 messages.error(request, 'Erro: CPF já cadastrado!')
                 cpf = CadastroAluno.objects.all()
-                return render(request, 'dashboard.html', {'cpf', cpf})  # Retorna ao formulário com mensagem de erro
+                return render(request, 'dashboard.html', {'cpf': cpf})  # Retorna ao formulário com mensagem de erro
 
             try:
                 # Criar uma instância do modelo CadastroAluno
