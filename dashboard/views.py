@@ -35,6 +35,9 @@ def dashboard(request):
             email = request.POST.get('email')
             id = request.POST.get('id')
 
+            if id:
+                pass
+
             # Verificar se o CPF já existe no banco de dados
             if CadastroAluno.objects.filter(cpf=cpf).exists():
                 messages.error(request, 'Erro: CPF já cadastrado!')
@@ -50,7 +53,8 @@ def dashboard(request):
                     bairro=bairro,
                     rua_av=rua_av,
                     celular=celular,
-                    email=email
+                    email=email,
+
                 )
 
                 # Salvar a instância no banco de dados

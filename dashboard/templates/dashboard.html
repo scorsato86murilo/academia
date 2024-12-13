@@ -64,6 +64,7 @@
     <p><strong>Rua/Avenida:</strong> {{ aluno.rua_av }}</p>
     <p><strong>Celular:</strong> {{ aluno.celular }}</p>
     <p><strong>Email:</strong> {{ aluno.email }}</p>
+                <p><strong>ID:</strong> {{ aluno.id }}</p>
 
 {% elif aluno_cpf %}
     <h4>Aluno Encontrado</h4>
@@ -74,13 +75,14 @@
     <p><strong>Rua/Avenida:</strong> {{ aluno_cpf.rua_av }}</p>
     <p><strong>Celular:</strong> {{ aluno_cpf.celular }}</p>
     <p><strong>Email:</strong> {{ aluno_cpf.email }}</p>
+                <p><strong>ID:</strong> {{ aluno_cpf.id }}</p>
 
 {% else %}
     {% for item in cpf %}
 
                 <div class="card">
                     <div class="card-body">
-                        <p>Nome: {{ item.nome }}, CPF: {{ item.cpf }}, Cidade: {{ item.cidade }}, Celular: {{ item.celular }}, E-Mail: {{ item.email }}</p>
+                        <p>Nome: {{ item.nome }}, CPF: {{ item.cpf }}, Cidade: {{ item.cidade }}, Celular: {{ item.celular }}, E-Mail: {{ item.email }}, ID: {{ item.id }}</p>
 
                     </div>
                 </div>
