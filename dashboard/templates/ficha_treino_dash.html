@@ -1,0 +1,44 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block titulo %}
+    FICHA DE TREINO
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'dashboard/css/ficha_treino_dash.css' %}">
+{% endblock %}
+{% block h1 %}DASHBOARD - FICHA DE TREINO{% endblock %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Coluna 1 -->
+            <div class="col-md-8 p-5" style="background-color: #F0FFFF;">
+                <form action="" method="post">{% csrf_token %}
+                    <b>Treino personalizado para aluno</b><textarea rows="4" cols="83"></textarea><br><br>
+                    Masculino perder peso<textarea rows="4" cols="83"></textarea><br><br>
+                    Masculino ganho de massa<textarea rows="4" cols="83"></textarea><br><br>
+                    Masculino atleta de alto rendimento<textarea rows="4" cols="83"></textarea><br><br>
+                    Feminino perder peso<textarea rows="4" cols="83"></textarea><br><br>
+                    Feminino ganho de massa<textarea rows="4" cols="83"></textarea><br><br>
+                    Feminino atleta de alto rendimento<textarea rows="4" cols="83"></textarea><br>
+                    <input type="submit" value="Salvar" name="treino_padrao">
+                </form>
+
+            </div>
+            <!-- Coluna 2 -->
+            <div class="col-md-4 p-5" style="background-color: #F5F5F5;">
+                <nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">Treino Padrão para alunos
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="CPF" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Procurar</button>
+
+    </form>
+  </div>
+</nav>
+            </div></div></div>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

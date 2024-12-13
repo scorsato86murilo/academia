@@ -13,7 +13,7 @@
     <h1>{% block h1 %}{% endblock %}</h1>
     <div class="btn">
     <button type="button" class="btn btn-light"><a href=" {% url 'dashboard' %}">Dash</a></button>
-    <button type="button" class="btn btn-light">Ficha de treino</button>
+    <button type="button" class="btn btn-light"><a href="{% url 'ficha_treino_dash' %}">Ficha de treino</a></button>
     <button type="button" class="btn btn-light">Alunos</button>
     <button type="button" class="btn btn-light">Academia</button>
     <button type="button" class="btn btn-light">Nossos produtos</button>

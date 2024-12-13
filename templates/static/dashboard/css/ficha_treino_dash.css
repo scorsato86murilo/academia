@@ -1,0 +1,101 @@
+
+
+/* Container principal */
+.container-fluid {
+    padding: 1px;
+}
+
+/* Estilos da Coluna 1 */
+.col-md-8 {
+    background-color: #F0FFFF;
+    border-radius: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    padding: 1px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    resize: none;
+    margin-bottom: 20px;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 5 0 5px rgba(76, 175, 80, 0.5);
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Estilos da Coluna 2 */
+.col-md-4 {
+    background-color: #F5F5F5;
+    border-radius: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 15px;
+}
+
+.navbar input[type="search"] {
+    border-radius: 5px;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    width: 80%;
+}
+
+.navbar button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.navbar button:hover {
+    background-color: #45a049;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .col-md-8, .col-md-4 {
+        padding: 15px;
+    }
+
+    .navbar input[type="search"] {
+        width: 60%;
+    }
+
+    textarea {
+        font-size: 0.9em;
+    }
+
+    input[type="submit"] {
+        font-size: 1em;
+    }
+}

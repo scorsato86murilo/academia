@@ -75,3 +75,10 @@ def dashboard(request):
         # Redirecionar para a página de dashboard com as mensagens
         cpf = CadastroAluno.objects.all()
         return render(request, 'dashboard.html', {'aluno': aluno, 'cpf': cpf})
+
+
+def ficha_treino_dash(request):
+    if request.method == 'GET':
+        return render(request, 'ficha_treino_dash.html')
+    elif request.method == 'POST':
+        return render(request, 'ficha_treino_dash.html')
