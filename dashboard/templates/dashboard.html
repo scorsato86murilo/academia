@@ -36,7 +36,7 @@
                         Rua/av com número: <input type="text" name="rua_av" placeholder="Rua/Avenida/número" value="{{ aluno_cpf.rua_av }}" required><br>
                         Celular: <input type="text" name="celular" placeholder="DDD+Número" value="{{ aluno_cpf.celular }}" required><br>
                         Email: <input type="email" name="email" placeholder="E-Mail" value="{{ aluno_cpf.email }}"required><br>
-                        ID: <input type="number" name="id" placeholder="Indentificador" value="{{ aluno_cpf.id }}"required disabled> disabled<br><br>
+                        ID: <input type="number" name="id" placeholder="Indentificador" value="{{ aluno_cpf.id }}"required disabled> <br><br>
                         <input type="submit" value="CADASTRO/ATUALIZAR" name="cadastrar">
                     </form>
                 </div>
@@ -82,7 +82,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <p>Nome: {{ item.nome }}, CPF: {{ item.cpf }}, Cidade: {{ item.cidade }}, Celular: {{ item.celular }}, E-Mail: {{ item.email }}, ID: {{ item.id }}</p>
+                        <p>Nome: {{ item.nome }}, CPF: {{ item.cpf }}, Cidade: {{ item.cidade }},<br>Celular: {{ item.celular }}, E-Mail: {{ item.email }}, ID:{{ item.id }}</p>
 
                     </div>
                 </div>
