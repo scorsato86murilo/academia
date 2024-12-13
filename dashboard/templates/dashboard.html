@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block head %}{% endblock %}
-
-{% block body %}
 {% block h1 %}DASHBOARD{% endblock %}
+{% block body %}
+
     <div class="container-fluid">
         <div class="row">
             <!-- Coluna 1 -->
             <div class="col-md-6 p-5" style="background-color: #F0FFFF;">
-                <h2>{% if aluno_cpf %}Editar Aluno{% else %}Cadastrar novo Aluno{% endif %}</h2>
+                <h2>{% if aluno_cpf %}Editar Aluno {% else %}Cadastrar novo Aluno{% endif %}</h2>
                 <hr>
 
                 <div class="message">
@@ -56,6 +56,7 @@
 
                         <!-- Botão de submit -->
                         <input type="submit" value="{% if aluno_cpf %}Atualizar{% else %}Cadastrar{% endif %}" name="cadastrar">
+                        {% if aluno_cpf %}<button>cancelar</button>{% endif %}
                     </form>
                 </div>
             </div>

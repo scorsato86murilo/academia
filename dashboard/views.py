@@ -44,7 +44,7 @@ def dashboard(request):
                 return render(request, 'dashboard.html', {'cpf': cpf})  # Retorna ao formulário com mensagem de erro
 
             try:
-                if id:
+                if id:  # é verdade que tem id?
                     # Atualizando o aluno existente
                     aluno = get_object_or_404(CadastroAluno, id=id)
                     aluno.nome = nome
@@ -56,7 +56,7 @@ def dashboard(request):
                     aluno.email = email
                     aluno.save()  # Salva as alterações
                     messages.success(request, 'Aluno atualizado com SUCESSO!')
-                else:
+                else:  # se não tem id entao entra aqui
                     # Criar uma instância do modelo CadastroAluno
                     aluno = CadastroAluno(
                         nome=nome,
