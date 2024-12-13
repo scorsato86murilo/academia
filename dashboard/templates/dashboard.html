@@ -13,7 +13,7 @@
         <div class="row">
             <!-- Coluna 1 -->
             <div class="col-md-6 p-5" style="background-color: #F0FFFF;">
-                <h2>Cadastrar novo Aluno</h2>
+                <h2>{% if aluno_cpf %}Editar Aluno{% else %}Cadastrar novo Aluno{% endif %}</h2>
                 <hr>
 
                 <div class="message">
@@ -29,15 +29,33 @@
                 <div class="caixa-edicao">
                     <form method="post" action="{% url 'dashboard' %}">
                         {% csrf_token %}
+
+                        <!-- Campo Nome -->
                         Nome: <input type="text" name="nome" placeholder="Nome do aluno" value="{{ aluno_cpf.nome }}" required><br>
+
+                        <!-- Campo CPF -->
                         CPF: <input type="text" name="cpf" placeholder="CPF" value="{{ aluno_cpf.cpf }}" required><br>
+
+                        <!-- Campo Cidade -->
                         Cidade: <input type="text" name="cidade" placeholder="Cidade" value="{{ aluno_cpf.cidade }}" required><br>
-                        Bairro: <input type="text" name="bairro" placeholder="Bairro" value="{{ aluno_cpf.bairro }}"required><br>
+
+                        <!-- Campo Bairro -->
+                        Bairro: <input type="text" name="bairro" placeholder="Bairro" value="{{ aluno_cpf.bairro }}" required><br>
+
+                        <!-- Campo Rua/Avenida -->
                         Rua/av com número: <input type="text" name="rua_av" placeholder="Rua/Avenida/número" value="{{ aluno_cpf.rua_av }}" required><br>
+
+                        <!-- Campo Celular -->
                         Celular: <input type="text" name="celular" placeholder="DDD+Número" value="{{ aluno_cpf.celular }}" required><br>
-                        Email: <input type="email" name="email" placeholder="E-Mail" value="{{ aluno_cpf.email }}"required><br>
-                        ID: <input type="number" name="id" placeholder="Indentificador" value="{{ aluno_cpf.id }}"required disabled> <br><br>
-                        <input type="submit" value="CADASTRO/ATUALIZAR" name="cadastrar">
+
+                        <!-- Campo Email -->
+                        Email: <input type="email" name="email" placeholder="E-Mail" value="{{ aluno_cpf.email }}" required><br>
+
+                        <!-- Campo ID (oculto para edição) -->
+                        <input type="hidden" name="id" value="{{ aluno_cpf.id }}">
+
+                        <!-- Botão de submit -->
+                        <input type="submit" value="{% if aluno_cpf %}Atualizar{% else %}Cadastrar{% endif %}" name="cadastrar">
                     </form>
                 </div>
             </div>
@@ -55,39 +73,38 @@
                 </nav>
                 <h2>Listagem de alunos</h2><hr>
 
-{% if aluno %}
-    <h4>Aluno Encontrado</h4>
-    <p><strong>Nome:</strong> {{ aluno.nome }}</p>
-    <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
-    <p><strong>Cidade:</strong> {{ aluno.cidade }}</p>
-    <p><strong>Bairro:</strong> {{ aluno.bairro }}</p>
-    <p><strong>Rua/Avenida:</strong> {{ aluno.rua_av }}</p>
-    <p><strong>Celular:</strong> {{ aluno.celular }}</p>
-    <p><strong>Email:</strong> {{ aluno.email }}</p>
-                <p><strong>ID:</strong> {{ aluno.id }}</p>
+                {% if aluno %}
+                    <h4>Aluno Encontrado</h4>
+                    <p><strong>Nome:</strong> {{ aluno.nome }}</p>
+                    <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+                    <p><strong>Cidade:</strong> {{ aluno.cidade }}</p>
+                    <p><strong>Bairro:</strong> {{ aluno.bairro }}</p>
+                    <p><strong>Rua/Avenida:</strong> {{ aluno.rua_av }}</p>
+                    <p><strong>Celular:</strong> {{ aluno.celular }}</p>
+                    <p><strong>Email:</strong> {{ aluno.email }}</p>
+                    <p><strong>ID:</strong> {{ aluno.id }}</p>
 
-{% elif aluno_cpf %}
-    <h4>Aluno Encontrado</h4>
-    <p><strong>Nome:</strong> {{ aluno_cpf.nome }}</p>
-    <p><strong>CPF:</strong> {{ aluno_cpf.cpf }}</p>
-    <p><strong>Cidade:</strong> {{ aluno_cpf.cidade }}</p>
-    <p><strong>Bairro:</strong> {{ aluno_cpf.bairro }}</p>
-    <p><strong>Rua/Avenida:</strong> {{ aluno_cpf.rua_av }}</p>
-    <p><strong>Celular:</strong> {{ aluno_cpf.celular }}</p>
-    <p><strong>Email:</strong> {{ aluno_cpf.email }}</p>
-                <p><strong>ID:</strong> {{ aluno_cpf.id }}</p>
+                {% elif aluno_cpf %}
+                    <h4>Aluno Encontrado</h4>
+                    <p><strong>Nome:</strong> {{ aluno_cpf.nome }}</p>
+                    <p><strong>CPF:</strong> {{ aluno_cpf.cpf }}</p>
+                    <p><strong>Cidade:</strong> {{ aluno_cpf.cidade }}</p>
+                    <p><strong>Bairro:</strong> {{ aluno_cpf.bairro }}</p>
+                    <p><strong>Rua/Avenida:</strong> {{ aluno_cpf.rua_av }}</p>
+                    <p><strong>Celular:</strong> {{ aluno_cpf.celular }}</p>
+                    <p><strong>Email:</strong> {{ aluno_cpf.email }}</p>
+                    <p><strong>ID:</strong> {{ aluno_cpf.id }}</p>
 
-{% else %}
-    {% for item in cpf %}
-
-                <div class="card">
-                    <div class="card-body">
-                        <p>Nome: {{ item.nome }}, CPF: {{ item.cpf }}, Cidade: {{ item.cidade }},<br>Celular: {{ item.celular }}, E-Mail: {{ item.email }}, ID:{{ item.id }}</p>
-
-                    </div>
-                </div>
-                {% endfor %}<br><b><a href="#">VOLTAR AO TOPO</a></b>
-{% endif %}
+                {% else %}
+                    {% for item in cpf %}
+                        <div class="card">
+                            <div class="card-body">
+                                <p>Nome: {{ item.nome }}, CPF: {{ item.cpf }}, Cidade: {{ item.cidade }},<br>Celular: {{ item.celular }}, E-Mail: {{ item.email }}, ID:{{ item.id }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <br><b><a href="#">VOLTAR AO TOPO</a></b>
+                {% endif %}
 
             </div>
         </div>
