@@ -67,7 +67,7 @@
                         <a class="navbar-brand">Procure pelo CPF</a>
                         <form method="post" action="{% url 'dashboard' %}" class="d-flex">
                             {% csrf_token %}
-                            <input class="form-control me-2" type="search" name="cpf_pesquisa" placeholder="CPF" aria-label="Search">
+                            <input class="form-control me-2" type="search" name="cpf_pesquisa" placeholder="Pesquise pelo CPF" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit" name="buscar">Procurar</button>
                         </form>
                     </div>

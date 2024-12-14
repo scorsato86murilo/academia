@@ -15,16 +15,54 @@
         <div class="row">
             <!-- Coluna 1 -->
             <div class="col-md-8 p-5" style="background-color: #F0FFFF;">
+
+
+                                <div class="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                <center>{{ message }}</center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
                 <form action="" method="post">{% csrf_token %}
-                    <b>Treino personalizado para aluno</b><textarea rows="4" cols="83" disabled>Sem treino cadastrado</textarea><br><br>
-                    Masculino perder peso<textarea rows="4" cols="83"></textarea><br><br>
-                    Masculino ganho de massa<textarea rows="4" cols="83"></textarea><br><br>
-                    Masculino atleta de alto rendimento<textarea rows="4" cols="83"></textarea><br><br>
-                    Feminino perder peso<textarea rows="4" cols="83"></textarea><br><br>
-                    Feminino ganho de massa<textarea rows="4" cols="83"></textarea><br><br>
-                    Feminino atleta de alto rendimento<textarea rows="4" cols="83"></textarea><br>
-                    <input type="submit" value="Salvar" name="treino_padrao">
+                    <b>Treino personalizado para aluno</b><textarea rows="9" cols="83">Sem treino cadastrado</textarea>
+                    <input type="submit" value="Salvar" name="treino_aluno"><br><br>
                 </form>
+                <hr>
+                <i><b>treino Padrão</b></i><br><br>
+
+               <form action="" method="post">
+    {% csrf_token %}
+
+    <!-- Masculino perder peso -->
+    <label for="masculino_perder_peso">Masculino perder peso</label>
+    <textarea id="masculino_perder_peso" name="treino_masculino_perder_peso" rows="6" cols="83">{{ treino.treino_masculino_perder_peso|default_if_none:'' }}</textarea><br><br>
+
+    <!-- Masculino ganho de massa -->
+    <label for="masculino_ganho_massa">Masculino ganho de massa</label>
+    <textarea id="masculino_ganho_massa" name="treino_masculino_ganho_massa" rows="6" cols="83">{{ treino.treino_masculino_ganho_massa|default_if_none:'' }}</textarea><br><br>
+
+    <!-- Masculino atleta de alto rendimento -->
+    <label for="masculino_atleta">Masculino atleta de alto rendimento</label>
+    <textarea id="masculino_atleta" name="treino_masculino_atleta" rows="6" cols="83">{{ treino.treino_masculino_atleta|default_if_none:'' }}</textarea><br><br>
+
+    <!-- Feminino perder peso -->
+    <label for="feminino_perder_peso">Feminino perder peso</label>
+    <textarea id="feminino_perder_peso" name="treino_feminino_perder_peso" rows="6" cols="83">{{ treino.treino_feminino_perder_peso|default_if_none:'' }}</textarea><br><br>
+
+    <!-- Feminino ganho de massa -->
+    <label for="feminino_ganho_massa">Feminino ganho de massa</label>
+    <textarea id="feminino_ganho_massa" name="treino_feminino_ganho_massa" rows="6" cols="83">{{ treino.treino_feminino_ganho_massa|default_if_none:'' }}</textarea><br><br>
+
+    <!-- Feminino atleta de alto rendimento -->
+    <label for="feminino_atleta">Feminino atleta de alto rendimento</label>
+    <textarea id="feminino_atleta" name="treino_feminino_atleta" rows="6" cols="83">{{ treino.treino_feminino_atleta|default_if_none:'' }}</textarea><br>
+
+    <input type="submit" value="Salvar" name="treino_padrao">
+</form>
 
             </div>
             <!-- Coluna 2 -->
@@ -33,7 +71,7 @@
   <div class="container-fluid">Treino Padrão para alunos
                         <form method="post" action="" class="d-flex">
                             {% csrf_token %}
-                            <input class="form-control me-2" type="search" name="cpf_pesquisa" placeholder="CPF" aria-label="Search">
+                            <input class="form-control me-2" type="search" name="cpf_pesquisa" placeholder="Pesquise pelo CPF" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit" name="buscar">Procurar</button>
                         </form>
   </div>

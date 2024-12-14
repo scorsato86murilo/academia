@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import CadastroAluno
+from .models import CadastroAluno, Treino
 from django.contrib import messages
 
 
@@ -76,9 +76,60 @@ def dashboard(request):
         cpf = CadastroAluno.objects.all()
         return render(request, 'dashboard.html', {'aluno': aluno, 'cpf': cpf})
 
+from django.shortcuts import render, redirect
+from .models import Treino
+
 
 def ficha_treino_dash(request):
+    # Verifica se existe algum treino no banco de dados
+    treino = Treino.objects.first()  # Pega o primeiro objeto, assumindo que deve haver apenas um treino
+
     if request.method == 'GET':
-        return render(request, 'ficha_treino_dash.html')
+        # Se não existir nenhum treino, cria um treino em branco
+        if treino is None:
+            treino = Treino.objects.create(
+                treino_masculino_perder_peso='',
+                treino_masculino_ganho_massa='',
+                treino_masculino_atleta='',
+                treino_feminino_perder_peso='',
+                treino_feminino_ganho_massa='',
+                treino_feminino_atleta=''
+            )
+
+        return render(request, 'ficha_treino_dash.html', {'treino': treino})
+
     elif request.method == 'POST':
-        return render(request, 'ficha_treino_dash.html')
+        if 'treino_padrao' in request.POST:
+            # Pega os dados enviados pelo formulário
+            treino_masculino_perder_peso = request.POST.get('treino_masculino_perder_peso')
+            treino_masculino_ganho_massa = request.POST.get('treino_masculino_ganho_massa')
+            treino_masculino_atleta = request.POST.get('treino_masculino_atleta')
+            treino_feminino_perder_peso = request.POST.get('treino_feminino_perder_peso')
+            treino_feminino_ganho_massa = request.POST.get('treino_feminino_ganho_massa')
+            treino_feminino_atleta = request.POST.get('treino_feminino_atleta')
+
+            # Se já existir um treino no banco de dados, atualiza os campos
+            if treino:
+                treino.treino_masculino_perder_peso = treino_masculino_perder_peso
+                treino.treino_masculino_ganho_massa = treino_masculino_ganho_massa
+                treino.treino_masculino_atleta = treino_masculino_atleta
+                treino.treino_feminino_perder_peso = treino_feminino_perder_peso
+                treino.treino_feminino_ganho_massa = treino_feminino_ganho_massa
+                treino.treino_feminino_atleta = treino_feminino_atleta
+                messages.success(request, 'Treino cadastrado com SUCESSO!')
+                treino.save()  # Salva as alterações no banco de dados
+            else:
+                # Caso não exista treino, cria um novo
+                Treino.objects.create(
+                    treino_masculino_perder_peso=treino_masculino_perder_peso,
+                    treino_masculino_ganho_massa=treino_masculino_ganho_massa,
+                    treino_masculino_atleta=treino_masculino_atleta,
+                    treino_feminino_perder_peso=treino_feminino_perder_peso,
+                    treino_feminino_ganho_massa=treino_feminino_ganho_massa,
+                    treino_feminino_atleta=treino_feminino_atleta,
+                )
+                messages.success(request, 'Treino cadastrado com SUCESSO!')
+
+            # Após salvar, redireciona para a página de ficha de treino'
+
+        return redirect('ficha_treino_dash')
