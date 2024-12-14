@@ -16,7 +16,7 @@
             <!-- Coluna 1 -->
             <div class="col-md-8 p-5" style="background-color: #F0FFFF;">
                 <form action="" method="post">{% csrf_token %}
-                    <b>Treino personalizado para aluno</b><textarea rows="4" cols="83"></textarea><br><br>
+                    <b>Treino personalizado para aluno</b><textarea rows="4" cols="83" disabled>Sem treino cadastrado</textarea><br><br>
                     Masculino perder peso<textarea rows="4" cols="83"></textarea><br><br>
                     Masculino ganho de massa<textarea rows="4" cols="83"></textarea><br><br>
                     Masculino atleta de alto rendimento<textarea rows="4" cols="83"></textarea><br><br>
@@ -31,11 +31,11 @@
             <div class="col-md-4 p-5" style="background-color: #F5F5F5;">
                 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">Treino Padrão para alunos
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="CPF" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Procurar</button>
-
-    </form>
+                        <form method="post" action="" class="d-flex">
+                            {% csrf_token %}
+                            <input class="form-control me-2" type="search" name="cpf_pesquisa" placeholder="CPF" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit" name="buscar">Procurar</button>
+                        </form>
   </div>
 </nav>
             </div></div></div>

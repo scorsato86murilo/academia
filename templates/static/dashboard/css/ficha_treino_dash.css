@@ -60,26 +60,6 @@ input[type="submit"]:hover {
     padding: 15px;
 }
 
-.navbar input[type="search"] {
-    border-radius: 5px;
-    padding: 8px 15px;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-    width: 80%;
-}
-
-.navbar button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.navbar button:hover {
-    background-color: #45a049;
-}
 
 /* Responsividade */
 @media (max-width: 768px) {
