@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import CadastroAluno, Treino
+from .models import CadastroAluno, Treino, TreinoAlunoCadastrado
 from django.contrib import messages
 
 
@@ -79,14 +79,28 @@ def dashboard(request):
 from django.shortcuts import render, redirect
 from .models import Treino
 
-
 def ficha_treino_dash(request):
-    # Verifica se existe algum treino no banco de dados
-    treino = Treino.objects.first()  # Pega o primeiro objeto, assumindo que deve haver apenas um treino
+    treino = Treino.objects.first()  # Obtém o primeiro treino, ou None se não existir
 
     if request.method == 'GET':
-        # Se não existir nenhum treino, cria um treino em branco
-        if treino is None:
+        if not treino:  # Se não existir treino, cria um novo
+            treino = Treino.objects.create(
+                treino_masculino_perder_peso='',
+                treino_masculino_ganho_massa='',
+                treino_masculino_atleta='',
+                treino_feminino_perder_peso='',
+                treino_feminino_ganho_massa='',
+                treino_feminino_atleta=''
+            )
+        return render(request, 'ficha_treino_dash.html', {'treino': treino})
+
+def ficha_treino_dash(request):
+    treino = Treino.objects.first()  # Obtém o primeiro treino, ou None se não existir
+    treino_personalizado = TreinoAlunoCadastrado.objects.first()  # Obtemos o primeiro treino personalizado, se existir
+
+    if request.method == 'GET':
+        # Se não existir treino, cria um novo
+        if not treino:
             treino = Treino.objects.create(
                 treino_masculino_perder_peso='',
                 treino_masculino_ganho_massa='',
@@ -96,40 +110,73 @@ def ficha_treino_dash(request):
                 treino_feminino_atleta=''
             )
 
-        return render(request, 'ficha_treino_dash.html', {'treino': treino})
+        if not treino_personalizado:
+            treino_personalizado = TreinoAlunoCadastrado.objects.create(
+                treino_personalizado_aluno='',
 
-    elif request.method == 'POST':
-        if 'treino_padrao' in request.POST:
-            # Pega os dados enviados pelo formulário
-            treino_masculino_perder_peso = request.POST.get('treino_masculino_perder_peso')
-            treino_masculino_ganho_massa = request.POST.get('treino_masculino_ganho_massa')
-            treino_masculino_atleta = request.POST.get('treino_masculino_atleta')
-            treino_feminino_perder_peso = request.POST.get('treino_feminino_perder_peso')
-            treino_feminino_ganho_massa = request.POST.get('treino_feminino_ganho_massa')
-            treino_feminino_atleta = request.POST.get('treino_feminino_atleta')
+            )
+        return render(request, 'ficha_treino_dash.html', {'treino': treino, 'treino_aluno_cadastrado': treino_personalizado})
 
-            # Se já existir um treino no banco de dados, atualiza os campos
-            if treino:
-                treino.treino_masculino_perder_peso = treino_masculino_perder_peso
-                treino.treino_masculino_ganho_massa = treino_masculino_ganho_massa
-                treino.treino_masculino_atleta = treino_masculino_atleta
-                treino.treino_feminino_perder_peso = treino_feminino_perder_peso
-                treino.treino_feminino_ganho_massa = treino_feminino_ganho_massa
-                treino.treino_feminino_atleta = treino_feminino_atleta
-                messages.success(request, 'Treino cadastrado com SUCESSO!')
-                treino.save()  # Salva as alterações no banco de dados
+    if request.method == 'POST':
+        # Se for o 'treino_padrao' ou 'treino_aluno_cadastrado'
+        if 'treino_padrao_btn' in request.POST or 'treino_aluno_cadastrado' in request.POST:
+            # Para treino padrão
+            if 'treino_padrao' in request.POST:
+                treino_masculino_perder_peso = request.POST.get('treino_masculino_perder_peso')
+                treino_masculino_ganho_massa = request.POST.get('treino_masculino_ganho_massa')
+                treino_masculino_atleta = request.POST.get('treino_masculino_atleta')
+                treino_feminino_perder_peso = request.POST.get('treino_feminino_perder_peso')
+                treino_feminino_ganho_massa = request.POST.get('treino_feminino_ganho_massa')
+                treino_feminino_atleta = request.POST.get('treino_feminino_atleta')
+
+                # Validação para os campos de treino
+                if not all([treino_masculino_perder_peso, treino_masculino_ganho_massa, treino_masculino_atleta,
+                            treino_feminino_perder_peso, treino_feminino_ganho_massa, treino_feminino_atleta]):
+                    messages.error(request, 'Todos os campos de treino devem ser preenchidos!')
+                    return redirect('ficha_treino_dash')
+
+                # Atualiza ou cria o treino padrão
+                if treino:
+                    treino.treino_masculino_perder_peso = treino_masculino_perder_peso
+                    treino.treino_masculino_ganho_massa = treino_masculino_ganho_massa
+                    treino.treino_masculino_atleta = treino_masculino_atleta
+                    treino.treino_feminino_perder_peso = treino_feminino_perder_peso
+                    treino.treino_feminino_ganho_massa = treino_feminino_ganho_massa
+                    treino.treino_feminino_atleta = treino_feminino_atleta
+                    treino.save()
+                    messages.success(request, 'Treino padrão atualizado com SUCESSO!')
+                else:
+                    Treino.objects.create(
+                        treino_masculino_perder_peso=treino_masculino_perder_peso,
+                        treino_masculino_ganho_massa=treino_masculino_ganho_massa,
+                        treino_masculino_atleta=treino_masculino_atleta,
+                        treino_feminino_perder_peso=treino_feminino_perder_peso,
+                        treino_feminino_ganho_massa=treino_feminino_ganho_massa,
+                        treino_feminino_atleta=treino_feminino_atleta
+                    )
+                    messages.success(request, 'Treino padrão cadastrado com SUCESSO!')
+
+        # Para treino personalizado
+        if 'treino_aluno_cadastrado_btn' in request.POST:
+            treino_aluno_cadastrado = request.POST.get('treino_aluno_cadastrado')
+
+            if treino_aluno_cadastrado == '':
+                treino_aluno_cadastrado = "Sem cadastro de treino personalizado"
+
+            # Valida o campo de treino personalizado
+            if not treino_aluno_cadastrado:
+                messages.error(request, 'O treino personalizado para o aluno não pode ser vazio!')
+                return redirect('ficha_treino_dash')
+
+            # Atualiza ou cria o treino personalizado
+            if treino_personalizado:
+                treino_personalizado.treino_personalizado_aluno = treino_aluno_cadastrado
+                treino_personalizado.save()
+                messages.success(request, 'Treino personalizado atualizado com SUCESSO!')
             else:
-                # Caso não exista treino, cria um novo
-                Treino.objects.create(
-                    treino_masculino_perder_peso=treino_masculino_perder_peso,
-                    treino_masculino_ganho_massa=treino_masculino_ganho_massa,
-                    treino_masculino_atleta=treino_masculino_atleta,
-                    treino_feminino_perder_peso=treino_feminino_perder_peso,
-                    treino_feminino_ganho_massa=treino_feminino_ganho_massa,
-                    treino_feminino_atleta=treino_feminino_atleta,
+                TreinoAlunoCadastrado.objects.create(
+                    treino_personalizado_aluno=treino_aluno_cadastrado,
                 )
-                messages.success(request, 'Treino cadastrado com SUCESSO!')
+                messages.success(request, 'Treino personalizado cadastrado com SUCESSO!')
 
-            # Após salvar, redireciona para a página de ficha de treino'
-
-        return redirect('ficha_treino_dash')
+    return render(request, 'ficha_treino_dash.html', {'treino': treino, 'treino_aluno_cadastrado': treino_personalizado})

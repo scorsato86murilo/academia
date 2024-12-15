@@ -22,3 +22,9 @@ class Treino(models.Model):
     treino_masculino_atleta = models.TextField()
     treino_feminino_atleta = models.TextField()
 
+
+class TreinoAlunoCadastrado(models.Model):
+    treino_personalizado_aluno = models.TextField()
+
+    def __str__(self):
+        return self.treino_personalizado_aluno

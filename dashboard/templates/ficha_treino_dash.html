@@ -8,16 +8,16 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'dashboard/css/ficha_treino_dash.css' %}">
 {% endblock %}
-{% block h1 %}DASHBOARD - FICHA DE TREINO{% endblock %}
-{% block body %}
 
+{% block h1 %}DASHBOARD - FICHA DE TREINO{% endblock %}
+
+{% block body %}
     <div class="container-fluid">
         <div class="row">
             <!-- Coluna 1 -->
-            <div class="col-md-8 p-5" style="background-color: #F0FFFF;">
+            <div class="col-md-8 p-5 bg-light">
 
-
-                                <div class="message">
+                <div class="message">
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert {{ message.tags }}">
@@ -27,56 +27,61 @@
                     {% endif %}
                 </div>
 
-                <form action="" method="post">{% csrf_token %}
-                    <b>Treino personalizado para aluno</b><textarea rows="9" cols="83">Sem treino cadastrado</textarea>
-                    <input type="submit" value="Salvar" name="treino_aluno"><br><br>
+                <form action="{% url 'ficha_treino_dash' %}" method="post">
+                    {% csrf_token %}
+                    <b><i>Treino personalizado para aluno</i></b><br>
+                    <textarea rows="9" cols="83" name="treino_aluno_cadastrado">{{ treino_aluno_cadastrado|default_if_none:'Sem treino cadastrado' }}</textarea><br><br>
+                    <input type="submit" name="treino_aluno_cadastrado_btn"><br><br>
                 </form>
                 <hr>
-                <i><b>treino Padrão</b></i><br><br>
+                <i><b>Treino Padrão</b></i><br><br>
 
-               <form action="" method="post">
-    {% csrf_token %}
+                <form action="{% url 'ficha_treino_dash' %}" method="post">
+                    {% csrf_token %}
 
-    <!-- Masculino perder peso -->
-    <label for="masculino_perder_peso">Masculino perder peso</label>
-    <textarea id="masculino_perder_peso" name="treino_masculino_perder_peso" rows="6" cols="83">{{ treino.treino_masculino_perder_peso|default_if_none:'' }}</textarea><br><br>
+                    <!-- Masculino perder peso -->
+                    <label for="masculino_perder_peso">Masculino perder peso</label>
+                    <textarea id="masculino_perder_peso" name="treino_masculino_perder_peso" rows="6" cols="83">{{ treino.treino_masculino_perder_peso|default_if_none:'' }}</textarea><br><br>
 
-    <!-- Masculino ganho de massa -->
-    <label for="masculino_ganho_massa">Masculino ganho de massa</label>
-    <textarea id="masculino_ganho_massa" name="treino_masculino_ganho_massa" rows="6" cols="83">{{ treino.treino_masculino_ganho_massa|default_if_none:'' }}</textarea><br><br>
+                    <!-- Masculino ganho de massa -->
+                    <label for="masculino_ganho_massa">Masculino ganho de massa</label>
+                    <textarea id="masculino_ganho_massa" name="treino_masculino_ganho_massa" rows="6" cols="83">{{ treino.treino_masculino_ganho_massa|default_if_none:'' }}</textarea><br><br>
 
-    <!-- Masculino atleta de alto rendimento -->
-    <label for="masculino_atleta">Masculino atleta de alto rendimento</label>
-    <textarea id="masculino_atleta" name="treino_masculino_atleta" rows="6" cols="83">{{ treino.treino_masculino_atleta|default_if_none:'' }}</textarea><br><br>
+                    <!-- Masculino atleta de alto rendimento -->
+                    <label for="masculino_atleta">Masculino atleta de alto rendimento</label>
+                    <textarea id="masculino_atleta" name="treino_masculino_atleta" rows="6" cols="83">{{ treino.treino_masculino_atleta|default_if_none:'' }}</textarea><br><br>
 
-    <!-- Feminino perder peso -->
-    <label for="feminino_perder_peso">Feminino perder peso</label>
-    <textarea id="feminino_perder_peso" name="treino_feminino_perder_peso" rows="6" cols="83">{{ treino.treino_feminino_perder_peso|default_if_none:'' }}</textarea><br><br>
+                    <!-- Feminino perder peso -->
+                    <label for="feminino_perder_peso">Feminino perder peso</label>
+                    <textarea id="feminino_perder_peso" name="treino_feminino_perder_peso" rows="6" cols="83">{{ treino.treino_feminino_perder_peso|default_if_none:'' }}</textarea><br><br>
 
-    <!-- Feminino ganho de massa -->
-    <label for="feminino_ganho_massa">Feminino ganho de massa</label>
-    <textarea id="feminino_ganho_massa" name="treino_feminino_ganho_massa" rows="6" cols="83">{{ treino.treino_feminino_ganho_massa|default_if_none:'' }}</textarea><br><br>
+                    <!-- Feminino ganho de massa -->
+                    <label for="feminino_ganho_massa">Feminino ganho de massa</label>
+                    <textarea id="feminino_ganho_massa" name="treino_feminino_ganho_massa" rows="6" cols="83">{{ treino.treino_feminino_ganho_massa|default_if_none:'' }}</textarea><br><br>
 
-    <!-- Feminino atleta de alto rendimento -->
-    <label for="feminino_atleta">Feminino atleta de alto rendimento</label>
-    <textarea id="feminino_atleta" name="treino_feminino_atleta" rows="6" cols="83">{{ treino.treino_feminino_atleta|default_if_none:'' }}</textarea><br>
+                    <!-- Feminino atleta de alto rendimento -->
+                    <label for="feminino_atleta">Feminino atleta de alto rendimento</label>
+                    <textarea id="feminino_atleta" name="treino_feminino_atleta" rows="6" cols="83">{{ treino.treino_feminino_atleta|default_if_none:'' }}</textarea><br>
 
-    <input type="submit" value="Salvar" name="treino_padrao">
-</form>
+                    <input type="submit" value="Salvar" name="treino_padrao_btn">
+                </form>
 
             </div>
             <!-- Coluna 2 -->
-            <div class="col-md-4 p-5" style="background-color: #F5F5F5;">
+            <div class="col-md-4 p-5 bg-light">
                 <nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">Treino Padrão para alunos
+                    <div class="container-fluid">
+                        Treino Padrão para alunos
                         <form method="post" action="" class="d-flex">
                             {% csrf_token %}
                             <input class="form-control me-2" type="search" name="cpf_pesquisa" placeholder="Pesquise pelo CPF" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit" name="buscar">Procurar</button>
                         </form>
-  </div>
-</nav>
-            </div></div></div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
