@@ -80,20 +80,6 @@ def dashboard(request):
         return render(request, 'dashboard.html', {'aluno': aluno, 'cpf': cpf})
 
 
-def ficha_treino_dash(request):
-    treino = Treino.objects.first()  # Obtém o primeiro treino, ou None se não existir
-
-    if request.method == 'GET':
-        if not treino:  # Se não existir treino, cria um novo
-            treino = Treino.objects.create(
-                treino_masculino_perder_peso='',
-                treino_masculino_ganho_massa='',
-                treino_masculino_atleta='',
-                treino_feminino_perder_peso='',
-                treino_feminino_ganho_massa='',
-                treino_feminino_atleta=''
-            )
-        return render(request, 'ficha_treino_dash.html', {'treino': treino})
 
 def ficha_treino_dash(request):
     treino = Treino.objects.first()

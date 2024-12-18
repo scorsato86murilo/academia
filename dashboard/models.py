@@ -25,6 +25,7 @@ class Treino(models.Model):
 
 class TreinoAlunoCadastrado(models.Model):
     treino_personalizado_aluno = models.TextField()
+    aluno_cadastrado = models.ForeignKey(CadastroAluno, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.treino_personalizado_aluno
