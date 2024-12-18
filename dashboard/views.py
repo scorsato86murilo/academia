@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .models import CadastroAluno, Treino, TreinoAlunoCadastrado
 from django.contrib import messages
+from django.shortcuts import render, redirect
+from .models import Treino
+
 
 
 def dashboard(request):
@@ -76,8 +79,6 @@ def dashboard(request):
         cpf = CadastroAluno.objects.all()
         return render(request, 'dashboard.html', {'aluno': aluno, 'cpf': cpf})
 
-from django.shortcuts import render, redirect
-from .models import Treino
 
 def ficha_treino_dash(request):
     treino = Treino.objects.first()  # Obtém o primeiro treino, ou None se não existir
@@ -95,8 +96,8 @@ def ficha_treino_dash(request):
         return render(request, 'ficha_treino_dash.html', {'treino': treino})
 
 def ficha_treino_dash(request):
-    treino = Treino.objects.first()  # Obtém o primeiro treino, ou None se não existir
-    treino_personalizado = TreinoAlunoCadastrado.objects.first()  # Obtemos o primeiro treino personalizado, se existir
+    treino = Treino.objects.first()
+    treino_personalizado = TreinoAlunoCadastrado.objects.first()
 
     if request.method == 'GET':
         # Se não existir treino, cria um novo
@@ -121,7 +122,7 @@ def ficha_treino_dash(request):
         # Se for o 'treino_padrao' ou 'treino_aluno_cadastrado'
         if 'treino_padrao_btn' in request.POST or 'treino_aluno_cadastrado' in request.POST:
             # Para treino padrão
-            if 'treino_padrao' in request.POST:
+            if 'treino_padrao_btn' in request.POST:
                 treino_masculino_perder_peso = request.POST.get('treino_masculino_perder_peso')
                 treino_masculino_ganho_massa = request.POST.get('treino_masculino_ganho_massa')
                 treino_masculino_atleta = request.POST.get('treino_masculino_atleta')
