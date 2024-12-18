@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from .models import Treino
 
 
-
 def dashboard(request):
     aluno = None  # Variável para armazenar o aluno encontrado
     if request.method == 'GET':
@@ -79,9 +78,8 @@ def dashboard(request):
         cpf = CadastroAluno.objects.all()
         return render(request, 'dashboard.html', {'aluno': aluno, 'cpf': cpf})
 
-
-
 def ficha_treino_dash(request):
+    aluno_c = None  # Inicializa a variável como None para evitar o erro UnboundLocalError
     treino = Treino.objects.first()
     treino_personalizado = TreinoAlunoCadastrado.objects.first()
 
@@ -100,9 +98,9 @@ def ficha_treino_dash(request):
         if not treino_personalizado:
             treino_personalizado = TreinoAlunoCadastrado.objects.create(
                 treino_personalizado_aluno='',
-
             )
-        return render(request, 'ficha_treino_dash.html', {'treino': treino, 'treino_aluno_cadastrado': treino_personalizado})
+        return render(request, 'ficha_treino_dash.html',
+                      {'treino': treino, 'treino_aluno_cadastrado': treino_personalizado, 'aluno_c': aluno_c})
 
     if request.method == 'POST':
         # Se for o 'treino_padrao' ou 'treino_aluno_cadastrado'
@@ -150,11 +148,6 @@ def ficha_treino_dash(request):
             if treino_aluno_cadastrado == '':
                 treino_aluno_cadastrado = "Sem cadastro de treino personalizado"
 
-            # Valida o campo de treino personalizado
-            if not treino_aluno_cadastrado:
-                messages.error(request, 'O treino personalizado para o aluno não pode ser vazio!')
-                return redirect('ficha_treino_dash')
-
             # Atualiza ou cria o treino personalizado
             if treino_personalizado:
                 treino_personalizado.treino_personalizado_aluno = treino_aluno_cadastrado
@@ -166,4 +159,22 @@ def ficha_treino_dash(request):
                 )
                 messages.success(request, 'Treino personalizado cadastrado com SUCESSO!')
 
-    return render(request, 'ficha_treino_dash.html', {'treino': treino, 'treino_aluno_cadastrado': treino_personalizado})
+        # Para buscar aluno por CPF
+        if 'cpf_buscar_btn' in request.POST:
+            cpf_buscar = request.POST.get('cpf_buscar')
+
+            if cpf_buscar:
+                try:
+                    # Busca o aluno pelo CPF
+                    aluno_c = CadastroAluno.objects.get(cpf=cpf_buscar)
+                    messages.success(request, f'Aluno encontrado: {aluno_c.nome}')
+                    print(aluno_c)
+                except CadastroAluno.DoesNotExist:
+                    messages.error(request, 'Aluno não encontrado com este CPF.')
+
+    # Retorna o render com o treino e o aluno (aluno_c) se encontrado
+    return render(request, 'ficha_treino_dash.html', {
+        'treino': treino,
+        'treino_aluno_cadastrado': treino_personalizado,
+        'aluno_c': aluno_c,  # Passando a variável aluno_c para o template
+    })
