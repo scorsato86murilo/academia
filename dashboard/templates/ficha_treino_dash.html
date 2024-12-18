@@ -29,9 +29,17 @@
 
                 <form action="{% url 'ficha_treino_dash' %}" method="post">
                     {% csrf_token %}
-                    <b><i>Treino personalizado para aluno</i></b><br>
-                    <textarea rows="9" cols="83" name="treino_aluno_cadastrado">{{ treino_personalizado.treino_personalizado_aluno|default_if_none:'Sem treino cadastrado' }}</textarea><br><br>
-                    <input type="submit" name="treino_aluno_cadastrado_btn"><br><br>
+                    <b><i>Treino personalizado para aluno</i></b>
+
+                    <textarea rows="9" cols="83" name="treino_aluno_cadastrado">
+    {% if treino_aluno_cadastrado %}
+        {{ treino_aluno_cadastrado.treino_personalizado_aluno }}
+    {% endif %}
+</textarea><br><br>
+
+<input type="submit" name="treino_aluno_cadastrado_btn" value="Salvar" {% if not treino_aluno_cadastrado %}disabled{% endif %}>
+
+                    <br><br>
                 </form>
                 <hr>
                 <i><b>Treino Padrão</b></i><br><br>
@@ -80,18 +88,16 @@
                     </div>
                 </nav>
 
-                {% if aluno_c %}
-                    <p><strong>Aluno encontrado:</strong></p>
-                    <p>Nome: {{ aluno_c.nome }}</p>
-                    <p>CPF: {{ aluno_c.cpf }}</p>
-                    <p>Cidade: {{ aluno_c.cidade }}</p>
-                    <p>Bairro: {{ aluno_c.bairro }}</p>
-                    <p>Rua/Av: {{ aluno_c.rua_av }}</p>
-                    <p>Celular: {{ aluno_c.celular }}</p>
-                    <p>Email: {{ aluno_c.email }}</p>
-                {% else %}
-                    <p>Nenhum aluno encontrado com esse CPF.</p>
-                {% endif %}
+{% if aluno_c %}
+    <p><strong>Aluno encontrado:</strong></p>
+    <p>Nome: {{ aluno_c.nome }}</p>
+    <p>CPF: {{ aluno_c.cpf }}</p>
+    <p>Cidade: {{ aluno_c.cidade }}</p>
+    <p>Bairro: {{ aluno_c.bairro }}</p>
+    <p>Rua/Av: {{ aluno_c.rua_av }}</p>
+    <p>Celular: {{ aluno_c.celular }}</p>
+    <p>Email: {{ aluno_c.email }}</p>
+{% endif %}
 
             </div>
         </div>

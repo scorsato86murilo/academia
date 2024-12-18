@@ -159,7 +159,6 @@ def ficha_treino_dash(request):
                 )
                 messages.success(request, 'Treino personalizado cadastrado com SUCESSO!')
 
-        # Para buscar aluno por CPF
         if 'cpf_buscar_btn' in request.POST:
             cpf_buscar = request.POST.get('cpf_buscar')
 
@@ -169,6 +168,14 @@ def ficha_treino_dash(request):
                     aluno_c = CadastroAluno.objects.get(cpf=cpf_buscar)
                     messages.success(request, f'Aluno encontrado: {aluno_c.nome}')
                     print(aluno_c)
+
+                    # Busca o treino personalizado do aluno
+                    treino_personalizado = TreinoAlunoCadastrado.objects.filter(aluno_cadastrado=aluno_c).first()
+
+                    # Caso não encontre treino personalizado, pode definir um valor padrão
+                    if not treino_personalizado:
+                        treino_personalizado = None
+
                 except CadastroAluno.DoesNotExist:
                     messages.error(request, 'Aluno não encontrado com este CPF.')
 
