@@ -180,13 +180,11 @@ def ficha_treino_dash(request):
 
         if 'cpf_buscar_btn' in request.POST:
             cpf_buscar = request.POST.get('cpf_buscar')
-
-            if not cpf_buscar:
-                messages.error(request, 'Aluno não encontrado com este CPF.')
+            print(f'Recebeu CPF: {cpf_buscar}')
 
             if cpf_buscar:
                 try:
-                    # Busca o aluno pelo CPF
+                    # Tenta buscar o aluno pelo CPF
                     aluno_c = CadastroAluno.objects.get(cpf=cpf_buscar)
                     messages.success(request, f'Aluno encontrado: {aluno_c.nome}')
                     print(aluno_c)
@@ -194,26 +192,26 @@ def ficha_treino_dash(request):
                     # Busca o treino personalizado do aluno
                     treino_personalizado = TreinoAlunoCadastrado.objects.filter(aluno_cadastrado=aluno_c).first()
 
-                    # Caso não encontre treino personalizado, pode definir um valor padrão
+                    # Caso não encontre treino personalizado, cria um novo treino personalizado
                     if not treino_personalizado:
-                        treino_personalizado = None
-
-                except TreinoAlunoCadastrado.DoesNotExist:
-                    messages.error(request, 'Erro: Treino personalizado não encontrado!')
+                        # Criar um novo objeto de treino personalizado, se necessário
+                        treino_personalizado = TreinoAlunoCadastrado.objects.create(
+                            treino_personalizado_aluno="Sem treino personalizado",
+                            aluno_cadastrado=aluno_c
+                        )
+                        messages.success(request, 'Crie pela primeira vez um treino para este aluno.')
 
                 except CadastroAluno.DoesNotExist:
-                    # Aqui tratamos o erro caso o aluno não seja encontrado
-                    messages.error(request, 'Erro: Aluno relacionado não encontrado!')
+                    # Caso não encontre o aluno
+                    messages.error(request, 'Erro: Aluno não encontrado!')
 
                 except Exception as e:
-                    # Aqui tratamos quaisquer outros erros inesperados
+                    # Caso ocorra algum outro erro
                     messages.error(request, f'Ocorreu um erro inesperado: {str(e)}')
 
-
-
-# Retorna o render com o treino e o aluno (aluno_c) se encontrado
-    return render(request, 'ficha_treino_dash.html', {
-        'treino': treino,
-        'treino_aluno_cadastrado': treino_personalizado,
-        'aluno_c': aluno_c,  # Passando a variável aluno_c para o template
-    })
+        # Retorna o render com o treino e o aluno (aluno_c) se encontrado
+        return render(request, 'ficha_treino_dash.html', {
+            'treino': treino,  # Certifique-se de que a variável 'treino' foi definida antes
+            'treino_aluno_cadastrado': treino_personalizado,
+            'aluno_c': aluno_c,  # Passando a variável aluno_c para o template
+        })

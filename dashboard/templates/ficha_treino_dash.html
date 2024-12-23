@@ -74,6 +74,7 @@
                     <label for="feminino_atleta">Feminino atleta de alto rendimento</label>
                     <textarea id="feminino_atleta" name="treino_feminino_atleta" rows="6" cols="83">{{ treino.treino_feminino_atleta|default_if_none:'' }}</textarea><br>
 
+
                     <input type="submit" value="Salvar" name="treino_padrao_btn">
                 </form>
 
@@ -100,6 +101,7 @@
     <p>Rua/Av: {{ aluno_c.rua_av }}</p>
     <p>Celular: {{ aluno_c.celular }}</p>
     <p>Email: {{ aluno_c.email }}</p>
+    <p>ID: {{ aluno_c.id }}</p>
 {% endif %}
 
             </div>
