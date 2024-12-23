@@ -81,26 +81,22 @@ def dashboard(request):
 def ficha_treino_dash(request):
     aluno_c = None  # Inicializa a variável como None para evitar o erro UnboundLocalError
     treino = Treino.objects.first()
-    treino_personalizado = TreinoAlunoCadastrado.objects.first()
+
 
     if request.method == 'GET':
         # Se não existir treino, cria um novo
         if not treino:
             treino = Treino.objects.create(
-                treino_masculino_perder_peso='',
-                treino_masculino_ganho_massa='',
-                treino_masculino_atleta='',
-                treino_feminino_perder_peso='',
-                treino_feminino_ganho_massa='',
-                treino_feminino_atleta=''
+                treino_masculino_perder_peso='treino_masculino_perder_peso',
+                treino_masculino_ganho_massa='treino_masculino_ganho_massa',
+                treino_masculino_atleta='treino_masculino_atleta',
+                treino_feminino_perder_peso='treino_feminino_perder_peso',
+                treino_feminino_ganho_massa='treino_feminino_ganho_massa',
+                treino_feminino_atleta='treino_feminino_atleta'
             )
 
-        if not treino_personalizado:
-            treino_personalizado = TreinoAlunoCadastrado.objects.create(
-                treino_personalizado_aluno='',
-            )
         return render(request, 'ficha_treino_dash.html',
-                      {'treino': treino, 'treino_aluno_cadastrado': treino_personalizado, 'aluno_c': aluno_c})
+                      {'treino': treino, 'aluno_c': aluno_c})
 
     if request.method == 'POST':
         # Se for o 'treino_padrao' ou 'treino_aluno_cadastrado'
@@ -144,20 +140,28 @@ def ficha_treino_dash(request):
         # Para treino personalizado
         if 'treino_aluno_cadastrado_btn' in request.POST:
             treino_aluno_cadastrado = request.POST.get('treino_aluno_cadastrado')
+            treino_id = request.POST.get('treino_aluno_cadastrado_id')  # Obtém o ID do treino
 
+            # Se não for fornecido um treino, define o valor padrão
             if treino_aluno_cadastrado == '':
                 treino_aluno_cadastrado = "Sem cadastro de treino personalizado"
 
-            # Atualiza ou cria o treino personalizado
-            if treino_personalizado:
-                treino_personalizado.treino_personalizado_aluno = treino_aluno_cadastrado
-                treino_personalizado.save()
-                messages.success(request, 'Treino personalizado atualizado com SUCESSO!')
+            if treino_id:  # Se o ID for fornecido, significa que é uma atualização
+                try:
+                    treino_atualizar = TreinoAlunoCadastrado.objects.get(id=treino_id)
+                    treino_atualizar.treino_personalizado_aluno = treino_aluno_cadastrado
+                    treino_atualizar.save()  # Salva as alterações
+                    messages.success(request, 'Treino personalizado atualizado com SUCESSO!')
+                except TreinoAlunoCadastrado.DoesNotExist:
+                    messages.error(request, 'Erro: Treino personalizado não encontrado!')
             else:
-                TreinoAlunoCadastrado.objects.create(
-                    treino_personalizado_aluno=treino_aluno_cadastrado,
-                )
+                # Se não houver ID, cria um novo treino personalizado
+                novo_treino = TreinoAlunoCadastrado(treino_personalizado_aluno=treino_aluno_cadastrado)
+                novo_treino.save()  # Salva o novo treino no banco de dados
                 messages.success(request, 'Treino personalizado cadastrado com SUCESSO!')
+
+            # Redireciona de volta ao dashboard ou a outra página relevante
+            return redirect('ficha_treino_dash')
 
         if 'cpf_buscar_btn' in request.POST:
             cpf_buscar = request.POST.get('cpf_buscar')

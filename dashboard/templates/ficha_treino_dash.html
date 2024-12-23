@@ -27,20 +27,23 @@
                     {% endif %}
                 </div>
 
-                <form action="{% url 'ficha_treino_dash' %}" method="post">
-                    {% csrf_token %}
-                    <b><i>Treino personalizado para aluno</i></b>
+              <form action="{% url 'ficha_treino_dash' %}" method="post">
+    {% csrf_token %}
+    <b><i>Treino personalizado para aluno</i></b>
 
-                    <textarea rows="9" cols="83" name="treino_aluno_cadastrado">
-    {% if treino_aluno_cadastrado %}
-        {{ treino_aluno_cadastrado.treino_personalizado_aluno }}
-    {% endif %}
-</textarea><br><br>
+    <textarea rows="9" cols="83" name="treino_aluno_cadastrado" placeholder="Digite o treino personalizado aqui...">
+        {% if treino_aluno_cadastrado %}
+            {{ treino_aluno_cadastrado.treino_personalizado_aluno }}
+        {% endif %}
+    </textarea><br><br>
 
-<input type="submit" name="treino_aluno_cadastrado_btn" value="Salvar" {% if not treino_aluno_cadastrado %}disabled{% endif %}>
+    <input type="hidden" name="treino_aluno_cadastrado_id" value="{% if treino_aluno_cadastrado %}{{ treino_aluno_cadastrado.id }}{% endif %}">
 
-                    <br><br>
-                </form>
+    <input type="submit" name="treino_aluno_cadastrado_btn" value="Salvar" {% if not treino_aluno_cadastrado %}disabled{% endif %}>
+
+    <br><br>
+</form>
+
                 <hr>
                 <i><b>Treino Padrão</b></i><br><br>
 
