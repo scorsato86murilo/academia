@@ -99,6 +99,7 @@ def ficha_treino_dash(request):
                       {'treino': treino, 'aluno_c': aluno_c})
 
     if request.method == 'POST':
+        treino_personalizado = None  # ou algum valor padrão que você deseja
         # Se for o 'treino_padrao' ou 'treino_aluno_cadastrado'
         if 'treino_padrao_btn' in request.POST or 'treino_aluno_cadastrado' in request.POST:
             # Para treino padrão
@@ -142,18 +143,32 @@ def ficha_treino_dash(request):
             treino_aluno_cadastrado = request.POST.get('treino_aluno_cadastrado')
             treino_id = request.POST.get('treino_aluno_cadastrado_id')  # Obtém o ID do treino
 
+
             # Se não for fornecido um treino, define o valor padrão
             if treino_aluno_cadastrado == '':
                 treino_aluno_cadastrado = "Sem cadastro de treino personalizado"
 
             if treino_id:  # Se o ID for fornecido, significa que é uma atualização
                 try:
+                    # Busca o treino personalizado pelo ID
                     treino_atualizar = TreinoAlunoCadastrado.objects.get(id=treino_id)
+
+                    # Atualiza o campo com o treino personalizado enviado
                     treino_atualizar.treino_personalizado_aluno = treino_aluno_cadastrado
                     treino_atualizar.save()  # Salva as alterações
-                    messages.success(request, 'Treino personalizado atualizado com SUCESSO!')
+
+                    # Busca o aluno associado a este treino
+                    aluno = CadastroAluno.objects.get(id=treino_atualizar.aluno_cadastrado.id)
+
+                    # Exibe a mensagem de sucesso com o nome do aluno
+                    messages.success(request,
+                                     f'Treino de {aluno.nome}  personalizado atualizado com SUCESSO!')
+
                 except TreinoAlunoCadastrado.DoesNotExist:
                     messages.error(request, 'Erro: Treino personalizado não encontrado!')
+                except CadastroAluno.DoesNotExist:
+                    messages.error(request, 'Erro: Aluno relacionado não encontrado!')
+
             else:
                 # Se não houver ID, cria um novo treino personalizado
                 novo_treino = TreinoAlunoCadastrado(treino_personalizado_aluno=treino_aluno_cadastrado)
@@ -165,6 +180,9 @@ def ficha_treino_dash(request):
 
         if 'cpf_buscar_btn' in request.POST:
             cpf_buscar = request.POST.get('cpf_buscar')
+
+            if not cpf_buscar:
+                messages.error(request, 'Aluno não encontrado com este CPF.')
 
             if cpf_buscar:
                 try:
@@ -180,10 +198,20 @@ def ficha_treino_dash(request):
                     if not treino_personalizado:
                         treino_personalizado = None
 
-                except CadastroAluno.DoesNotExist:
-                    messages.error(request, 'Aluno não encontrado com este CPF.')
+                except TreinoAlunoCadastrado.DoesNotExist:
+                    messages.error(request, 'Erro: Treino personalizado não encontrado!')
 
-    # Retorna o render com o treino e o aluno (aluno_c) se encontrado
+                except CadastroAluno.DoesNotExist:
+                    # Aqui tratamos o erro caso o aluno não seja encontrado
+                    messages.error(request, 'Erro: Aluno relacionado não encontrado!')
+
+                except Exception as e:
+                    # Aqui tratamos quaisquer outros erros inesperados
+                    messages.error(request, f'Ocorreu um erro inesperado: {str(e)}')
+
+
+
+# Retorna o render com o treino e o aluno (aluno_c) se encontrado
     return render(request, 'ficha_treino_dash.html', {
         'treino': treino,
         'treino_aluno_cadastrado': treino_personalizado,
