@@ -83,3 +83,13 @@ def ficha_treino(request):
 
     # Retorna o contexto com os dados do treino selecionado
     return render(request, 'ficha_treino.html', contexto)
+
+
+def login_(request):
+    contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
+    if request.method == 'GET':
+        return render(request, 'cadastro_login.html', contexto)
+
+    elif request.method == 'POST':
+        return render(request, 'cadastro_login.html', contexto)
+
