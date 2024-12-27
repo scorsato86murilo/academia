@@ -27,15 +27,14 @@
         </form>
 
         <hr>
-
-        <!-- Exibindo o treino selecionado -->
-        {% if treino %}
-            <h4>Treino Selecionado:</h4>
-            <p>{{ treino }}</p>
-        {% elif erro %}
-            <div class="alert alert-danger">
-                <p>{{ erro }}</p>
-            </div>
-        {% endif %}
+<!-- Exibindo o treino selecionado -->
+{% if treino %}
+    <h4>Treino Selecionado:</h4>
+    <pre>{{ treino }}</pre>
+{% elif erro %}
+    <div class="alert alert-danger">
+        <p>{{ erro }}</p>
+    </div>
+{% endif %}
     </div>
 {% endblock %}

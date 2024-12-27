@@ -8,38 +8,58 @@
 {% block body %}
     <div class="container mt-3">
         <h3>Cadastro de Usuário</h3>
-        <form action="#}" method="post">
+        <form action="#" method="post">
             {% csrf_token %}
 
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
+                <input type="text" class="form-control" id="nome" name="nome" required
+                placeholder="Nome">
             </div>
 
             <div class="mb-3">
                 <label for="telefone" class="form-label">Número de Telefone</label>
-                <input type="tel" class="form-control" id="telefone" name="telefone" required>
+                <input type="tel" class="form-control" id="telefone" name="telefone" required
+                placeholder="(99)99999-9999">
             </div>
 
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" required
+                placeholder="Email">
             </div>
 
             <div class="mb-3">
                 <label for="cidade" class="form-label">Cidade</label>
-                <input type="text" class="form-control" id="cidade" name="cidade" required>
+                <input type="text" class="form-control" id="cidade" name="cidade" required
+                placeholder="Cidade">
             </div>
+
             <div class="mb-3">
                 <label for="senha" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" required>
+                <input type="password" class="form-control" id="senha" name="senha" required
+                placeholder="Senha">
             </div>
+
             <div class="mb-3">
                 <label for="conf_senha" class="form-label">Confirme sua Senha</label>
-                <input type="password" class="form-control" id="conf_senha" name="conf_senha" required>
+                <input type="password" class="form-control" id="conf_senha" name="conf_senha" required
+                placeholder="Confirme sua Senha">
             </div>
 
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
     </div>
+
+    {% block extra_js %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <script type="text/javascript">
+        // Aplica a máscara de telefone com DDD
+        $(document).ready(function() {
+            $('#telefone').mask('(00) 00000-0000');
+        });
+    </script>
+    {% endblock %}
 {% endblock %}
