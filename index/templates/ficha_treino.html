@@ -30,11 +30,32 @@
 <!-- Exibindo o treino selecionado -->
 {% if treino %}
     <h4>Treino Selecionado:</h4>
-    <pre>{{ treino }}</pre>
+    <pre class="treino-pre">{{ treino }}</pre>
 {% elif erro %}
     <div class="alert alert-danger">
         <p>{{ erro }}</p>
     </div>
 {% endif %}
+
+<!-- Adicionando o CSS diretamente -->
+<style>
+    .treino-pre {
+        white-space: pre-wrap; /* Quebra de linha automática */
+        word-wrap: break-word; /* Quebra de palavras longas */
+        max-width: 100%; /* Impede que o conteúdo ultrapasse a largura da tela */
+        overflow-wrap: break-word; /* Garantir que palavras longas quebrem corretamente */
+        word-break: break-all; /* Quebra as palavras mais longas que não podem ser divididas */
+        box-sizing: border-box; /* Considera padding e bordas no tamanho do elemento */
+    }
+
+    /* Ajustando para telas pequenas */
+    @media screen and (max-width: 768px) {
+        .treino-pre {
+            font-size: 14px; /* Ajustando o tamanho da fonte para telas pequenas */
+            padding: 10px; /* Adiciona um pequeno padding para não grudar na borda */
+        }
+    }
+</style>
+
     </div>
 {% endblock %}
