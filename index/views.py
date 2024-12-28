@@ -108,3 +108,13 @@ def login_(request):
     elif request.method == 'POST':
         return render(request, 'cadastro_login.html', contexto)
 
+
+def cadastro_login_(request):
+    contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
+    if request.method == 'GET':
+        return render(request, 'cadastro.html', contexto)
+
+    elif request.method == 'POST':
+        return render(request, 'cadastro.html', contexto)
+
+

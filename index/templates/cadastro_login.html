@@ -7,7 +7,7 @@
 
 {% block body %}
     <div class="container mt-3">
-        <h3>Cadastro de Usuário</h3>
+        <h3>LOGIN - <a href="{% url 'cadastro_login_' %}">CADASTRO</a></h3>
         <form action="#" method="post">
             {% csrf_token %}
 
@@ -41,13 +41,9 @@
                 placeholder="Senha">
             </div>
 
-            <div class="mb-3">
-                <label for="conf_senha" class="form-label">Confirme sua Senha</label>
-                <input type="password" class="form-control" id="conf_senha" name="conf_senha" required
-                placeholder="Confirme sua Senha">
-            </div>
 
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+
+            <button type="submit" class="btn btn-primary">LOGIN</button> <a href="{% url 'cadastro_login_' %}"><button type="button" class="btn btn-success">CADASTRO</button></a>
         </form>
     </div>
 
