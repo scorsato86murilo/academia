@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password  # Usado para criar a senh
 from django.contrib.auth.models import User
 from dashboard.models import Treino
 from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar
+from django.contrib import messages
 
 
 def CoresNavBar():
@@ -93,8 +94,11 @@ def ficha_treino(request):
                     contexto['treino'] = treino_masculino_atleta
                 elif treino_selecionado == 'feminino_atleta':
                     contexto['treino'] = treino_feminino_atleta
+                elif treino_selecionado == 'x':
+                    contexto['treino'] = "Selecione um treino válido!"
+                    messages.error(request, 'Selecione um treino válido!')
                 else:
-                    contexto['erro'] = "Treino Exclusivo para alunos!"  # Caso o treino não seja válido
+                    contexto['erro'] = "Treino Exclusivo para alunos!"
 
     # Retorna o contexto com os dados do treino selecionado
     return render(request, 'ficha_treino.html', contexto)

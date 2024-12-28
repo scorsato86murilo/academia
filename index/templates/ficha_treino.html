@@ -14,6 +14,7 @@
         <form action="{% url 'ficha_treino' %}" method="post">
             {% csrf_token %}
             <select class="form-select" name="treino">
+                <option value="x">Escolha seu treino</option>
                 <option value="masculino_perder_peso">Masculino Perder Peso</option>
                 <option value="masculino_ganho_massa">Masculino Ganho de Massa</option>
                 <option value="feminino_perder_peso">Feminino Perder Peso</option>
@@ -27,6 +28,18 @@
         </form>
 
         <hr>
+
+                        <div class="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                <center>{{ message }}</center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+
 <!-- Exibindo o treino selecionado -->
 {% if treino %}
     <h4>Treino Selecionado:</h4>
