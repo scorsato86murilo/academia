@@ -98,7 +98,8 @@ def ficha_treino(request):
                     contexto['treino'] = "Selecione um treino válido!"
                     messages.error(request, 'Selecione um treino válido!')
                 else:
-                    contexto['erro'] = "Treino Exclusivo para alunos!"
+                    contexto['treino'] = "Treino Exclusivo para alunos"
+                    messages.error(request, 'Treino Excluisivo para Aluno!')
 
     # Retorna o contexto com os dados do treino selecionado
     return render(request, 'ficha_treino.html', contexto)
