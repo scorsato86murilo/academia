@@ -72,7 +72,7 @@
                         </form>
                     </div>
                 </nav>
-                <h2>Listagem de alunos</h2><hr>
+                <h2>Listagem de alunos</h2>
 
                 {% if aluno %}
                     <h4>Aluno Encontrado</h4>
@@ -97,13 +97,31 @@
                     <p><strong>ID:</strong> {{ aluno_cpf.id }}</p>
 
                 {% else %}
-                    {% for item in cpf %}
-                        <div class="card">
-                            <div class="card-body">
-                                <p>Nome: {{ item.nome }}, CPF: {{ item.cpf }}, Cidade: {{ item.cidade }},<br>Celular: {{ item.celular }}, E-Mail: {{ item.email }}, ID:{{ item.id }}</p>
-                            </div>
-                        </div>
-                    {% endfor %}
+
+<div class="card">
+    <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+        {% if cpf %}
+            {% for item in cpf %}
+                <div class="mb-3">
+                    <p><strong>Nome:</strong> {{ item.nome }}</p>
+                    <p><strong>CPF:</strong> {{ item.cpf }}</p>
+                    <p><strong>Cidade:</strong> {{ item.cidade }}</p>
+                    <p><strong>Bairro:</strong> {{ item.bairro }}</p>
+                    <p><strong>Rua/Avenida:</strong> {{ item.rua_av }}</p>
+                    <p><strong>Celular:</strong> {{ item.celular }}</p>
+                    <p><strong>Email:</strong> {{ item.email }}</p>
+                    <p><strong>ID:</strong> {{ item.id }}</p>
+                    <hr>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Nenhum cadastro encontrado.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+
                     <br><b><a href="#">VOLTAR AO TOPO</a></b>
                 {% endif %}
 
