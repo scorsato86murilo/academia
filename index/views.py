@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password  # Usado para criar a senha com hash
@@ -162,5 +163,11 @@ def cadastro_login_(request):
             return render(request, 'cadastro.html', contexto)
 
     return render(request, 'cadastro.html', contexto)
+
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'DESLOGADO com sucesso!')
+    return redirect('index')
 
 
