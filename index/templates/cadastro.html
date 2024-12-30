@@ -7,8 +7,18 @@
 
 {% block body %}
     <div class="container mt-3">
+                                <div class="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                <center>{{ message }}</center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
         <h3>Cadastro de Usuário - </h3>
-        <form action="#" method="post">
+        <form action="{% url 'cadastro_login_' %}" method="post">
             {% csrf_token %}
 
             <div class="mb-3">

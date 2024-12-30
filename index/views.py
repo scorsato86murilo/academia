@@ -1,9 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password  # Usado para criar a senha com hash
 from django.contrib.auth.models import User
 from dashboard.models import Treino
-from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar
+from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar, CadastroAlunoOnLine
 from django.contrib import messages
 
 
@@ -113,13 +113,54 @@ def login_(request):
     elif request.method == 'POST':
         return render(request, 'cadastro_login.html', contexto)
 
-
 def cadastro_login_(request):
     contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
+
     if request.method == 'GET':
         return render(request, 'cadastro.html', contexto)
 
-    elif request.method == 'POST':
-        return render(request, 'cadastro.html', contexto)
+    if request.method == 'POST':
+        # Obtendo dados do formulário
+        username = request.POST.get('nome')  # Nome do usuário (será o email)
+        telefone = request.POST.get('telefone')  # Telefone
+        email = request.POST.get('email')  # E-mail
+        cidade = request.POST.get('cidade')  # Cidade
+        password = request.POST.get('senha')  # Senha (remoção de espaços)
+        conf_senha = request.POST.get('conf_senha')  # Confirmação da senha (remoção de espaços)
+
+        # Verificar se as senhas coincidem
+        if password != conf_senha:
+            messages.error(request, 'As senhas não coincidem!')
+            return render(request, 'cadastro.html', contexto)
+
+        # Verificar se o nome foi preenchido
+        if not username:
+            messages.error(request, 'O nome é obrigatório!')
+            return render(request, 'cadastro.html', contexto)
+
+        # Verificar se o email já existe no banco
+        if CadastroAlunoOnLine.objects.filter(email=email).exists():
+            messages.error(request, 'Este e-mail já está registrado.')
+            return render(request, 'cadastro.html', contexto)
+
+        # Criando o usuário
+        try:
+            usuario = CadastroAlunoOnLine(
+                nome=username,  # Nome é o username
+                celular=telefone,
+                email=email,
+                cidade=cidade
+            )
+            usuario.set_password(password)  # Armazenar a senha de forma segura
+            usuario.save()
+
+            messages.success(request, 'Cadastro realizado com sucesso!')
+            return redirect('login_')  # Redirecionar para a página de login ou página desejada
+
+        except Exception as e:
+            messages.error(request, f'Erro ao cadastrar: {str(e)}')
+            return render(request, 'cadastro.html', contexto)
+
+    return render(request, 'cadastro.html', contexto)
 
 
