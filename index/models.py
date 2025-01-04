@@ -53,23 +53,3 @@ class LogoBanner(models.Model):
     img_aviso = models.ImageField(upload_to='Banner_index')
     altura = models.IntegerField(default=0)  # Altura da imagem, valor padrão 0
     largura = models.IntegerField(default=40)  # Largura da imagem, valor padrão 40
-
-
-from django.contrib.auth.models import AbstractBaseUser
-
-
-class CadastroAlunoOnLine(AbstractBaseUser):
-    nome = models.CharField(max_length=100)
-    celular = models.CharField(max_length=20)
-    email = models.EmailField(max_length=100)
-    cidade = models.CharField(max_length=100)
-    senha = models.CharField(max_length=128)  # Aqui, vamos usar CharField para o hash da senha
-
-    USERNAME_FIELD = 'email'  # Isso torna o email o campo principal para login
-    REQUIRED_FIELDS = ['nome', 'celular', 'cidade']  # Campos adicionais obrigatórios
-
-    def set_password(self, raw_password):
-        self.senha = make_password(raw_password)
-
-    def check_password(self, raw_password):
-        return check_password(raw_password, self.senha)

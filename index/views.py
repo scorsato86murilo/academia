@@ -1,10 +1,11 @@
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password  # Usado para criar a senha com hash
 from django.contrib.auth.models import User
 from dashboard.models import Treino
-from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar, CadastroAlunoOnLine
+from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar
 from django.contrib import messages
 
 
@@ -32,13 +33,19 @@ def CoresNavBar():
 
 
 def index(request):
+    contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
+
+    # Verifica se o usuário está autenticado, se não, a mensagem de erro será exibida
+    if not request.user.is_authenticated:
+
+        messages.warning(request, 'Você precisar logar no sistema')
+        return render(request, 'cadastro.html', contexto)
     if request.method == 'GET':
         contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
         # Verifique se já existe algum superusuário
         if User.objects.filter(is_superuser=True).exists():
             print('ja existe um SUPERusuario')
             return render(request, 'index.html', contexto)
-
 
         # Se não existir nenhum superusuário, cria um novo
         user = User.objects.create_superuser(
@@ -54,7 +61,9 @@ def index(request):
         pass
 
 
+@login_required(login_url='/cadastro_login_/')
 def ficha_treino(request):
+
     # Inicializando o contexto
     contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto base
     treino_selecionado = None  # Variável para armazenar o treino selecionado
@@ -114,18 +123,17 @@ def login_(request):
     elif request.method == 'POST':
         return render(request, 'cadastro_login.html', contexto)
 
+
 def cadastro_login_(request):
     contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
-
     if request.method == 'GET':
+
         return render(request, 'cadastro.html', contexto)
 
     if request.method == 'POST':
         # Obtendo dados do formulário
         username = request.POST.get('nome')  # Nome do usuário (será o email)
-        telefone = request.POST.get('telefone')  # Telefone
         email = request.POST.get('email')  # E-mail
-        cidade = request.POST.get('cidade')  # Cidade
         password = request.POST.get('senha')  # Senha (remoção de espaços)
         conf_senha = request.POST.get('conf_senha')  # Confirmação da senha (remoção de espaços)
 
@@ -139,27 +147,29 @@ def cadastro_login_(request):
             messages.error(request, 'O nome é obrigatório!')
             return render(request, 'cadastro.html', contexto)
 
-        # Verificar se o email já existe no banco
-        if CadastroAlunoOnLine.objects.filter(email=email).exists():
-            messages.error(request, 'Este e-mail já está registrado.')
+        # Verificar se o email já existe
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email já cadastrado!')
             return render(request, 'cadastro.html', contexto)
 
-        # Criando o usuário
+        # Verificar se o username já existe
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Nome de usuário já existe!')
+            return render(request, 'cadastro.html', contexto)
+
+        # Verificar se todos os campos foram preenchidos >> pra garantir que foi preechido
+        if not username or not password or not email:
+            messages.error(request, 'Preencha todos os campos!')
+            return render(request, 'cadastro.html', contexto)
+
         try:
-            usuario = CadastroAlunoOnLine(
-                nome=username,  # Nome é o username
-                celular=telefone,
-                email=email,
-                cidade=cidade
-            )
-            usuario.set_password(password)  # Armazenar a senha de forma segura
-            usuario.save()
+            # Criar o usuário se as verificações passarem
+            user = User.objects.create_user(username=username, password=password, email=email)
+            messages.success(request, 'Usuário cadastrado com sucesso!')
+            return redirect('login_')
 
-            messages.success(request, 'Cadastro realizado com sucesso!')
-            return redirect('login_')  # Redirecionar para a página de login ou página desejada
-
-        except Exception as e:
-            messages.error(request, f'Erro ao cadastrar: {str(e)}')
+        except:
+            messages.error(request, 'Erro ao criar o usuário. Tente novamente.')
             return render(request, 'cadastro.html', contexto)
 
     return render(request, 'cadastro.html', contexto)
@@ -169,5 +179,3 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'DESLOGADO com sucesso!')
     return redirect('index')
-
-

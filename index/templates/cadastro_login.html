@@ -16,7 +16,7 @@
                         {% endfor %}
                     {% endif %}
                 </div>
-        <h3><font color="red">LOGIN - </font><a href="{% url 'cadastro_login_' %}">CADASTRO</a></h3>
+        <h3><font color="red">LOGIN - </font></h3>
         <form action="#" method="post">
             {% csrf_token %}
 
@@ -26,23 +26,6 @@
                 placeholder="Nome">
             </div>
 
-            <div class="mb-3">
-                <label for="telefone" class="form-label">Número de Telefone</label>
-                <input type="tel" class="form-control" id="telefone" name="telefone" required
-                placeholder="(99)99999-9999">
-            </div>
-
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required
-                placeholder="Email">
-            </div>
-
-            <div class="mb-3">
-                <label for="cidade" class="form-label">Cidade</label>
-                <input type="text" class="form-control" id="cidade" name="cidade" required
-                placeholder="Cidade">
-            </div>
 
             <div class="mb-3">
                 <label for="senha" class="form-label">Senha</label>

@@ -1,17 +1,27 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import CadastroAluno, Treino, TreinoAlunoCadastrado
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import Treino
+from django.contrib.auth import logout
 
 
+def verifica_superuser(request):
+    if request.user.username != 'murilo':
+        messages.error(request, 'Você não tem permissão para acessar esta página.')
+        return render(request, 'index.html')
+
+@login_required(login_url='index')
 def dashboard(request):
     aluno = None  # Variável para armazenar o aluno encontrado
+    verifica_superuser()
     if request.method == 'GET':
         cpf = CadastroAluno.objects.all()
         return render(request, 'dashboard.html', {'cpf': cpf})
 
     elif request.method == 'POST':
+
         # Verificar se é uma busca de CPF ou cadastro
         if 'buscar' in request.POST:
             # Buscar o aluno pelo CPF
@@ -78,6 +88,7 @@ def dashboard(request):
         cpf = CadastroAluno.objects.all()
         return render(request, 'dashboard.html', {'aluno': aluno, 'cpf': cpf})
 
+@login_required(login_url='index')
 def ficha_treino_dash(request):
     aluno_c = None  # Inicializa a variável como None para evitar o erro UnboundLocalError
     treino = Treino.objects.first()
@@ -215,3 +226,8 @@ def ficha_treino_dash(request):
             'treino_aluno_cadastrado': treino_personalizado,
             'aluno_c': aluno_c,  # Passando a variável aluno_c para o template
         })
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'DESLOGADO com sucesso!')
+    return redirect('index')
