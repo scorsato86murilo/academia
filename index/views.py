@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password  # Usado para criar a senha com hash
 from django.contrib.auth.models import User
-from dashboard.models import Treino
+from dashboard.models import Treino, CadastroAluno, TreinoAlunoCadastrado
 from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar
 from django.contrib import messages
 
@@ -44,11 +44,8 @@ def index(request):
         # Lógica para o método POST (se necessário)
         pass
 
-
 @login_required(login_url='/cadastro_login_/')
 def ficha_treino(request):
-
-    # Inicializando o contexto
     contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto base
     treino_selecionado = None  # Variável para armazenar o treino selecionado
 
@@ -93,7 +90,33 @@ def ficha_treino(request):
                     messages.error(request, 'Selecione um treino válido!')
                 else:
                     contexto['treino'] = "Treino Exclusivo para alunos"
-                    messages.error(request, 'Treino Excluisivo para Aluno!')
+
+            # Verificando se o botão foi pressionado e capturando a 'buscar treino pelo CPF'
+            if 'buscar_treino_btn' in request.POST:
+                html_cpf = request.POST.get('cpf')
+                print(html_cpf)
+
+                # Buscar aluno pelo CPF no banco de dados
+                try:
+                    aluno = CadastroAluno.objects.get(cpf=html_cpf)  # Buscar aluno pelo CPF
+                    print(f'Aluno encontrado: {aluno.nome}')  # Exemplo de como usar a informação do aluno
+
+                    # Buscar treino associado ao aluno
+                    treino = TreinoAlunoCadastrado.objects.get(aluno_cadastrado=aluno)  # Buscar treino do aluno
+                    print(f'Treino encontrado: {treino.treino_personalizado_aluno}')  # Exibir o treino do aluno
+
+                    # Aqui você pode fazer o que for necessário com o treino encontrado
+                    # Retorne os dados do treino ou continue a lógica necessária
+
+                    contexto['aluno'] = aluno  # Passando o aluno para o contexto
+                    contexto['treino'] = treino.treino_personalizado_aluno  # Passando o treino personalizado para o contexto
+
+                except CadastroAluno.DoesNotExist:
+                    print("Aluno não encontrado com o CPF informado.")
+                    messages.error(request, "Aluno não encontrado com o CPF informado.")
+                except TreinoAlunoCadastrado.DoesNotExist:
+                    print("Treino não encontrado para o aluno com o CPF informado.")
+                    messages.error(request, "Treino não encontrado para o aluno com o CPF informado.")
 
     # Retorna o contexto com os dados do treino selecionado
     return render(request, 'ficha_treino.html', contexto)
@@ -127,7 +150,6 @@ def login_(request):
 def cadastro_login_(request):
     contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
     if request.method == 'GET':
-
         return render(request, 'cadastro.html', contexto)
 
     if request.method == 'POST':

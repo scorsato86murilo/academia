@@ -24,60 +24,60 @@
                 <option value="sem_valor">Meu treino EXCLUSIVO</option>
             </select>
 
-            <button id="ok_button" class="btn btn-primary mt-3" name="selecione_treino_btn">OK</button>
+            <button id="ok_button" class="btn btn-primary mt-1" name="selecione_treino_btn">OK</button>
         </form>
 
         <hr>
 
-                        <div class="message">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert {{ message.tags }}">
-                                <center>{{ message }}</center>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+        <!-- Exibição de mensagens -->
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        <center>{{ message }}</center>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
 
-                </div>
+        <!-- Exibindo o treino selecionado -->
+        {% if treino %}
+        <h4>Treino Selecionado: <b>{{ aluno.nome }}</b></h4>
+            <pre class="treino-pre">{{ treino }}</pre><br>
 
+            <!-- Formulário de busca de treino pelo CPF -->
+            <form method="post" action="{% url 'ficha_treino' %}">
+                {% csrf_token %}
+                <b>Busque seu treino Digite seu CPF:</b>
+                <input type="number" name="cpf" placeholder="Seu CPF" required>
+                <button type="submit" name="buscar_treino_btn">Buscar Treino</button>
+            </form>
 
-
-<!-- Exibindo o treino selecionado -->
-{% if treino %}
-    <h4>Treino Selecionado:</h4>
-    <pre class="treino-pre">{{ treino }}</pre><br>
-        <form>
-            <b>Busque seu treino Digite seu CPF:</b>
-            <input type="number" name="cpf" placeholder="Seu CPF">
-        <button type="submit" value="buscar-treino" name="buscar-treino">: : Buscar Treino : :</button></form>
-{% elif erro %}
-    <div class="alert alert-danger">
-        <p>{{ erro }}</p><br>
-
+        {% elif erro %}
+            <!-- Exibição de erro, caso não haja treino ou CPF não encontrado -->
+            <div class="alert alert-danger">
+                <p>{{ erro }}</p><br>
+            </div>
+        {% endif %}
     </div>
 
-
-{% endif %}
-
-<!-- Adicionando o CSS diretamente -->
-<style>
-    .treino-pre {
-        white-space: pre-wrap; /* Quebra de linha automática */
-        word-wrap: break-word; /* Quebra de palavras longas */
-        max-width: 100%; /* Impede que o conteúdo ultrapasse a largura da tela */
-        overflow-wrap: break-word; /* Garantir que palavras longas quebrem corretamente */
-        word-break: break-all; /* Quebra as palavras mais longas que não podem ser divididas */
-        box-sizing: border-box; /* Considera padding e bordas no tamanho do elemento */
-    }
-
-    /* Ajustando para telas pequenas */
-    @media screen and (max-width: 768px) {
+    <!-- Estilos customizados -->
+    <style>
         .treino-pre {
-            font-size: 14px; /* Ajustando o tamanho da fonte para telas pequenas */
-            padding: 10px; /* Adiciona um pequeno padding para não grudar na borda */
+            white-space: pre-wrap; /* Quebra de linha automática */
+            word-wrap: break-word; /* Quebra de palavras longas */
+            max-width: 100%; /* Impede que o conteúdo ultrapasse a largura da tela */
+            overflow-wrap: break-word; /* Garantir que palavras longas quebrem corretamente */
+            word-break: break-all; /* Quebra as palavras mais longas que não podem ser divididas */
+            box-sizing: border-box; /* Considera padding e bordas no tamanho do elemento */
         }
-    }
-</style>
 
-    </div>
+        /* Ajustando para telas pequenas */
+        @media screen and (max-width: 768px) {
+            .treino-pre {
+                font-size: 14px; /* Ajustando o tamanho da fonte para telas pequenas */
+                padding: 10px; /* Adiciona um pequeno padding para não grudar na borda */
+            }
+        }
+    </style>
 {% endblock %}
