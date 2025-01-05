@@ -37,17 +37,26 @@
                             </div>
                         {% endfor %}
                     {% endif %}
+
                 </div>
+
 
 
 <!-- Exibindo o treino selecionado -->
 {% if treino %}
     <h4>Treino Selecionado:</h4>
-    <pre class="treino-pre">{{ treino }}</pre>
+    <pre class="treino-pre">{{ treino }}</pre><br>
+        <form>
+            <b>Busque seu treino Digite seu CPF:</b>
+            <input type="number" name="cpf" placeholder="Seu CPF">
+        <button type="submit" value="buscar-treino" name="buscar-treino">: : Buscar Treino : :</button></form>
 {% elif erro %}
     <div class="alert alert-danger">
-        <p>{{ erro }}</p>
+        <p>{{ erro }}</p><br>
+
     </div>
+
+
 {% endif %}
 
 <!-- Adicionando o CSS diretamente -->
