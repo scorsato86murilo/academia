@@ -35,25 +35,8 @@ def CoresNavBar():
 def index(request):
     contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
 
-    # Verifica se o usuário está autenticado, se não, a mensagem de erro será exibida
-    if not request.user.is_authenticated:
-
-        messages.warning(request, 'Você precisar logar no sistema')
-        return render(request, 'cadastro.html', contexto)
     if request.method == 'GET':
         contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
-        # Verifique se já existe algum superusuário
-        if User.objects.filter(is_superuser=True).exists():
-            print('ja existe um SUPERusuario')
-            return render(request, 'index.html', contexto)
-
-        # Se não existir nenhum superusuário, cria um novo
-        user = User.objects.create_superuser(
-            username='adminadmin',  # Nome de usuário
-            email='admin@example.com',  # Email
-            password='123'  # Senha
-        )
-        user.save()
         return render(request, 'index.html', contexto)
 
     elif request.method == 'POST':
