@@ -1,4 +1,5 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -104,7 +105,23 @@ def login_(request):
         return render(request, 'cadastro_login.html', contexto)
 
     elif request.method == 'POST':
-        return render(request, 'cadastro_login.html', contexto)
+        username = request.POST.get('nome')  # Nome do usuário (será o email)
+        password = request.POST.get('senha')  # Senha (remoção de espaços)
+        # Autentica o usuário
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            # Se a autenticação foi bem-sucedida, faz login do usuário
+            login(request, user)
+            messages.success(request, 'Cadastrado com sucesso!')
+            return redirect('ficha_treino')  # Redireciona para a plataforma após login
+
+        else:
+            # Se a autenticação falhar, retorna à página de cadastro ou exibe uma mensagem de erro
+            messages.error(request, 'Usuário ou senha incorretos. Tente novamente ou cadastre-se.')
+            return redirect('cadastro_login_')
+
+    return render(request, 'cadastro_login.html', contexto)
 
 
 def cadastro_login_(request):
