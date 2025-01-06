@@ -12,7 +12,8 @@ from django.contrib.auth import logout
 @login_required(login_url='index')
 def dashboard(request):
     if not request.user.is_superuser:
-        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode acessar essa página.')
+        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode '
+                                     'acessar essa página.')
 
     aluno = None  # Variável para armazenar o aluno encontrado
 
@@ -88,10 +89,12 @@ def dashboard(request):
         cpf = CadastroAluno.objects.all()
         return render(request, 'dashboard.html', {'aluno': aluno, 'cpf': cpf})
 
+
 @login_required(login_url='index')
 def ficha_treino_dash(request):
     if not request.user.is_superuser:
-        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode acessar essa página.')
+        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode '
+                                     'acessar essa página.')
 
     aluno_c = None  # Inicializa a variável como None para evitar o erro UnboundLocalError
     treino = Treino.objects.first()
@@ -229,6 +232,18 @@ def ficha_treino_dash(request):
             'treino_aluno_cadastrado': treino_personalizado,
             'aluno_c': aluno_c,  # Passando a variável aluno_c para o template
         })
+
+
+@login_required(login_url='index')
+def academia_dash(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode '
+                                     'acessar essa página.')
+    if request.method == 'GET':
+        return render(request, 'academia_dash.html')
+    elif request.method == 'POST':
+        return render(request, 'academia_dash.html')
+
 
 def logout_view(request):
     logout(request)
