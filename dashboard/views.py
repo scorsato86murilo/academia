@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from .models import CadastroAluno, Treino, TreinoAlunoCadastrado
 from django.contrib import messages
@@ -10,6 +11,9 @@ from django.contrib.auth import logout
 
 @login_required(login_url='index')
 def dashboard(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode acessar essa página.')
+
     aluno = None  # Variável para armazenar o aluno encontrado
 
     if request.method == 'GET':
@@ -86,6 +90,9 @@ def dashboard(request):
 
 @login_required(login_url='index')
 def ficha_treino_dash(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode acessar essa página.')
+
     aluno_c = None  # Inicializa a variável como None para evitar o erro UnboundLocalError
     treino = Treino.objects.first()
 
