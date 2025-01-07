@@ -8,8 +8,6 @@ from django.contrib.auth.models import User
 from dashboard.models import Treino, CadastroAluno, TreinoAlunoCadastrado
 from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar
 from django.contrib import messages
-import os
-from django.core.management import call_command
 
 
 def CoresNavBar():
@@ -36,23 +34,10 @@ def CoresNavBar():
 
 
 def index(request):
-    # Define o caminho para o arquivo de controle
-    control_file_path = os.path.join(os.getcwd(), "migracao_executada.txt")
-
-    # Verifica se o arquivo de controle existe
-    if not os.path.exists(control_file_path):
-        # Rodar as migrações
-        call_command('migrate')
-
-        # Cria o arquivo de controle para indicar que a migração foi realizada
-        with open(control_file_path, "w") as f:
-            f.write("Migração executada com sucesso.")
-    else:
-        print("Migração já foi executada anteriormente.")
-
     contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
 
     if request.method == 'GET':
+        contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
         return render(request, 'index.html', contexto)
 
     elif request.method == 'POST':
