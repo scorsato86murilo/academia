@@ -2,6 +2,8 @@ from django.contrib.auth import logout, authenticate
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.contrib.auth import get_user_model
+from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password  # Usado para criar a senha com hash
 from django.contrib.auth.models import User
@@ -34,14 +36,22 @@ def CoresNavBar():
 
 
 def index(request):
+    User = get_user_model()
     # Verifica se já existe um superusuário com o nome 'admin'
     if not User.objects.filter(username='admin').exists():
-        # Cria o superusuário
-        User.objects.create_superuser(
-            username='adminadmin',
-            email='admin@example.com',
-            password='123'
-        )
+        try:
+            # Cria o superusuário
+            User.objects.create_superuser(
+                username='admin',
+                email='admin@example.com',
+                password='adminpassword'
+            )
+            print("Superuser created successfully!")
+        except IntegrityError:
+            # Se ocorrer erro de integridade (por exemplo, se o nome de usuário já existir)
+            print("Error: A superuser with the username 'admin' already exists.")
+    else:
+        print("Superuser with username 'admin' already exists. No action taken.")
 
         contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
 
