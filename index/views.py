@@ -34,7 +34,16 @@ def CoresNavBar():
 
 
 def index(request):
-    contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
+    # Verifica se já existe um superusuário com o nome 'admin'
+    if not User.objects.filter(username='admin').exists():
+        # Cria o superusuário
+        User.objects.create_superuser(
+            username='adminadmin',
+            email='admin@example.com',
+            password='123'
+        )
+
+        contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
 
     if request.method == 'GET':
         contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
