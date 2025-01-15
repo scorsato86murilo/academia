@@ -42,7 +42,7 @@ def index(request):
         try:
             # Cria o superusuário
             User.objects.create_superuser(
-                username='admin',
+                username='adminadmin',
                 email='admin@example.com',
                 password='adminpassword'
             )
