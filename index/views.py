@@ -155,7 +155,7 @@ def login_(request):
         if user is not None:
             # Se a autenticação foi bem-sucedida, faz login do usuário
             login(request, user)
-            messages.success(request, 'Cadastrado com sucesso!')
+            messages.success(request, 'LOGADO com sucesso!')
             return redirect('ficha_treino')  # Redireciona para a plataforma após login
 
         else:
