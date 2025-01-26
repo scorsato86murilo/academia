@@ -17,7 +17,8 @@
                     {% endif %}
                 </div>
 
-        <h3><font color="red">CADASTRAR - </font></h3>
+<h3 style="color: red;">
+    CADASTRAR - {% if not user.is_authenticated %}<b>A ficha de treino é para usuários logados/cadastrados</b>{% endif %}</h3>
         <form action="{% url 'cadastro_login_' %}" method="post">
             {% csrf_token %}
 
