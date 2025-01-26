@@ -218,5 +218,5 @@ def cadastro_login_(request):
 
 def logout_view(request):
     logout(request)
-    messages.success(request, 'DESLOGADO com sucesso!')
+    messages.error(request, 'DESLOGADO com sucesso!')
     return redirect('index')

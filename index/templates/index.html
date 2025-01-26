@@ -10,6 +10,15 @@
 {% endblock %}
 
 {% block body %}
+   <div class="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                <center>{{ message }}</center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </di
     <div class="banner" style="background-color: {{ banner.background }}; padding: 0px;">
         <center>
             <img src="{{ banner.img_aviso.url }}" alt="Logo" width="{{ banner.largura }}" height="{{ banner.altura }}" class="img-fluid" style="border-radius: 0%; max-width: 100%;">
