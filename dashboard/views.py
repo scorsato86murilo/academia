@@ -236,11 +236,15 @@ def ficha_treino_dash(request):
 
 @login_required(login_url='index')
 def academia_dash(request):
+    # Obtendo todos os objetos e invertendo a ordem pela data de publicação
+    objeto_academia = PulicarAcademia.objects.all().order_by('-data_publicacao')
+
     if not request.user.is_superuser:
         return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode '
                                      'acessar essa página.')
     if request.method == 'GET':
-        return render(request, 'academia_dash.html')
+
+        return render(request, 'academia_dash.html', {'objeto_academia': objeto_academia})
     elif request.method == 'POST':
         if 'publicar' in request.POST:
 
@@ -263,7 +267,7 @@ def academia_dash(request):
             except:
                 messages.error(request, 'Erro ao tentar salvar!')
 
-        return render(request, 'academia_dash.html')
+        return render(request, 'academia_dash.html', {'objeto_academia': objeto_academia})
 
 
 def logout_view(request):

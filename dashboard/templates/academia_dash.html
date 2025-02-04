@@ -50,7 +50,17 @@
             <!-- Coluna 2 -->
             <div class="col-md-8 p-5 bg-light">
 
-murilo
+{% for iten in objeto_academia %}
+    <div class="card">
+        <img src="{{ iten.foto.url }}" alt="Foto" class="imagem-academia">
+        <div class="card-body">
+            <h5 class="card-title">{{ iten.titulo }}</h5>
+            <p class="card-text">{{ iten.mensagem }}</p>
+            <p class="card-footer">Publicado em: {{ iten.data_publicacao }}</p>
+        </div>
+    </div>
+{% endfor %}
+
 
             </div>
         </div>
