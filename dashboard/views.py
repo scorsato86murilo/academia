@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
-from .models import CadastroAluno, Treino, TreinoAlunoCadastrado
+from .models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademia
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import Treino
 from django.contrib.auth import logout
-
+from PIL import Image
 
 
 @login_required(login_url='index')
@@ -242,6 +242,27 @@ def academia_dash(request):
     if request.method == 'GET':
         return render(request, 'academia_dash.html')
     elif request.method == 'POST':
+        if 'publicar' in request.POST:
+
+            # Obtendo os dados do formulário
+            img = request.FILES.get('img')  # Lembre-se de usar request.FILES para arquivos
+            titulo = request.POST.get('titulo')
+            msg = request.POST.get('msg')
+
+            try:
+                # Criando uma instância do modelo e atribuindo os valores
+                salvar = PulicarAcademia(
+                    foto=img,  # Atribuindo o arquivo de imagem ao campo 'foto'
+                    titulo=titulo,  # Atribuindo o título
+                    mensagem=msg  # Atribuindo a mensagem
+                )
+
+                # Salvando o objeto no banco de dados
+                salvar.save()
+                messages.success(request, 'Salvo com sucesso!')
+            except:
+                messages.error(request, 'Erro ao tentar salvar!')
+
         return render(request, 'academia_dash.html')
 
 

@@ -28,11 +28,11 @@
                 </div>
 
 
-        <form action="/salvar" method="post" enctype="multipart/form-data">
+        <form action="{% url 'academia_dash' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <!-- Campo para selecionar a imagem -->
             <label for="foto">Foto:</label>
-            <input type="file" name="foto" id="foto" accept="image/*" required>
+            <input type="file" name="img" id="foto" accept="image/*" required>
 
             <!-- Campo para o título -->
             <label for="titulo">Título:</label>
@@ -40,10 +40,10 @@
 
             <!-- Campo para a mensagem -->
             <label for="mensagem">Mensagem:</label>
-            <textarea name="mensagem" id="mensagem" placeholder="Digite a mensagem" required></textarea>
+            <textarea name="msg" id="mensagem" placeholder="Digite a mensagem" required></textarea>
 
             <!-- Botão para salvar -->
-            <button type="submit">Salvar</button>
+            <button type="submit" name="publicar">Publicar</button>
         </form>
 
             </div>

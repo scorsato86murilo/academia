@@ -29,3 +29,13 @@ class TreinoAlunoCadastrado(models.Model):
 
     def __str__(self):
         return self.treino_personalizado_aluno
+
+
+class PulicarAcademia(models.Model):
+    foto = models.ImageField(upload_to='fotos-publicar-academia', blank=True, null=True)
+    titulo = models.CharField(max_length=255)
+    mensagem = models.TextField()
+    data_publicacao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.titulo
