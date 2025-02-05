@@ -236,7 +236,8 @@ def ficha_treino_dash(request):
 @login_required(login_url='index')
 def academia_dash(request):
     # Obtendo todos os objetos e invertendo a ordem pela data de publicação
-    objeto_academia = PulicarAcademia.objects.all().order_by('-data_publicacao')
+    objeto_academia = PulicarAcademia.objects.all().order_by('-data_publicacao')[:20]# se mudas esse 20 recomendo que mude la
+                                                                                # no index (academia)
 
     # Verificando se o usuário não é superusuário
     if not request.user.is_superuser:
@@ -257,9 +258,9 @@ def academia_dash(request):
             try:
                 # Criando uma instância do modelo e atribuindo os valores
                 salvar = PulicarAcademia(
-                    foto=img,  # Atribuindo o arquivo de imagem ao campo 'foto'
-                    titulo=titulo,  # Atribuindo o título
-                    mensagem=msg  # Atribuindo a mensagem
+                    foto=img,
+                    titulo=titulo,
+                    mensagem=msg
                 )
 
                 # Salvando o objeto no banco de dados

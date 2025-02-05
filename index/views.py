@@ -216,10 +216,12 @@ def cadastro_login_(request):
 
     return render(request, 'cadastro.html', contexto)
 
+
 def academia(request):
     contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
     # Obtém todos os objetos
-    objetos = PulicarAcademia.objects.all().order_by('-data_publicacao')[:20]
+    objetos = PulicarAcademia.objects.all().order_by('-data_publicacao')[:20] # se mudas esse 20 recomendo que mude la
+                                                                                # no dahsboard (academia_dash)
     objetos_all = PulicarAcademia.objects.all()
 
     if objetos:  # Verifica se há objetos para evitar erro caso não haja nenhum
