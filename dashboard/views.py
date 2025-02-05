@@ -233,6 +233,7 @@ def ficha_treino_dash(request):
             'aluno_c': aluno_c,  # Passando a variável aluno_c para o template
         })
 
+
 @login_required(login_url='index')
 def academia_dash(request):
     # Obtendo todos os objetos e invertendo a ordem pela data de publicação
@@ -277,6 +278,13 @@ def academia_dash(request):
 
         # Redireciona para a página com a lista de objetos de academia
         return render(request, 'academia_dash.html', {'objeto_academia': objeto_academia})
+
+
+def mensalidades(request):
+    if request.method == 'GET':
+        return render(request, 'mensalidade.html')
+    if request.method == 'POST':
+        return render(request, 'mensalidade.html')
 
 
 def logout_view(request):
