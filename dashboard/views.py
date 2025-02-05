@@ -233,23 +233,24 @@ def ficha_treino_dash(request):
             'aluno_c': aluno_c,  # Passando a variável aluno_c para o template
         })
 
-
 @login_required(login_url='index')
 def academia_dash(request):
     # Obtendo todos os objetos e invertendo a ordem pela data de publicação
     objeto_academia = PulicarAcademia.objects.all().order_by('-data_publicacao')
 
+    # Verificando se o usuário não é superusuário
     if not request.user.is_superuser:
         return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode '
                                      'acessar essa página.')
-    if request.method == 'GET':
 
+    if request.method == 'GET':
+        # Retorna a página com todos os objetos de academia
         return render(request, 'academia_dash.html', {'objeto_academia': objeto_academia})
+
     elif request.method == 'POST':
         if 'publicar' in request.POST:
-
             # Obtendo os dados do formulário
-            img = request.FILES.get('img')  # Lembre-se de usar request.FILES para arquivos
+            img = request.FILES.get('img')  # Usando request.FILES para arquivos
             titulo = request.POST.get('titulo')
             msg = request.POST.get('msg')
 
@@ -263,10 +264,17 @@ def academia_dash(request):
 
                 # Salvando o objeto no banco de dados
                 salvar.save()
-                messages.success(request, 'Salvo com sucesso!')
-            except:
-                messages.error(request, 'Erro ao tentar salvar!')
 
+                # Mensagem de sucesso
+                messages.success(request, 'Salvo com sucesso!')
+
+                # Redireciona para a mesma página após o POST
+                return redirect('academia_dash')
+
+            except Exception as e:
+                messages.error(request, f'Erro ao tentar salvar: {str(e)}')
+
+        # Redireciona para a página com a lista de objetos de academia
         return render(request, 'academia_dash.html', {'objeto_academia': objeto_academia})
 
 

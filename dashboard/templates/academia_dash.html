@@ -50,7 +50,10 @@
             <!-- Coluna 2 -->
             <div class="col-md-8 p-5 bg-light">
 
-<div style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
+<!-- Adicionando o ID "topo" no início do conteúdo da página -->
+
+
+<div style="max-height: 600px; overflow-y: auto; padding-right: 10px;"><div id="topo"></div>
     {% for iten in objeto_academia %}
         <div class="card" style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);">
             <img src="{{ iten.foto.url }}" alt="Foto" class="imagem-academia" style="width: 100%; height: auto; border-bottom: 1px solid #ddd;">
@@ -58,10 +61,16 @@
                 <h5 class="card-title">{{ iten.titulo }}</h5>
                 <p class="card-text">{{ iten.mensagem }}</p>
                 <p class="card-footer" style="font-size: 0.9em; color: #888;">Publicado em: {{ iten.data_publicacao }}</p>
-            </div>
+  <a href="#topo">Voltar ao TOPO</a>          </div>
         </div>
     {% endfor %}
 </div>
+
+<!-- Link de Voltar ao TOPO -->
+
+
+
+
 
 
 
