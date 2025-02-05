@@ -50,16 +50,20 @@
             <!-- Coluna 2 -->
             <div class="col-md-8 p-5 bg-light">
 
-{% for iten in objeto_academia %}
-    <div class="card">
-        <img src="{{ iten.foto.url }}" alt="Foto" class="imagem-academia">
-        <div class="card-body">
-            <h5 class="card-title">{{ iten.titulo }}</h5>
-            <p class="card-text">{{ iten.mensagem }}</p>
-            <p class="card-footer">Publicado em: {{ iten.data_publicacao }}</p>
+<div style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
+    {% for iten in objeto_academia %}
+        <div class="card" style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);">
+            <img src="{{ iten.foto.url }}" alt="Foto" class="imagem-academia" style="width: 100%; height: auto; border-bottom: 1px solid #ddd;">
+            <div class="card-body" style="padding: 15px;">
+                <h5 class="card-title">{{ iten.titulo }}</h5>
+                <p class="card-text">{{ iten.mensagem }}</p>
+                <p class="card-footer" style="font-size: 0.9em; color: #888;">Publicado em: {{ iten.data_publicacao }}</p>
+            </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+</div>
+
+
 
 
             </div>
