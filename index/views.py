@@ -7,9 +7,10 @@ from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password  # Usado para criar a senha com hash
 from django.contrib.auth.models import User
-from dashboard.models import Treino, CadastroAluno, TreinoAlunoCadastrado
+from dashboard.models import Treino, CadastroAluno, TreinoAlunoCadastrado, PulicarAcademia
 from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar
 from django.contrib import messages
+import random
 
 
 def CoresNavBar():
@@ -215,6 +216,21 @@ def cadastro_login_(request):
 
     return render(request, 'cadastro.html', contexto)
 
+def academia(request):
+    contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
+    # Obtém todos os objetos
+    objetos = PulicarAcademia.objects.all().order_by('-data_publicacao')[:20]
+
+    if objetos:  # Verifica se há objetos para evitar erro caso não haja nenhum
+        # Faz o sorteio de um objeto aleatório
+        obj_ultima = random.choice(objetos)
+    else:
+        obj_ultima = None  # Caso não haja nenhum objeto, atribui None
+
+    if request.method == 'GET':
+        return render(request, 'academia.html', {**contexto, 'obj_ultima': obj_ultima})
+    elif request.method == 'POST':
+        return render(request, 'academia.html', {**contexto, 'obj_ultima': obj_ultima})
 
 def logout_view(request):
     logout(request)

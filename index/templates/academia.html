@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base_index.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block titulo %}
+    {{ nome_empresa.nome }} - Academia
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Coluna 1 -->
+        <div class="col-md-6 p-5" style="background-color: #F5FFFA;">
+            <!-- Conteúdo da coluna 1 -->
+            <p class="card-footer" style="font-size: 1.1em; color: #888;">Publicado em: {{ obj_ultima.data_publicacao }}</p>
+
+            <!-- Exibe os dados da última publicação -->
+            <div class="card" style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);">
+                <img src="{{ obj_ultima.foto.url }}" alt="Foto" class="imagem-academia" style="width: 100%; height: auto; border-bottom: 1px solid #ddd;">
+                <div class="card-body" style="padding: 15px;">
+                    <h5 class="card-title">{{ obj_ultima.titulo }}</h5>
+                    <p class="card-text">{{ obj_ultima.mensagem }}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Coluna 2 -->
+        <div class="col-md-6 p-5" style="background-color: #F8F8FF;">
+            <!-- Conteúdo da coluna 2 -->
+            <h3>Coluna 2</h3>
+            <p>Conteúdo da segunda coluna aqui.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
