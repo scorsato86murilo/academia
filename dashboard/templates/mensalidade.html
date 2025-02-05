@@ -12,5 +12,28 @@
 {% block h1 %}DASHBOARD - MENSALIDADES{% endblock %}
 
 {% block body %}
-murilo
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Coluna 1: Parte superior -->
+            <div class="col-md-12 p-5" style="background-color: #F0FFFF;">
+
+                      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="'CPF' do aluno matriculado para a pesquisa" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Procurar</button>
+      </form>
+                <div class="d-grid gap-2">
+  <button class="btn btn-danger" type="button">Alunos em atraso</button>
+</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Coluna 2: Parte inferior -->
+            <div class="col-md-12 p-5 bg-light">
+                <div class="container-fluid">
+                    <!-- Adicione conteúdo aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
