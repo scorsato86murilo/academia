@@ -220,6 +220,7 @@ def academia(request):
     contexto = CoresNavBar()  # Chama a função CoresNavBar para obter o contexto
     # Obtém todos os objetos
     objetos = PulicarAcademia.objects.all().order_by('-data_publicacao')[:20]
+    objetos_all = PulicarAcademia.objects.all()
 
     if objetos:  # Verifica se há objetos para evitar erro caso não haja nenhum
         # Faz o sorteio de um objeto aleatório
@@ -228,9 +229,11 @@ def academia(request):
         obj_ultima = None  # Caso não haja nenhum objeto, atribui None
 
     if request.method == 'GET':
-        return render(request, 'academia.html', {**contexto, 'obj_ultima': obj_ultima})
+        return render(request, 'academia.html', {**contexto, 'obj_ultima': obj_ultima,
+                                                 'objetos_all': objetos_all})
     elif request.method == 'POST':
-        return render(request, 'academia.html', {**contexto, 'obj_ultima': obj_ultima})
+        return render(request, 'academia.html', {**contexto, 'obj_ultima': obj_ultima,
+                                                 'objetos_all': objetos_all})
 
 def logout_view(request):
     logout(request)
