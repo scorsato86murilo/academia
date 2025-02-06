@@ -286,18 +286,46 @@ def academia_dash(request):
         return render(request, 'academia_dash.html', {'objeto_academia': objeto_academia})
 
 
+from django.shortcuts import render
+from django.contrib import messages
+from django.http import HttpResponseForbidden
+from .models import CadastroAluno  # Certifique-se de que esse seja o nome correto do seu modelo
+
+
 @login_required(login_url='index')
 def mensalidades(request):
     # Verificando se o usuário não é superusuário
     if not request.user.is_superuser:
-        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode '
-                                     'acessar essa página.')
+        return HttpResponseForbidden(
+            '<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode acessar essa página.')
+
     if request.method == 'GET':
         return render(request, 'mensalidade.html')
+
     if request.method == 'POST':
-        return render(request, 'mensalidade.html')
+        cpf_buscar = request.POST.get('cpf_buscar')  # Obtendo o CPF a partir do formulário
+        print(cpf_buscar)
 
+        if not cpf_buscar:
+            messages.error(request, 'Por favor, forneça um CPF válido.')
+            return render(request, 'mensalidade.html')
 
+        try:
+            alunos_cpf = CadastroAluno.objects.filter(cpf=cpf_buscar)  # Buscando aluno pelo CPF
+            print(alunos_cpf)
+
+            if alunos_cpf.exists():
+                messages.success(request, 'Aluno encontrado com SUCESSO!')
+                return render(request, 'mensalidade.html',
+                              {'alunos': alunos_cpf})  # Passando alunos encontrados para o template
+            else:
+                messages.error(request, 'Aluno não encontrado com esse CPF.')
+
+        except Exception as e:
+            print(f"Erro ao buscar aluno: {e}")
+            messages.error(request, 'Ocorreu um erro ao tentar buscar o aluno.')
+
+        return render(request, 'mensalidade.html')  # Retorna a mesma página após o processamento
 def logout_view(request):
     logout(request)
     messages.error(request, 'DESLOGADO com sucesso!')

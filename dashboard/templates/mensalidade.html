@@ -16,14 +16,28 @@
         <div class="row">
             <!-- Coluna 1: Parte superior -->
             <div class="col-md-12 p-5" style="background-color: #F0FFFF;">
+                <div class="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                <center>{{ message }}</center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
 
-                      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="'CPF' do aluno matriculado para a pesquisa" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Procurar</button>
-      </form>
+                <!-- Formulário de pesquisa -->
+<form class="d-flex" role="search" method="post" action="{% url 'mensalidades' %}">
+    {% csrf_token %}
+    <input class="form-control me-2" type="search" placeholder="'CPF' do aluno matriculado para a pesquisa" aria-label="Search" name="cpf_buscar">
+    <button class="btn btn-outline-success" type="submit">Procurar</button>
+</form>
+
+
+                <!-- Botão "Alunos em atraso" -->
                 <div class="d-grid gap-2">
-  <button class="btn btn-danger" type="button">Alunos em atraso</button>
-</div>
+                    <a class="btn btn-danger" href="#" role="button">Alunos em atraso</a>
+                </div>
             </div>
         </div>
 
