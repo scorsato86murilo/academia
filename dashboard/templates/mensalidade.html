@@ -27,12 +27,11 @@
                 </div>
 
                 <!-- Formulário de pesquisa -->
-<form class="d-flex" role="search" method="post" action="{% url 'mensalidades' %}">
-    {% csrf_token %}
-    <input class="form-control me-2" type="search" placeholder="'CPF' do aluno matriculado para a pesquisa" aria-label="Search" name="cpf_buscar">
-    <button class="btn btn-outline-success" type="submit">Procurar</button>
-</form>
-
+                <form class="d-flex" role="search" method="post" action="{% url 'mensalidades' %}">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="'CPF' do aluno matriculado para a pesquisa" aria-label="Search" name="cpf_buscar">
+                    <button class="btn btn-outline-success" type="submit">Procurar</button>
+                </form>
 
                 <!-- Botão "Alunos em atraso" -->
                 <div class="d-grid gap-2">
@@ -45,7 +44,24 @@
             <!-- Coluna 2: Parte inferior -->
             <div class="col-md-12 p-5 bg-light">
                 <div class="container-fluid">
-                    <!-- Adicione conteúdo aqui -->
+                    <!-- Exibindo alunos encontrados -->
+                    {% if alunos %}
+                        <h4>Aluno Encontrado:</h4>
+                        <ul>
+                            {% for aluno in alunos %}
+                                <li>{{ aluno.nome }} - {{ aluno.cpf }}</li> <!-- Ajuste conforme os campos no seu modelo -->
+                            {% endfor %}
+                        </ul>
+                    {% elif alunos_cpf %}
+                        <h4>Aluno(s) Encontrado(s) com o CPF fornecido:</h4>
+                        <ul>
+                            {% for aluno in alunos_cpf %}
+                                <li>{{ aluno.nome }} - {{ aluno.cpf }}</li> <!-- Exibindo informações do aluno -->
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Nenhum aluno encontrado para o CPF fornecido.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
