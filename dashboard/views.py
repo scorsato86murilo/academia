@@ -8,6 +8,12 @@ from .models import Treino
 from django.contrib.auth import logout
 from PIL import Image
 
+## sempre que criar uma nova def antes do GET este codigo ##
+#    # Verificando se o usuário não é superusuário
+#    if not request.user.is_superuser:
+#        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode '
+#                                     'acessar essa página.'
+
 
 @login_required(login_url='index')
 def dashboard(request):
@@ -280,7 +286,12 @@ def academia_dash(request):
         return render(request, 'academia_dash.html', {'objeto_academia': objeto_academia})
 
 
+@login_required(login_url='index')
 def mensalidades(request):
+    # Verificando se o usuário não é superusuário
+    if not request.user.is_superuser:
+        return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode '
+                                     'acessar essa página.')
     if request.method == 'GET':
         return render(request, 'mensalidade.html')
     if request.method == 'POST':
