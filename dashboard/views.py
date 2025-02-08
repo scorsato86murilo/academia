@@ -318,6 +318,8 @@ def mensalidades(request):
                 print(f"Erro ao buscar aluno: {e}")
                 messages.error(request, 'Ocorreu um erro ao tentar buscar o aluno.')
 
+        if 'procurar' in request.POST:
+            pass
     return render(request, 'mensalidade.html', {'alunos_cpf': alunos_cpf})  # Retorna a mesma página após o processamento
 
 

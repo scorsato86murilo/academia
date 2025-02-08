@@ -85,9 +85,13 @@
       <div class="modal-body">
 
 
-      <span class="badge rounded-pill text-bg-warning">Mesalidade Atrasada</span>
 
-
+          {% for aluno in alunos %}
+            <p>{{ aluno.nome }}, CPF:{{ aluno.cpf }}</p>
+          {% endfor %}<hr>
+ <span class="badge rounded-pill text-bg-warning">Mesalidade Atrasada</span><br><br>
+          Valor da mensalidade: <input type="number" name="valor_mensal"><br><br>
+          Descrição: <input type="text" name="descricao" size="47">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" name="cancelar">Cancelar</button>
