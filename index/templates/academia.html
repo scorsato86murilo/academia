@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Coluna 1 -->
-        <div class="col-md-6 p-5" style="background-color: #F5FFFA;">
+        <div class="col-md-6 p-2" style="background-color: #F5FFFA;">
             <!-- Exibe os dados da última publicação sorteada -->
             {% if obj_ultima %}
                 <p class="card-footer" style="font-size: 1.1em; color: #888;">Publicado em: {{ obj_ultima.data_publicacao }}</p>
@@ -27,7 +27,7 @@
         </div>
 
         <!-- Coluna 2 -->
-        <div class="col-md-6 p-5" style="background-color: #F8F8FF;">
+        <div class="col-md-6 p-1" style="background-color: #F8F8FF;">
             <!-- Exibe todos os objetos -->
             <h3>Últimas Publicações</h3><div style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
             {% for iten in objetos_all %}
