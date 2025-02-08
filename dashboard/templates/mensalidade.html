@@ -50,7 +50,8 @@
                         <ul>
                             {% for aluno in alunos %}
                                 <li>
-                                    <h4><span class="badge text-bg-secondary"> {{ aluno.nome }} - {{ aluno.cpf }}</span></h4>
+                                    <h4>
+                                        <span class="badge text-bg-secondary">{{ aluno.nome }},  CPF: {{ aluno.cpf }}</span></h4>
                                    </li> <!-- Ajuste conforme os campos no seu modelo -->
                                 <span class="badge rounded-pill text-bg-warning">Mesalidade Atrasada</span>
                                 <span class="badge rounded-pill text-bg-dark">Ajustar situação</span>

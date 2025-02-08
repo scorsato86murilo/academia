@@ -83,6 +83,7 @@
                     <p><strong>Rua/Avenida:</strong> {{ aluno.rua_av }}</p>
                     <p><strong>Celular:</strong> {{ aluno.celular }}</p>
                     <p><strong>Email:</strong> {{ aluno.email }}</p>
+                    <p><strong>Data matrícula:</strong> {{ item.data_cadastro }}</p>
                     <p><strong>ID:</strong> {{ aluno.id }}</p>
 
                 {% elif aluno_cpf %}
@@ -94,6 +95,7 @@
                     <p><strong>Rua/Avenida:</strong> {{ aluno_cpf.rua_av }}</p>
                     <p><strong>Celular:</strong> {{ aluno_cpf.celular }}</p>
                     <p><strong>Email:</strong> {{ aluno_cpf.email }}</p>
+                    <p><strong>Data matrícula:</strong> {{ aluno_cpf.data_cadastro }}</p>
                     <p><strong>ID:</strong> {{ aluno_cpf.id }}</p>
 
                 {% else %}
@@ -110,6 +112,7 @@
                     <p><strong>Rua/Avenida:</strong> {{ item.rua_av }}</p>
                     <p><strong>Celular:</strong> {{ item.celular }}</p>
                     <p><strong>Email:</strong> {{ item.email }}</p>
+                    <p><strong>Data matrícula:</strong> {{ item.data_cadastro }}</p>
                     <p><strong>ID:</strong> {{ item.id }}</p>
                     <hr>
                 </div>

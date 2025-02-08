@@ -73,6 +73,7 @@ def dashboard(request):
                     aluno.rua_av = rua_av
                     aluno.celular = celular
                     aluno.email = email
+
                     aluno.save()  # Salva as alterações
                     messages.success(request, 'Aluno atualizado com SUCESSO!')
                 else:  # se não tem id entao entra aqui

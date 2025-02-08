@@ -9,6 +9,7 @@ class CadastroAluno(models.Model):
     rua_av = models.CharField(max_length=200)
     celular = models.CharField(max_length=20)  # Celular com DDD (ex: 11 91234-5678)
     email = models.EmailField(max_length=100)
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.nome
