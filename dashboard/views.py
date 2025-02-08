@@ -332,16 +332,16 @@ def mensalidades(request):
 def deleta_obj_academia(request, id):
     # Verifica se o método da requisição é POST (pois queremos deletar com POST por segurança)
     if request.method == 'POST':
-        # Obtém o objeto com o ID especificado ou retorna um erro 404 se não encontrado
-        item = get_object_or_404(PulicarAcademia, id=id)
 
-        # Deleta o objeto
-        item.delete()
+        try:
+            # Obtém o objeto com o ID especificado ou retorna um erro 404 se não encontrado
+            item = get_object_or_404(PulicarAcademia, id=id)
+            # Deleta o objeto
+            item.delete()
 
-        # Redireciona para a página do dashboard ou qualquer outra página que você desejar
-        return redirect('academia_dash')
+        except:
+            messages.error(request, 'Não foi possivel deletar, Tente outra vez.')
 
-    # Caso o método não seja POST, redireciona ou retorna um erro
     return redirect('academia_dash')
 
 def logout_view(request):
