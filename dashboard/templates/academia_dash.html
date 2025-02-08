@@ -13,71 +13,70 @@
 
 {% block body %}
 <div class="container-fluid">
-        <div class="row">
-            <!-- Coluna 1 -->
-            <div class="col-md-4 p-5" style="background-color: #F0FFFF;">
+    <div class="row">
+        <!-- Coluna 1 -->
+        <div class="col-md-4 p-5" style="background-color: #F0FFFF;">
 
-                <div class="message">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert {{ message.tags }}">
-                                <center>{{ message }}</center>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-
-
-        <form action="{% url 'academia_dash' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <!-- Campo para selecionar a imagem -->
-            <label for="foto">Foto:</label>
-            <input type="file" name="img" id="foto" accept="image/*" required>
-
-            <!-- Campo para o título -->
-            <label for="titulo">Título:</label>
-            <input type="text" name="titulo" id="titulo" placeholder="Digite o título" required>
-
-            <!-- Campo para a mensagem -->
-            <label for="mensagem">Mensagem:</label>
-            <textarea name="msg" id="mensagem" placeholder="Digite a mensagem" required></textarea>
-
-            <!-- Botão para salvar -->
-            <button type="submit" name="publicar">Publicar</button>
-        </form>
-
+            <div class="message">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }}">
+                            <center>{{ message }}</center>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
-            <!-- Coluna 2 -->
-            <div class="col-md-8 p-5 bg-light">
 
-<!-- Adicionando o ID "topo" no início do conteúdo da página -->
+            <!-- Formulário para publicar conteúdo -->
+            <form action="{% url 'academia_dash' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Campo para selecionar a imagem -->
+                <label for="foto">Foto:</label>
+                <input type="file" name="img" id="foto" accept="image/*" required>
 
+                <!-- Campo para o título -->
+                <label for="titulo">Título:</label>
+                <input type="text" name="titulo" id="titulo" placeholder="Digite o título" required>
 
-<div style="max-height: 600px; overflow-y: auto; padding-right: 10px;"><div id="topo"></div>
-    {% for iten in objeto_academia %}
-        <div class="card" style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);">
-            <img src="{{ iten.foto.url }}" alt="Foto" class="imagem-academia" style="width: 100%; height: auto; border-bottom: 1px solid #ddd;">
-            <div class="card-body" style="padding: 15px;">
-                <h5 class="card-title">{{ iten.titulo }}</h5>
-                <p class="card-text">{{ iten.mensagem }}</p>
-                <p class="card-footer" style="font-size: 0.9em; color: #888;">Publicado em: {{ iten.data_publicacao }}</p>
-  <a href="#topo">Voltar ao TOPO</a>          </div>
+                <!-- Campo para a mensagem -->
+                <label for="mensagem">Mensagem:</label>
+                <textarea name="msg" id="mensagem" placeholder="Digite a mensagem" required></textarea>
+
+                <!-- Botão para salvar -->
+                <button type="submit" name="publicar">Publicar</button>
+            </form>
+
         </div>
-    {% endfor %}
-</div>
+        <!-- Coluna 2 -->
+        <div class="col-md-8 p-5 bg-light">
 
-<!-- Link de Voltar ao TOPO -->
+            <!-- Adicionando o ID "topo" no início do conteúdo da página -->
+            <div style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
+                <div id="topo"></div>
+                {% for iten in objeto_academia %}
+                    <div class="card" style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);">
+                        <img src="{{ iten.foto.url }}" alt="Foto" class="imagem-academia" style="width: 100%; height: auto; border-bottom: 1px solid #ddd;">
+                        <div class="card-body" style="padding: 15px;">
+                            <h5 class="card-title">{{ iten.titulo }}</h5>
+                            <p class="card-text">{{ iten.mensagem }}</p>
+                            <p class="card-footer" style="font-size: 0.9em; color: #888;">Publicado em: {{ iten.data_publicacao }}</p>
 
+<!-- Formulário para deletar o item com link -->
+<form action="{% url 'deleta_obj_academia' iten.id %}" method="POST" style="display: inline;">
+    {% csrf_token %}
+    <a href="#" onclick="this.closest('form').submit();">DELETE</a>
+</form>
 
-
-
-
-
-
-
+                                                        <!-- Link para voltar ao topo -->
+                            <a href="#topo"> ^TOPO </a>
+                        </div><br>
+                    </div>
+                {% endfor %}
             </div>
+
         </div>
     </div>
+</div>
 {% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

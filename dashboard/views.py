@@ -327,6 +327,23 @@ def mensalidades(request):
             messages.error(request, 'Ocorreu um erro ao tentar buscar o aluno.')
 
         return render(request, 'mensalidade.html', {'alunos_cpf': alunos_cpf})  # Retorna a mesma página após o processamento
+
+
+def deleta_obj_academia(request, id):
+    # Verifica se o método da requisição é POST (pois queremos deletar com POST por segurança)
+    if request.method == 'POST':
+        # Obtém o objeto com o ID especificado ou retorna um erro 404 se não encontrado
+        item = get_object_or_404(PulicarAcademia, id=id)
+
+        # Deleta o objeto
+        item.delete()
+
+        # Redireciona para a página do dashboard ou qualquer outra página que você desejar
+        return redirect('academia_dash')
+
+    # Caso o método não seja POST, redireciona ou retorna um erro
+    return redirect('academia_dash')
+
 def logout_view(request):
     logout(request)
     messages.error(request, 'DESLOGADO com sucesso!')
