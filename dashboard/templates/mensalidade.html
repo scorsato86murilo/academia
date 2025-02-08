@@ -30,7 +30,7 @@
                 <form class="d-flex" role="search" method="post" action="{% url 'mensalidades' %}">
                     {% csrf_token %}
                     <input class="form-control me-2" type="search" placeholder="'CPF' do aluno matriculado para a pesquisa" aria-label="Search" name="cpf_buscar">
-                    <button class="btn btn-outline-success" type="submit">Procurar</button>
+                    <button class="btn btn-outline-success" type="submit" name="procurar">Procurar</button>
                 </form>
 
                 <!-- Botão "Alunos em atraso" -->
@@ -53,8 +53,11 @@
                                     <h4>
                                         <span class="badge text-bg-secondary">{{ aluno.nome }},  CPF: {{ aluno.cpf }}</span></h4>
                                    </li> <!-- Ajuste conforme os campos no seu modelo -->
-                                <span class="badge rounded-pill text-bg-warning">Mesalidade Atrasada</span>
-                                <span class="badge rounded-pill text-bg-dark">Ajustar situação</span>
+
+                                <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Ajustar Situação
+</button>
                             {% endfor %}
 
 
@@ -69,4 +72,28 @@
             </div>
         </div>
     </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Ajustar Situação</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+      <span class="badge rounded-pill text-bg-warning">Mesalidade Atrasada</span>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

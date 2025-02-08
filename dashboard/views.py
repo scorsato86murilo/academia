@@ -1,12 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademia
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from .models import Treino
 from django.contrib.auth import logout
-from PIL import Image
 
 ## sempre que criar uma nova def antes do GET este codigo ##
 #    # Verificando se o usuário não é superusuário
@@ -287,12 +284,6 @@ def academia_dash(request):
         return render(request, 'academia_dash.html', {'objeto_academia': objeto_academia})
 
 
-from django.shortcuts import render
-from django.contrib import messages
-from django.http import HttpResponseForbidden
-from .models import CadastroAluno  # Certifique-se de que esse seja o nome correto do seu modelo
-
-
 @login_required(login_url='index')
 def mensalidades(request):
     # Verificando se o usuário não é superusuário
@@ -304,29 +295,30 @@ def mensalidades(request):
         return render(request, 'mensalidade.html')
 
     if request.method == 'POST':
-        cpf_buscar = request.POST.get('cpf_buscar')  # Obtendo o CPF a partir do formulário
-        print(cpf_buscar)
+        if 'procurar' in request.POST:
+            cpf_buscar = request.POST.get('cpf_buscar')  # Obtendo o CPF a partir do formulário
+            print(cpf_buscar)
 
-        if not cpf_buscar:
-            messages.error(request, 'Por favor, forneça um CPF válido.')
-            return render(request, 'mensalidade.html')
+            if not cpf_buscar:
+                messages.error(request, 'Por favor, forneça um CPF válido.')
+                return render(request, 'mensalidade.html')
 
-        try:
-            alunos_cpf = CadastroAluno.objects.filter(cpf=cpf_buscar)  # Buscando aluno pelo CPF
-            print(alunos_cpf)
+            try:
+                alunos_cpf = CadastroAluno.objects.filter(cpf=cpf_buscar)  # Buscando aluno pelo CPF
+                print(alunos_cpf)
 
-            if alunos_cpf.exists():
-                messages.success(request, 'Aluno encontrado com SUCESSO!')
-                return render(request, 'mensalidade.html',
-                              {'alunos': alunos_cpf})  # Passando alunos encontrados para o template
-            else:
-                messages.error(request, 'Aluno não encontrado com esse CPF.')
+                if alunos_cpf.exists():
+                    messages.success(request, 'Aluno encontrado com SUCESSO!')
+                    return render(request, 'mensalidade.html',
+                                  {'alunos': alunos_cpf})  # Passando alunos encontrados para o template
+                else:
+                    messages.error(request, 'Aluno não encontrado com esse CPF.')
 
-        except Exception as e:
-            print(f"Erro ao buscar aluno: {e}")
-            messages.error(request, 'Ocorreu um erro ao tentar buscar o aluno.')
+            except Exception as e:
+                print(f"Erro ao buscar aluno: {e}")
+                messages.error(request, 'Ocorreu um erro ao tentar buscar o aluno.')
 
-        return render(request, 'mensalidade.html', {'alunos_cpf': alunos_cpf})  # Retorna a mesma página após o processamento
+    return render(request, 'mensalidade.html', {'alunos_cpf': alunos_cpf})  # Retorna a mesma página após o processamento
 
 
 def deleta_obj_academia(request, id):
