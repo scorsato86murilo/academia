@@ -42,23 +42,25 @@
 
         <div class="row">
             <!-- Coluna 2: Parte inferior -->
-            <div class="col-md-12 p-5 bg-light">
+            <div class="col-md-12 p-2 bg-light">
                 <div class="container-fluid">
                     <!-- Exibindo alunos encontrados -->
                     {% if alunos %}
-                        <h4>Aluno Encontrado:</h4>
+                        <h3> - Aluno Encontrado:</h3>
                         <ul>
                             {% for aluno in alunos %}
-                                <li>{{ aluno.nome }} - {{ aluno.cpf }}</li> <!-- Ajuste conforme os campos no seu modelo -->
+                                <li>
+                                    <h4><span class="badge text-bg-secondary"> {{ aluno.nome }} - {{ aluno.cpf }}</span></h4>
+                                   </li> <!-- Ajuste conforme os campos no seu modelo -->
+                                <span class="badge rounded-pill text-bg-warning">Mesalidade Atrasada</span>
+                                <span class="badge rounded-pill text-bg-dark">Ajustar situação</span>
                             {% endfor %}
+
+
                         </ul>
                     {% elif alunos_cpf %}
                         <h4>Aluno(s) Encontrado(s) com o CPF fornecido:</h4>
-                        <ul>
-                            {% for aluno in alunos_cpf %}
-                                <li>{{ aluno.nome }} - {{ aluno.cpf }}</li> <!-- Exibindo informações do aluno -->
-                            {% endfor %}
-                        </ul>
+
                     {% else %}
                         <p>Nenhum aluno encontrado para o CPF fornecido.</p>
                     {% endif %}
