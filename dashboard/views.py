@@ -324,7 +324,6 @@ def mensalidades(request):
 
 
 def deleta_obj_academia(request, id):
-    # Verifica se o método da requisição é POST (pois queremos deletar com POST por segurança)
     if request.method == 'POST':
 
         try:
