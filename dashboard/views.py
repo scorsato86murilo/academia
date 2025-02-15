@@ -320,7 +320,7 @@ def mensalidades(request):
 
         if 'situacao_btn' in request.POST:
             print('aqui')
-    return render(request, 'mensalidade.html', {'alunos_cpf': alunos_cpf})  # Retorna a mesma página após o processamento
+    return render(request, 'mensalidade.html')  # Retorna a mesma página após o processamento
 
 
 def deleta_obj_academia(request, id):

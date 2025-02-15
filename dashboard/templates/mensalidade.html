@@ -95,7 +95,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" name="cancelar">Cancelar</button>
-        <button type="submit" class="btn btn-primary" name="situacao_btn">Confirmar</button>
+        <form method="post" action="{% url 'mensalidades' %}">{% csrf_token %}
+            <button type="submit" class="btn btn-primary" name="situacao_btn">Confirmar</button>
+        </form>
       </div>
     </div>
   </div>
