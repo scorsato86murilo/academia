@@ -14,3 +14,5 @@ admin.site.register(Treino)
 admin.site.register(TreinoAlunoCadastrado)
 admin.site.register(PulicarAcademia)
 admin.site.register(Mensalidade)
+
+

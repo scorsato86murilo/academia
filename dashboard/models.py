@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from datetime import timedelta
+from django.utils import timezone
 
 
 class CadastroAluno(models.Model):
@@ -41,13 +45,12 @@ class PulicarAcademia(models.Model):
     def __str__(self):
         return self.titulo
 
-
 class Mensalidade(models.Model):
     aluno = models.ForeignKey(CadastroAluno, on_delete=models.CASCADE)  # Relacionamento com o modelo CadastroAluno
-    valor = models.DecimalField(max_digits=10, decimal_places=2)  # Valor da mensalidade, com até 10 dígitos e 2 casas decimais
+    valor = models.DecimalField(max_digits=10, decimal_places=2)  # Valor da mensalidade
     data_vencimento = models.DateField()  # Data de vencimento da mensalidade
-    data_pagamento = models.DateField(null=True, blank=True)  # Data do pagamento (pode ser nula caso não tenha sido paga)
-    descricao = models.TextField(blank=True, null=True)  # Campo opcional para descrição, por exemplo, para observações
+    data_matricula = models.DateField()  # Data de matrícula, preenchida automaticamente na criação
+    descricao = models.TextField(blank=True, null=True)  # Campo opcional para descrição
 
     def __str__(self):
         return f'Mensalidade de {self.aluno.nome} - {self.valor}'
@@ -57,3 +60,11 @@ class Mensalidade(models.Model):
         verbose_name_plural = 'Mensalidades'
         ordering = ['data_vencimento']
 
+    def save(self, *args, **kwargs):
+        if not self.data_vencimento:  # Se a data de vencimento não foi preenchida
+            # Define a data de vencimento para o último dia do próximo mês
+            hoje = self.data_matricula or timezone.now().date()
+            proximo_mes = hoje.replace(day=1) + timedelta(days=32)  # Vai para o próximo mês
+            ultimo_dia_proximo_mes = proximo_mes.replace(day=1) - timedelta(days=1)
+            self.data_vencimento = ultimo_dia_proximo_mes  # Define o último dia do próximo mês como vencimento
+        super().save(*args, **kwargs)  # Salva o objeto normalmente
