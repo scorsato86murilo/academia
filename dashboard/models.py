@@ -55,16 +55,3 @@ class Mensalidade(models.Model):
     def __str__(self):
         return f'Mensalidade de {self.aluno.nome} - {self.valor}'
 
-    class Meta:
-        verbose_name = 'Mensalidade'
-        verbose_name_plural = 'Mensalidades'
-        ordering = ['data_vencimento']
-
-    def save(self, *args, **kwargs):
-        if not self.data_vencimento:  # Se a data de vencimento não foi preenchida
-            # Define a data de vencimento para o último dia do próximo mês
-            hoje = self.data_matricula or timezone.now().date()
-            proximo_mes = hoje.replace(day=1) + timedelta(days=32)  # Vai para o próximo mês
-            ultimo_dia_proximo_mes = proximo_mes.replace(day=1) - timedelta(days=1)
-            self.data_vencimento = ultimo_dia_proximo_mes  # Define o último dia do próximo mês como vencimento
-        super().save(*args, **kwargs)  # Salva o objeto normalmente
