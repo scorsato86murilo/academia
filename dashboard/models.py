@@ -47,7 +47,7 @@ class PulicarAcademia(models.Model):
 
 from django.db import models
 from django.utils import timezone
-from datetime import timedelta
+from dateutil.relativedelta import relativedelta  # Importa para adicionar 1 mês facilmente
 
 class Mensalidade(models.Model):
     aluno = models.ForeignKey(CadastroAluno, on_delete=models.CASCADE)  # Relacionamento com o modelo CadastroAluno
@@ -65,12 +65,14 @@ class Mensalidade(models.Model):
         ordering = ['data_vencimento']
 
     def save(self, *args, **kwargs):
-        # Preenche automaticamente data_vencimento com o último dia do próximo mês
+        # Preenche automaticamente data_vencimento com 1 mês de diferença
         if not self.data_vencimento:
             hoje = self.data_matricula or timezone.now().date()  # Se data_matricula não for fornecida, usa a data atual
-            proximo_mes = hoje.replace(day=1) + timedelta(days=32)  # Vai para o próximo mês
-            ultimo_dia_proximo_mes = proximo_mes.replace(day=1) - timedelta(days=1)  # Último dia do próximo mês
-            self.data_vencimento = ultimo_dia_proximo_mes  # Atribui o último dia do próximo mês ao campo data_vencimento
+            # Adiciona 1 mês à data de matrícula
+            self.data_vencimento = hoje + relativedelta(months=1)
 
         super().save(*args, **kwargs)  # Salva o objeto normalmente
+
+
+
 

@@ -3,3 +3,4 @@ pip install Pillow
 pip install gunicorn
 pip install whitenoise
 pip install dj-database-url
+pip install python-dateutil
