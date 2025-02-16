@@ -3,6 +3,7 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from datetime import timedelta
 from django.utils import timezone
+from dateutil.relativedelta import relativedelta  # Importa para adicionar 1 mês facilmente
 
 
 class CadastroAluno(models.Model):
@@ -45,9 +46,6 @@ class PulicarAcademia(models.Model):
     def __str__(self):
         return self.titulo
 
-from django.db import models
-from django.utils import timezone
-from dateutil.relativedelta import relativedelta  # Importa para adicionar 1 mês facilmente
 
 class Mensalidade(models.Model):
     aluno = models.ForeignKey(CadastroAluno, on_delete=models.CASCADE)  # Relacionamento com o modelo CadastroAluno
