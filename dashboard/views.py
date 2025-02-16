@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademia
+from .models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademia, Mensalidade
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.utils import timezone
+
 
 ## sempre que criar uma nova def antes do GET este codigo ##
 #    # Verificando se o usuário não é superusuário
@@ -296,21 +298,21 @@ def mensalidades(request):
 
     if request.method == 'POST':
         if 'procurar' in request.POST:
-            cpf_buscar = request.POST.get('cpf_buscar')  # Obtendo o CPF a partir do formulário
-            print(cpf_buscar)
+            cpf_buscar = request.POST.get('cpf_buscar')
+            print(f"CPF buscado: {cpf_buscar}")  # Verificando se o CPF foi passado corretamente
 
             if not cpf_buscar:
                 messages.error(request, 'Por favor, forneça um CPF válido.')
                 return render(request, 'mensalidade.html')
 
             try:
-                alunos_cpf = CadastroAluno.objects.filter(cpf=cpf_buscar)  # Buscando aluno pelo CPF
-                print(alunos_cpf)
+                # Usando o filtro exact para garantir que o CPF seja exato
+                alunos_cpf = CadastroAluno.objects.filter(cpf__exact=cpf_buscar)
+                print(f"Alunos encontrados: {alunos_cpf}")  # Verificando os alunos encontrados
 
                 if alunos_cpf.exists():
                     messages.success(request, 'Aluno encontrado com SUCESSO!')
-                    return render(request, 'mensalidade.html',
-                                  {'alunos': alunos_cpf})  # Passando alunos encontrados para o template
+                    return render(request, 'mensalidade.html', {'alunos': alunos_cpf})
                 else:
                     messages.error(request, 'Aluno não encontrado com esse CPF.')
 
@@ -319,8 +321,38 @@ def mensalidades(request):
                 messages.error(request, 'Ocorreu um erro ao tentar buscar o aluno.')
 
         if 'situacao_btn' in request.POST:
-            print('aqui')
-    return render(request, 'mensalidade.html')  # Retorna a mesma página após o processamento
+            print('botão -> situacao_btn')
+
+            valor_mensal = request.POST.get('valor_mensal')
+            descricao = request.POST.get('descricao')
+            cpf_aluno = request.POST.get('cpf_aluno')  # Pegando o CPF do aluno enviado pelo formulário
+            print(cpf_aluno)
+
+            try:
+                # Buscar o aluno com o CPF fornecido
+                aluno = CadastroAluno.objects.get(cpf__exact=cpf_aluno)  # Garantir que o aluno seja único
+
+                # Validar o valor da mensalidade
+                if not valor_mensal:
+                    messages.error(request, 'Por favor, forneça um valor de mensalidade.')
+                    return render(request, 'mensalidade.html')
+
+                # Criar a nova mensalidade
+                salvar_mensalidades = Mensalidade(
+                    aluno=aluno,  # Usando o objeto aluno encontrado
+                    valor=valor_mensal,
+                    data_matricula=timezone.now().date(),  # Preenche com a data atual
+                    descricao=descricao,
+                )
+                salvar_mensalidades.save()  # Salva no banco de dados
+                messages.success(request, 'SUCESSO! Mensalidade atualizada com SUCESSO!')
+            except CadastroAluno.DoesNotExist:
+                messages.error(request, 'Aluno não encontrado com esse CPF.')
+            except Exception as e:
+                print(f"Erro ao salvar mensalidade: {e}")
+                messages.error(request, 'ERRO no sistema (Erro ao salvar a mensalidade).')
+
+    return render(request, 'mensalidade.html')
 
 
 def deleta_obj_academia(request, id):

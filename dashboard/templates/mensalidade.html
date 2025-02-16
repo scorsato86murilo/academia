@@ -55,16 +55,13 @@
                                    </li> <!-- Ajuste conforme os campos no seu modelo -->
 
                                 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Ajustar Situação
-</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                  Ajustar Situação
+                                </button>
                             {% endfor %}
-
-
                         </ul>
                     {% elif alunos_cpf %}
                         <h4>Aluno(s) Encontrado(s) com o CPF fornecido:</h4>
-
                     {% else %}
                         <p>Nenhum aluno encontrado para o CPF fornecido.</p>
                     {% endif %}
@@ -73,33 +70,36 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ajustar Situação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for aluno in alunos %}
+                        <p>{{ aluno.nome }}, CPF:{{ aluno.cpf }}</p>
+                        <input type="hidden" name="cpf_aluno" value="{{ aluno.cpf }}"> <!-- Envia o CPF do aluno -->
+                    {% endfor %}
+                    <hr>
+                    <span class="badge rounded-pill text-bg-warning">Mensalidade Atrasada</span><br><br>
+                    <form method="post" action="{% url 'mensalidades' %}">
+                        {% csrf_token %}
+                    {% for aluno in alunos %}
+                        <input type="hidden" name="cpf_aluno" value="{{ aluno.cpf }}">
+                    {% endfor %}
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Ajustar Situação</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-
-
-          {% for aluno in alunos %}
-            <p>{{ aluno.nome }}, CPF:{{ aluno.cpf }}</p>
-          {% endfor %}<hr>
- <span class="badge rounded-pill text-bg-warning">Mesalidade Atrasada</span><br><br>
-          Valor da mensalidade: <input type="number" name="valor_mensal"><br><br>
-          Descrição: <input type="text" name="descricao" size="47">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" name="cancelar">Cancelar</button>
-        <form method="post" action="{% url 'mensalidades' %}">{% csrf_token %}
-            <button type="submit" class="btn btn-primary" name="situacao_btn">Confirmar</button>
-        </form>
-      </div>
+                        Valor da mensalidade: <input type="number" name="valor_mensal"><br><br>
+                        Descrição: <input type="text" name="descricao" size="47"><br><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" name="cancelar">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" name="situacao_btn">Confirmar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 {% endblock %}
