@@ -46,7 +46,6 @@ class Mensalidade(models.Model):
     aluno = models.ForeignKey(CadastroAluno, on_delete=models.CASCADE)  # Relacionamento com o modelo CadastroAluno
     valor = models.DecimalField(max_digits=10, decimal_places=2)  # Valor da mensalidade, com até 10 dígitos e 2 casas decimais
     data_vencimento = models.DateField()  # Data de vencimento da mensalidade
-    paga = models.BooleanField(default=False)  # Campo para marcar se a mensalidade foi paga ou não
     data_pagamento = models.DateField(null=True, blank=True)  # Data do pagamento (pode ser nula caso não tenha sido paga)
     descricao = models.TextField(blank=True, null=True)  # Campo opcional para descrição, por exemplo, para observações
 
