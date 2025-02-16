@@ -45,13 +45,32 @@ class PulicarAcademia(models.Model):
     def __str__(self):
         return self.titulo
 
+from django.db import models
+from django.utils import timezone
+from datetime import timedelta
+
 class Mensalidade(models.Model):
     aluno = models.ForeignKey(CadastroAluno, on_delete=models.CASCADE)  # Relacionamento com o modelo CadastroAluno
     valor = models.DecimalField(max_digits=10, decimal_places=2)  # Valor da mensalidade
-    data_vencimento = models.DateField()  # Data de vencimento da mensalidade
-    data_matricula = models.DateField()  # Data de matrícula, preenchida automaticamente na criação
+    data_vencimento = models.DateField(null=True, blank=True)  # Data de vencimento da mensalidade (preenchida automaticamente)
+    data_matricula = models.DateField()  # Data de matrícula, preenchida manualmente
     descricao = models.TextField(blank=True, null=True)  # Campo opcional para descrição
 
     def __str__(self):
         return f'Mensalidade de {self.aluno.nome} - {self.valor}'
+
+    class Meta:
+        verbose_name = 'Mensalidade'
+        verbose_name_plural = 'Mensalidades'
+        ordering = ['data_vencimento']
+
+    def save(self, *args, **kwargs):
+        # Preenche automaticamente data_vencimento com o último dia do próximo mês
+        if not self.data_vencimento:
+            hoje = self.data_matricula or timezone.now().date()  # Se data_matricula não for fornecida, usa a data atual
+            proximo_mes = hoje.replace(day=1) + timedelta(days=32)  # Vai para o próximo mês
+            ultimo_dia_proximo_mes = proximo_mes.replace(day=1) - timedelta(days=1)  # Último dia do próximo mês
+            self.data_vencimento = ultimo_dia_proximo_mes  # Atribui o último dia do próximo mês ao campo data_vencimento
+
+        super().save(*args, **kwargs)  # Salva o objeto normalmente
 
