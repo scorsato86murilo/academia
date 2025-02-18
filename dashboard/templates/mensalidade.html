@@ -29,7 +29,7 @@
                 <!-- Formulário de pesquisa -->
                 <form class="d-flex" role="search" method="post" action="{% url 'mensalidades' %}">
                     {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="'CPF' do aluno matriculado para a pesquisa" aria-label="Search" name="cpf_buscar">
+                    <input class="form-control me-2" type="search" placeholder="'CPF' do aluno matriculado para a pesquisa" aria-label="Search" name="cpf_buscar" required>
                     <button class="btn btn-outline-success" type="submit" name="procurar">Procurar</button>
                 </form>
 
@@ -84,15 +84,15 @@
                         <input type="hidden" name="cpf_aluno" value="{{ aluno.cpf }}"> <!-- Envia o CPF do aluno -->
                     {% endfor %}
                     <hr>
-                    <span class="badge rounded-pill text-bg-warning">Mensalidade Atrasada</span><br><br>
+                    <span class="badge rounded-pill text-bg-warning">{{ mensalidade_em_dia }}</span><br><br>
                     <form method="post" action="{% url 'mensalidades' %}">
                         {% csrf_token %}
                     {% for aluno in alunos %}
                         <input type="hidden" name="cpf_aluno" value="{{ aluno.cpf }}">
                     {% endfor %}
 
-                        Valor da mensalidade: <input type="number" name="valor_mensal"><br><br>
-                        Descrição: <input type="text" name="descricao" size="47"><br><br>
+                        Valor da mensalidade: <input type="number" name="valor_mensal" required><br><br>
+                        Descrição: <input type="text" name="descricao" size="47" required><br><br>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" name="cancelar">Cancelar</button>

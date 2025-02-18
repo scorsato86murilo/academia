@@ -1,3 +1,5 @@
+from datetime import timedelta
+from dateutil.relativedelta import relativedelta  # Para calcular a diferença de 1 mês
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
@@ -5,6 +7,7 @@ from .models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademi
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.utils import timezone
+from datetime import date
 
 
 ## sempre que criar uma nova def antes do GET este codigo ##
@@ -299,26 +302,73 @@ def mensalidades(request):
     if request.method == 'POST':
         if 'procurar' in request.POST:
             cpf_buscar = request.POST.get('cpf_buscar')
-            print(f"CPF buscado: {cpf_buscar}")  # Verificando se o CPF foi passado corretamente
+            print(f"CPF buscado: {cpf_buscar}")
 
-            if not cpf_buscar:
-                messages.error(request, 'Por favor, forneça um CPF válido.')
+            # Verifica se o CPF foi passado corretamente
+            if not cpf_buscar or len(cpf_buscar) != 11:
+                messages.error(request, 'Por favor, forneça um CPF válido com 11 dígitos.')
                 return render(request, 'mensalidade.html')
 
             try:
-                # Usando o filtro exact para garantir que o CPF seja exato
-                alunos_cpf = CadastroAluno.objects.filter(cpf__exact=cpf_buscar)
-                print(f"Alunos encontrados: {alunos_cpf}")  # Verificando os alunos encontrados
+                # Verificando se o aluno existe
+                alunos_cpf = CadastroAluno.objects.filter(cpf=cpf_buscar)
+                print(f"Alunos encontrados: {alunos_cpf}")
 
                 if alunos_cpf.exists():
+                    # Buscar as mensalidades do aluno
+                    mensalidades = Mensalidade.objects.filter(aluno=alunos_cpf.first()).order_by('-data_matricula')[:1]
+
+                    # Inicializando a variável mensalidade_em_dia antes do loop
+                    mensalidade_em_dia = None
+
+                    # Verificando e exibindo a data de vencimento de cada mensalidade
+                    for mensalidade in mensalidades:
+                        print(f"Mensalidade: {mensalidade}, Data de Vencimento: {mensalidade.data_vencimento}")
+
+                        # Comparando a data de vencimento com a data atual
+                        data_atual = timezone.now().date()  # Pega a data atual sem hora
+                        data_vencimento = mensalidade.data_vencimento
+
+
+                        # Substituindo a data_atual com uma data manual para teste
+                        # data_atual_teste = date(2025, 3, 19)  # Data manual (ano, mês, dia)
+
+                        # Verificando se a mensalidade está 1 mês atrasada
+                        # data_atual
+                        if data_vencimento < data_atual:
+                            # Calculando a diferença de um mês
+                            diff = relativedelta(data_atual, data_vencimento)
+
+                            # Verifica se a diferença é de 1 mês
+                            if diff.months == 1 and diff.years == 0:
+                                print(f"A mensalidade de {mensalidade.aluno.nome} está +1 mês atrasada.")
+                                mensalidade_em_dia = f'A mensalidade de {mensalidade.aluno.nome}: ESTÁ +1 MÊS ATRASADA.'
+                            else:
+                                print(f"A mensalidade de {mensalidade.aluno.nome} ESTÁ atrasada.")
+                                mensalidade_em_dia = f'A mensalidade de {mensalidade.aluno.nome}: ESTÁ atrasada.'
+                        else:
+                            print(f"A mensalidade de {mensalidade.aluno.nome} Tudo OK, não está vencida.")
+                            mensalidade_em_dia = f'A mensalidade de {mensalidade.aluno.nome}: Tudo OK!'
+
+                    # Se a variável mensalidade_em_dia não for alterada, define um valor padrão
+                    if mensalidade_em_dia is None:
+                        mensalidade_em_dia = "Nenhuma mensalidade encontrada ou condições não atendidas."
+
                     messages.success(request, 'Aluno encontrado com SUCESSO!')
-                    return render(request, 'mensalidade.html', {'alunos': alunos_cpf})
+                    return render(request, 'mensalidade.html', {
+                        'alunos': alunos_cpf,
+                        'mensalidades': mensalidades,
+                        'mensalidade_em_dia': mensalidade_em_dia,  # Passando a variável para o template
+                    })
+
                 else:
                     messages.error(request, 'Aluno não encontrado com esse CPF.')
+                    return render(request, 'mensalidade.html')
 
             except Exception as e:
                 print(f"Erro ao buscar aluno: {e}")
                 messages.error(request, 'Ocorreu um erro ao tentar buscar o aluno.')
+                return render(request, 'mensalidade.html')
 
         if 'situacao_btn' in request.POST:
             print('botão -> situacao_btn')
