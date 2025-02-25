@@ -343,22 +343,28 @@ def mensalidades(request):
                             if diff.months == 1 and diff.years == 0:
                                 print(f"A mensalidade de {mensalidade.aluno.nome} está +1 mês atrasada.")
                                 mensalidade_em_dia = f'A mensalidade de {mensalidade.aluno.nome}: ESTÁ +1 MÊS ATRASADA.'
+                                cor = 1 # text-bg-danger
                             else:
                                 print(f"A mensalidade de {mensalidade.aluno.nome} ESTÁ atrasada.")
                                 mensalidade_em_dia = f'A mensalidade de {mensalidade.aluno.nome}: ESTÁ atrasada.'
+                                cor = 2 # text-bg-warning
                         else:
                             print(f"A mensalidade de {mensalidade.aluno.nome} Tudo OK, não está vencida.")
                             mensalidade_em_dia = f'A mensalidade de {mensalidade.aluno.nome}: Tudo OK!'
+                            cor = 3 # text-bg-success
 
                     # Se a variável mensalidade_em_dia não for alterada, define um valor padrão
                     if mensalidade_em_dia is None:
                         mensalidade_em_dia = "Nenhuma mensalidade encontrada ou condições não atendidas."
+                        cor = 4 # text-bg-secondary
 
                     messages.success(request, 'Aluno encontrado com SUCESSO!')
                     return render(request, 'mensalidade.html', {
                         'alunos': alunos_cpf,
                         'mensalidades': mensalidades,
                         'mensalidade_em_dia': mensalidade_em_dia,  # Passando a variável para o template
+                        'cor': cor,
+
                     })
 
                 else:

@@ -51,8 +51,8 @@
                             {% for aluno in alunos %}
                                 <li>
                                     <h4>
-                                        <span class="badge text-bg-secondary">{{ aluno.nome }},  CPF: {{ aluno.cpf }}</span></h4>
-                                   </li> <!-- Ajuste conforme os campos no seu modelo -->
+                                        <span class="badge text-bg-secondary">{{ aluno.nome }}, CPF: {{ aluno.cpf }}</span></h4>
+                                   </li>
 
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -84,7 +84,17 @@
                         <input type="hidden" name="cpf_aluno" value="{{ aluno.cpf }}"> <!-- Envia o CPF do aluno -->
                     {% endfor %}
                     <hr>
-                    <span class="badge rounded-pill text-bg-warning">{{ mensalidade_em_dia }}</span><br><br>
+                    <!-- Bloco de cores baseado no valor de "cor" -->
+                    {% if cor == 1 %}
+                        <span class="badge rounded-pill text-bg-danger">{{ mensalidade_em_dia }}</span><br><br>
+                    {% elif cor == 2 %}
+                        <span class="badge rounded-pill text-bg-warning">{{ mensalidade_em_dia }}</span><br><br>
+                    {% elif cor == 3 %}
+                        <span class="badge rounded-pill text-bg-success">{{ mensalidade_em_dia }}</span><br><br>
+                    {% elif cor == 4 %}
+                        <span class="badge rounded-pill text-bg-secondary">{{ mensalidade_em_dia }}</span><br><br>
+                    {% endif %}
+
                     <form method="post" action="{% url 'mensalidades' %}">
                         {% csrf_token %}
                     {% for aluno in alunos %}
