@@ -8,7 +8,8 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.utils import timezone
 from datetime import date
-
+from django.shortcuts import render
+from .models import NossosProdutos
 
 ## sempre que criar uma nova def antes do GET este codigo ##
 #    # Verificando se o usuário não é superusuário
@@ -412,10 +413,42 @@ def mensalidades(request):
 
 
 def nossos_produtos(request):
-    if request.method == 'POST':
-        return render(request, 'nossos_produtos.html')
-    elif request.method == 'GET':
-        return render(request, 'nossos_produtos.html')
+    produtos = NossosProdutos.objects.all()
+    if request.method == 'GET':
+
+        return render(request, 'nossos_produtos.html', {
+            'produtos': produtos
+        })
+
+
+def nossos_produtos(request):
+    if request.method == 'GET':
+        produtos = NossosProdutos.objects.all().order_by('-data_publicacao')
+        return render(request, 'nossos_produtos.html', {'produtos': produtos})
+
+    elif request.method == 'POST':
+        if 'btn-salvar-produto' in request.POST:
+            imagem = request.FILES.get('imagem')
+            titulo = request.POST.get('titulo')
+            descricao = request.POST.get('descricao')
+            valor = request.POST.get('valor')
+
+            try:
+                novo_produto = NossosProdutos(
+                    foto=imagem,
+                    titulo=titulo,
+                    descricao=descricao,
+                    valor=valor
+                )
+                novo_produto.save()
+                messages.success(request, 'Produto adicionado com sucesso!')
+
+            except:
+                messages.error(request, 'Ocorreu um erro ao tentar salvar este produto.')
+
+    # Após salvar, redireciona para a página de produtos com os produtos atualizados
+    # Redireciona para a página de produtos no caso de qualquer outro caso
+    return redirect('nossos_produtos')
 
 
 def deleta_obj_academia(request, id):

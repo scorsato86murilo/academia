@@ -16,6 +16,8 @@
         <div class="row">
             <!-- Coluna 1: Parte superior -->
             <div class="col-md-12 p-5" style="background-color: #F0FFFF;">
+
+                <!-- Exibindo mensagens de sucesso ou erro -->
                 <div class="message">
                     {% if messages %}
                         {% for message in messages %}
@@ -26,69 +28,72 @@
                     {% endif %}
                 </div>
 
-
-
-
-
                 <div class="container-fluid">
-    <div class="row">
-        <!-- Coluna 1 -->
-        <div class="col-md-4 p-5" style="background-color: #F0FFFF;">
-
-            <div class="message">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert {{ message.tags }}">
-                            <center>{{ message }}</center>
+                    <div class="row">
+                        <!-- Coluna 1: Formulário de cadastro de produto -->
+                        <div class="col-md-4 p-5" style="background-color: #F0FFFF;">
+                            <form action="{% url 'nossos_produtos' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div>
+                                    <label for="imagem">Imagem:</label>
+                                    <input type="file" name="imagem" id="imagem" required>
+                                </div><br>
+                                <div>
+                                    <label for="titulo">Título:</label>
+                                    <input type="text" name="titulo" id="titulo" required>
+                                </div><br>
+                                <div>
+                                    <label for="descricao">Descrição:</label>
+                                    <textarea name="descricao" id="descricao" required></textarea>
+                                </div>
+                                <div>
+                                    <label for="valor">Valor:</label>
+                                    <input type="number" name="valor" id="valor" step="0.01" required>
+                                </div>
+                                <button type="submit" name="btn-salvar-produto">Salvar Produto</button>
+                            </form>
                         </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
 
-<form action="{% url 'nossos_produtos' %}" method="post">
-    {% csrf_token %}
+                        <!-- Coluna 2: Produtos cadastrados -->
+                        <div class="col-md-8 p-5 bg-light">
+                            {% if produtos %}
+                                <h3>Produtos Cadastrados:</h3>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
 
-    <div>
-        <label for="imagem">Imagem:</label>
-        <input type="file" id="imagem" name="imagem" required>
-    </div><br>
+                                            <th scope="col">X</th>
+                                            <th scope="col">Imagem</th>
+                                            <th scope="col">Título</th>
+                                            <th scope="col">Descrição</th>
+                                            <th scope="col">Valor</th>
 
-    <div>
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" required>
-    </div><br>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for produto in produtos %}
+                                            <tr>
 
-    <div>
-        <label for="descricao">Descrição:</label>
-        <textarea id="descricao" name="descricao" required></textarea>
-    </div><br>
+                                                <td>Excluir</td>
+                                                <td>
+                                                    <img src="{{ produto.foto.url }}" alt="{{ produto.titulo }}" width="100">
+                                                </td>
+                                                <td>{{ produto.titulo }}</td>
+                                                <td>{{ produto.descricao }}</td>
+                                                <td>R$ {{ produto.valor }}</td>
 
-    <div>
-        <label for="valor">Valor:</label>
-        <input type="number" id="valor" name="valor" step="0.01" required>
-    </div>
-
-    <div>
-        <button type="submit" name="btn-salvar-produto">Salvar Produto</button>
-    </div>
-</form>
-
-
-        </div>
-        <!-- Coluna 2 -->
-        <div class="col-md-8 p-5 bg-light">
-scorsato
-            <!-- Adicionando o ID "topo" no início do conteúdo da página -->
-            <div style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
-                <div id="topo"></div>
-
-
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p>Nenhum produto cadastrado.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
 
             </div>
-
         </div>
     </div>
-</div>
-
-
 {% endblock %}

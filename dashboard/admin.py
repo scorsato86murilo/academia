@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dashboard.models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademia, Mensalidade
+from dashboard.models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademia, Mensalidade, NossosProdutos
 
 
 class CadastroAlunoAdmin(admin.ModelAdmin):
@@ -14,5 +14,6 @@ admin.site.register(Treino)
 admin.site.register(TreinoAlunoCadastrado)
 admin.site.register(PulicarAcademia)
 admin.site.register(Mensalidade)
+admin.site.register(NossosProdutos)
 
 
