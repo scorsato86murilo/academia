@@ -316,7 +316,7 @@ def mensalidades(request):
 
                 if alunos_cpf.exists():
                     # Buscar as mensalidades do aluno
-                    mensalidades = Mensalidade.objects.filter(aluno=alunos_cpf.first()).order_by('-data_matricula')[:1]
+                    mensalidades = Mensalidade.objects.filter(aluno=alunos_cpf.first()).order_by('-data_matricula')
 
                     # Inicializando a variável mensalidade_em_dia antes do loop
                     mensalidade_em_dia = None

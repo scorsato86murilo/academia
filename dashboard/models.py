@@ -60,7 +60,7 @@ class Mensalidade(models.Model):
     class Meta:
         verbose_name = 'Mensalidade'
         verbose_name_plural = 'Mensalidades'
-        ordering = ['data_vencimento']
+        ordering = ['-data_vencimento']
 
     def save(self, *args, **kwargs):
         # Preenche automaticamente data_vencimento com 1 mês de diferença
