@@ -72,5 +72,13 @@ class Mensalidade(models.Model):
         super().save(*args, **kwargs)  # Salva o objeto normalmente
 
 
+class NossosProdutos(models.Model):
+    foto = models.ImageField(upload_to='fotos-nossos-produtos', blank=True, null=True)
+    titulo = models.CharField(max_length=255)
+    descricao = models.TextField()
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
+    data_publicacao = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.titulo
 

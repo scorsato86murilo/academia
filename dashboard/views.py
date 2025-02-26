@@ -248,7 +248,6 @@ def academia_dash(request):
     # Obtendo todos os objetos e invertendo a ordem pela data de publicação
     objeto_academia = PulicarAcademia.objects.all().order_by('-data_publicacao')[:20]# se mudas esse 20 recomendo que mude la
                                                                                 # no index (academia)
-
     # Verificando se o usuário não é superusuário
     if not request.user.is_superuser:
         return HttpResponseForbidden('<b>Acesso negado:</b> apenas o <font color="red">superusuário</font> pode '
@@ -400,7 +399,7 @@ def mensalidades(request):
                     data_matricula=timezone.now().date(),  # Preenche com a data atual
                     descricao=descricao,
                 )
-                salvar_mensalidades.save()  # Salva no banco de dados
+                salvar_mensalidades.save()
                 messages.success(request, 'SUCESSO! Mensalidade atualizada com SUCESSO!')
             except CadastroAluno.DoesNotExist:
                 messages.error(request, 'Aluno não encontrado com esse CPF.')
@@ -408,7 +407,15 @@ def mensalidades(request):
                 print(f"Erro ao salvar mensalidade: {e}")
                 messages.error(request, 'ERRO no sistema (Erro ao salvar a mensalidade).')
 
+    # ultima saida da função
     return render(request, 'mensalidade.html')
+
+
+def nossos_produtos(request):
+    if request.method == 'POST':
+        return render(request, 'nossos_produtos.html')
+    elif request.method == 'GET':
+        return render(request, 'nossos_produtos.html')
 
 
 def deleta_obj_academia(request, id):
