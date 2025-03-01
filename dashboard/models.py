@@ -82,3 +82,14 @@ class NossosProdutos(models.Model):
     def __str__(self):
         return self.titulo
 
+class Personal(models.Model):
+    foto = models.ImageField(upload_to='fotos-personal', blank=True, null=True)
+    nome = models.CharField(max_length=255)
+    descricao = models.TextField()
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
+    zap = models.CharField(max_length=11)
+    email = models.EmailField(max_length=100)
+
+    def __str__(self):
+        return self.nome
+

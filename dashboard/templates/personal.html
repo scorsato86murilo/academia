@@ -1,0 +1,73 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block titulo %}
+    Personal
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'dashboard/css/ficha_treino_dash.css' %}">
+{% endblock %}
+
+{% block h1 %}DASHBOARD - PERSONAL{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Coluna 1: Parte superior -->
+            <div class="col-md-12 p-5" style="background-color: #F0FFFF;">
+
+                <!-- Exibindo mensagens de sucesso ou erro -->
+                <div class="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                <center>{{ message }}</center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Coluna 1: Formulário de cadastro de produto -->
+                        <div class="col-md-4 p-5" style="background-color: #F0FFFF;">
+                            <form action="{% url 'personal' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div>
+                                    <label for="foto">Foto:</label>
+                                    <input type="file" name="foto" id="foto" required>
+                                </div><br>
+                                <div>
+                                    <label for="Nome">Nome:</label>
+                                    <input type="text" name="nome" id="Nome" required>
+                                </div><br>
+                                <div>
+                                    <label for="descricao">Descrição:</label>
+                                    <textarea name="descricao" id="descricao" required></textarea>
+                                </div>
+                                <div>
+                                    <label for="valor">Valor:</label>
+                                    <input type="number" name="valor" id="valor" step="0.01" required>
+                                </div>
+                                <div>
+                                    <label for="zap">Zap:</label>
+                                    <input type="number" name="zap" id="zap" required></input>
+                                </div>
+                                    <label for="email">Email:</label>
+                                    <input type="email" name="email" id="email" required></input>
+                                <button type="submit" name="btn-cadastrar-personal">Cadastrar Personal</button>
+                            </form>
+                        </div>
+
+                        <!-- Coluna 2: Produtos cadastrados -->
+                        <div class="col-md-8 p-5 bg-light">
+                            jjjjjj
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

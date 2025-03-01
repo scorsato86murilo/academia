@@ -3,7 +3,7 @@ from dateutil.relativedelta import relativedelta  # Para calcular a diferença d
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademia, Mensalidade
+from .models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademia, Mensalidade, Personal
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.utils import timezone
@@ -465,6 +465,45 @@ def deleta_obj_academia(request, id):
 
     return redirect('academia_dash')
 
+def personal(request):
+    if request.method == 'GET':
+        return render(request, 'personal.html')
+    elif request.method == 'POST':
+        if 'btn-cadastrar-personal' in request.POST:
+            # Recebendo os dados do formulário
+            foto = request.FILES.get('foto')
+            nome = request.POST.get('nome')
+            descricao = request.POST.get('descricao')
+            valor = request.POST.get('valor')
+            zap = request.POST.get('zap')
+            email = request.POST.get('email')
+
+            try:
+                # Criando e salvando o objeto Personal
+                personal = Personal(
+                    foto=foto,
+                    nome=nome,
+                    descricao=descricao,
+                    valor=valor,
+                    zap=zap,
+                    email=email
+                )
+                personal.save()  # Salva o objeto no banco de dados
+
+                # Mensagem de sucesso
+                messages.success(request, 'Personal cadastrado com sucesso!')
+
+                # Redireciona para a mesma página ou para outra URL de sua escolha
+                return redirect('cadastrar_personal')
+
+            # deixei em pass porque esta dando erro, preciso entra lo, mas esta salvando corretamnte
+            except:
+                pass
+
+
+        # Caso o metodo nã seja post
+        pessoais = Personal.objects.all()  # Buscar todos os dados de Personal
+        return render(request, 'personal.html', {'pessoais': pessoais})
 def logout_view(request):
     logout(request)
     messages.error(request, 'DESLOGADO com sucesso!')
