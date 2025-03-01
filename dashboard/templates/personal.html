@@ -52,17 +52,49 @@
                                 </div>
                                 <div>
                                     <label for="zap">Zap:</label>
-                                    <input type="number" name="zap" id="zap" required></input>
+                                    <input type="number" name="zap" id="zap" required>
                                 </div>
+                                <div>
                                     <label for="email">Email:</label>
-                                    <input type="email" name="email" id="email" required></input>
+                                    <input type="email" name="email" id="email" required>
+                                </div>
                                 <button type="submit" name="btn-cadastrar-personal">Cadastrar Personal</button>
                             </form>
                         </div>
 
-                        <!-- Coluna 2: Produtos cadastrados -->
+                        <!-- Coluna 2: Pessoais cadastrados -->
                         <div class="col-md-8 p-5 bg-light">
-                            jjjjjj
+                            {% if todos_personais %}
+                                <h3>Pessoais Cadastrados:</h3>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Detalhes</th>
+                                            <th scope="col">Foto</th>
+                                            <th scope="col">Nome</th>
+                                            <th scope="col">Descrição</th>
+                                            <th scope="col">Mensal</th>
+                                            <th scope="col">Zap</th>
+                                            <th scope="col">Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for personal in todos_personais %}
+                                            <tr>
+                                                <td><a href="#">Editar</a></td>
+                                                <td><img src="{{ personal.foto.url }}" alt="{{ personal.nome }}" width="100"></td>
+                                                <td>{{ personal.nome }}</td>
+                                                <td>{{ personal.descricao }}</td>
+                                                <td>R$ {{ personal.valor }}</td>
+                                                <td>{{ personal.zap }}</td>
+                                                <td>{{ personal.email }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p>Nenhum personal cadastrado.</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

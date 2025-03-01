@@ -465,9 +465,14 @@ def deleta_obj_academia(request, id):
 
     return redirect('academia_dash')
 
+
+
 def personal(request):
+    todos_personais = Personal.objects.all().order_by('-id')
+
     if request.method == 'GET':
-        return render(request, 'personal.html')
+        return render(request, 'personal.html', {'todos_personais': todos_personais})
+
     elif request.method == 'POST':
         if 'btn-cadastrar-personal' in request.POST:
             # Recebendo os dados do formulário
@@ -493,17 +498,17 @@ def personal(request):
                 # Mensagem de sucesso
                 messages.success(request, 'Personal cadastrado com sucesso!')
 
-                # Redireciona para a mesma página ou para outra URL de sua escolha
-                return redirect('cadastrar_personal')
+                # Após salvar, renderiza a página com todos os pessoais cadastrados
+                return render(request, 'personal.html', {'todos_personais': todos_personais})
 
-            # deixei em pass porque esta dando erro, preciso entra lo, mas esta salvando corretamnte
-            except:
-                pass
+            except Exception as e:
+                # Em caso de erro, exibe uma mensagem de erro
+                messages.error(request, f'Erro ao cadastrar o personal: {str(e)}')
+
+        # Caso o botão não tenha sido pressionado ou após o erro, apenas renderiza a página
+        return render(request, 'personal.html', {'todos_personais': todos_personais})
 
 
-        # Caso o metodo nã seja post
-        pessoais = Personal.objects.all()  # Buscar todos os dados de Personal
-        return render(request, 'personal.html', {'pessoais': pessoais})
 def logout_view(request):
     logout(request)
     messages.error(request, 'DESLOGADO com sucesso!')
