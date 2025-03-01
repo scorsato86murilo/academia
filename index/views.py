@@ -11,6 +11,8 @@ from dashboard.models import Treino, CadastroAluno, TreinoAlunoCadastrado, Pulic
 from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar
 from django.contrib import messages
 import random
+from dashboard.models import NossosProdutos  # Importando o modelo 'NossosProdutos'
+
 
 
 def CoresNavBar():
@@ -236,6 +238,38 @@ def academia(request):
     elif request.method == 'POST':
         return render(request, 'academia.html', {**contexto, 'obj_ultima': obj_ultima,
                                                  'objetos_all': objetos_all})
+
+
+def produto_vendas(request):
+    # Definindo o contexto da barra de navegação
+    contexto = CoresNavBar()
+
+    # Lógica para GET
+    if request.method == 'GET':
+        produto_vendas = NossosProdutos.objects.all().order_by('-data_publicacao')
+
+    # Lógica para POST (filtrar ou manipular os produtos)
+    elif request.method == 'POST':
+        if 'btn-filtro' in request.POST:
+            filtro = request.POST.get('filtro_nome')  # Obtém o valor do filtro de nome
+
+            if filtro:  # Se houver algum valor no filtro
+                # Filtra os produtos com base no nome
+                produto_vendas = NossosProdutos.objects.filter(titulo__icontains=filtro).order_by('-data_publicacao')
+            else:
+                # Se o filtro estiver vazio, retorna todos os produtos
+                produto_vendas = NossosProdutos.objects.all().order_by('-data_publicacao')
+
+        # Caso o botão não seja pressionado, retorna todos os produtos
+        else:
+            produto_vendas = NossosProdutos.objects.all().order_by('-data_publicacao')
+
+    # Atualiza o contexto com os produtos filtrados
+    contexto.update({'produto_vendas': produto_vendas})
+
+    # Retorna o template com os produtos
+    return render(request, 'produto_vendas.html', contexto)
+
 
 def logout_view(request):
     logout(request)

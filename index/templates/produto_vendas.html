@@ -1,0 +1,50 @@
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block titulo %}
+    {{ nome_empresa.nome }} - Nossos Produtos
+{% endblock %}
+
+{% block body %}
+<div class="container mt-3">
+    <div class="row">
+        <!-- Primeira Coluna -->
+        <div class="col-md-12">
+            <h3>Produtos Disponíveis</h3>
+            <p>Confira nossos produtos e suas informações abaixo.</p>
+
+            <!-- Formulário de filtro ou busca (caso haja necessidade) -->
+            <form method="POST" class="mb-4" action="{% url 'produto_vendas' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="filtro_nome" class="form-control" placeholder="Pesquisar pelo nome do produto..." value="{{ request.POST.filtro_nome }}">
+                </div>
+                <button type="submit" class="btn btn-primary mt-2" name="btn-filtro">Pesquisar</button>
+            </form>
+
+            <!-- Exibindo a lista de produtos -->
+            <div class="row">
+                {% for produto in produto_vendas %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            {% if produto.foto %}
+                                <img src="{{ produto.foto.url }}" class="card-img-top" alt="{{ produto.titulo }}" style="max-height: 200px; object-fit: cover;">
+                            {% else %}
+                                <img src="{% static 'default_product_image.jpg' %}" class="card-img-top" alt="Imagem não disponível" style="max-height: 200px; object-fit: cover;">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ produto.titulo }}</h5>
+                                <p class="card-text">{{ produto.descricao|truncatewords:20 }}</p>
+                                <p class="card-text"><strong>Preço:</strong> R$ {{ produto.valor }}</p>
+                                <p class="card-text"><small class="text-muted">Publicado em: {{ produto.data_publicacao|date:"d/m/Y" }}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>Nenhum produto encontrado.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
