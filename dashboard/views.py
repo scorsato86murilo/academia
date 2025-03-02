@@ -535,6 +535,20 @@ def atualizar_personal(request, pk):
     return render(request, 'atualizar_personal.html', {'personal': personal})
 
 
+def excluir_personal(request, pk):
+    # Obtém o personal com o pk fornecido ou retorna 404 se não encontrar
+    personal = get_object_or_404(Personal, pk=pk)
+
+    if request.method == 'POST':  # Verifica se a requisição é POST para confirmar a exclusão
+        personal.delete()  # Exclui o objeto
+        messages.success(request, "Personal excluído com sucesso!")
+        return redirect('personal')  # Redireciona para a página de lista de personals
+
+    # Caso a requisição não seja POST, você pode apenas renderizar uma confirmação
+    return render(request, 'confirmar_exclusao.html', {'personal': personal})
+
+
+
 
 def logout_view(request):
     logout(request)

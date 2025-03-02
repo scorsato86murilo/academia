@@ -33,8 +33,16 @@
                 <div class="container-fluid">
                     <div class="row">
                         <!-- Coluna 1: Formulário de edição do personal -->
-                        <div class="col-md-6 p-5" style="background-color: #F0FFFF;">
-                            <h3>Editar Personal: {{ personal.nome }}</h3>
+                        <div class="col-md-6 p-2" style="background-color: #F0FFFF;">
+                            <h3>Editar Personal: <b>{{ personal.nome }}</b></h3>
+
+                            <!-- Formulário para exclusão -->
+                            <form action="{% url 'excluir_personal' personal.pk %}" method="POST" onsubmit="return confirm('Você tem certeza que deseja excluir este personal?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+
+                            <!-- Formulário para edição -->
                             <form method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
 
@@ -44,7 +52,7 @@
                                     <input type="file" name="foto" id="foto">
                                     <br>
                                     {% if personal.foto %}
-                                        <img src="{{ personal.foto.url }}" alt="{{ personal.nome }}" width="100">
+                                        <img src="{{ personal.foto.url }}" alt="{{ personal.nome }}" width="400">
                                     {% endif %}
                                 </div>
                                 <br>
@@ -64,7 +72,7 @@
                                 <!-- Campo Valor -->
                                 <div>
                                     <label for="valor">Valor:</label>
-<input type="number" name="valor" id="valor" step="0.01" value="{{ personal.valor }}" required>
+                                    <input type="number" name="valor" id="valor" step="0.01" value="{{ personal.valor }}" required>
                                 </div><br>
 
                                 <!-- Campo Zap -->
@@ -79,7 +87,7 @@
                                     <input type="email" name="email" id="email" value="{{ personal.email }}" required>
                                 </div><br>
 
-                                <!-- Botão de Submissão -->
+                                <!-- Botão de Submissão para Atualização -->
                                 <button type="submit" class="btn btn-primary">Atualizar Personal</button>
                             </form>
                         </div>
