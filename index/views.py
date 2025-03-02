@@ -7,7 +7,7 @@ from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password  # Usado para criar a senha com hash
 from django.contrib.auth.models import User
-from dashboard.models import Treino, CadastroAluno, TreinoAlunoCadastrado, PulicarAcademia
+from dashboard.models import Treino, CadastroAluno, TreinoAlunoCadastrado, PulicarAcademia, Personal
 from index.models import NomeDaEmpresa, LogoBanner, LadoEsquerdo, LadoDireito, NavBar
 from django.contrib import messages
 import random
@@ -269,6 +269,17 @@ def produto_vendas(request):
 
     # Retorna o template com os produtos
     return render(request, 'produto_vendas.html', contexto)
+
+
+def personal(request):
+    contexto = CoresNavBar()
+    if request.method == 'GET':
+        personal_index = Personal.objects.all().order_by('-id')
+        return render(request, 'personal_index.html', {**contexto, 'personal_index': personal_index})
+    elif request.method == 'POST':
+        return render(request, 'personal_index.html', contexto)
+
+
 
 
 def logout_view(request):

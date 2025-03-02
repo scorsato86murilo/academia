@@ -462,12 +462,15 @@ def editar_produtos(request, pk):
         # Se o campo de foto for preenchido, atualiza a foto
         if request.FILES.get('foto'):
             produto.foto = request.FILES['foto']
+        try:
+            # Salva as alterações no banco de dados
+            produto.save()
 
-        # Salva as alterações no banco de dados
-        produto.save()
+            # Adiciona uma mensagem de sucesso
+            messages.success(request, 'Produto atualizado com sucesso!')
 
-        # Adiciona uma mensagem de sucesso
-        messages.success(request, 'Produto atualizado com sucesso!')
+        except:
+            messages.error(request, 'Ocorreu um erro ao salvar produto. Tente novamente.')
 
         # Redireciona para uma outra página (aqui é a página de lista de produtos)
         return redirect('nossos_produtos')  # Alterar para a URL desejada
