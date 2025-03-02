@@ -1,15 +1,13 @@
-from datetime import timedelta
 from dateutil.relativedelta import relativedelta  # Para calcular a diferença de 1 mês
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from django.shortcuts import render, get_object_or_404, redirect
 from .models import CadastroAluno, Treino, TreinoAlunoCadastrado, PulicarAcademia, Mensalidade, Personal
-from django.contrib import messages
 from django.contrib.auth import logout
 from django.utils import timezone
-from datetime import date
-from django.shortcuts import render
 from .models import NossosProdutos
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import Personal
 
 ## sempre que criar uma nova def antes do GET este codigo ##
 #    # Verificando se o usuário não é superusuário
@@ -507,6 +505,35 @@ def personal(request):
 
         # Caso o botão não tenha sido pressionado ou após o erro, apenas renderiza a página
         return render(request, 'personal.html', {'todos_personais': todos_personais})
+
+
+def atualizar_personal(request, pk):
+    # Obtendo o personal pelo pk
+    personal = get_object_or_404(Personal, pk=pk)
+
+    if request.method == 'POST':
+        # Atualizando os campos manualmente
+        personal.nome = request.POST.get('nome', personal.nome)
+        personal.descricao = request.POST.get('descricao', personal.descricao)
+        personal.valor = request.POST.get('valor', personal.valor)
+        personal.zap = request.POST.get('zap', personal.zap)
+        personal.email = request.POST.get('email', personal.email)
+        personal.valor = request.POST.get('valor', personal.valor)
+
+        # Se o usuário enviou uma nova foto
+        if 'foto' in request.FILES:
+            personal.foto = request.FILES['foto']
+
+        # Salvar as mudanças
+        personal.save()
+
+        # Mensagem de sucesso
+        messages.success(request, "Personal atualizado com sucesso!")
+
+        return redirect('personal')  # Redireciona para a página de personal (ajuste o nome da URL conforme necessário)
+
+    return render(request, 'atualizar_personal.html', {'personal': personal})
+
 
 
 def logout_view(request):

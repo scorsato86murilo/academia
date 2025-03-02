@@ -1,0 +1,92 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block titulo %}
+    Editar Personal
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'dashboard/css/editar_personal.css' %}">
+{% endblock %}
+
+{% block h1 %}
+    DASHBOARD - EDITAR PERSONAL
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Coluna 1: Parte superior -->
+            <div class="col-md-12 p-5" style="background-color: #F0FFFF;">
+
+                <!-- Exibindo mensagens de sucesso ou erro -->
+                <div class="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                <center>{{ message }}</center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Coluna 1: Formulário de edição do personal -->
+                        <div class="col-md-6 p-5" style="background-color: #F0FFFF;">
+                            <h3>Editar Personal: {{ personal.nome }}</h3>
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <!-- Campo Foto -->
+                                <div>
+                                    <label for="foto">Foto:</label>
+                                    <input type="file" name="foto" id="foto">
+                                    <br>
+                                    {% if personal.foto %}
+                                        <img src="{{ personal.foto.url }}" alt="{{ personal.nome }}" width="100">
+                                    {% endif %}
+                                </div>
+                                <br>
+
+                                <!-- Campo Nome -->
+                                <div>
+                                    <label for="nome">Nome:</label>
+                                    <input type="text" name="nome" id="nome" value="{{ personal.nome }}" required>
+                                </div><br>
+
+                                <!-- Campo Descrição -->
+                                <div>
+                                    <label for="descricao">Descrição:</label>
+                                    <textarea name="descricao" id="descricao" required>{{ personal.descricao }}</textarea>
+                                </div><br>
+
+                                <!-- Campo Valor -->
+                                <div>
+                                    <label for="valor">Valor:</label>
+<input type="number" name="valor" id="valor" step="0.01" value="{{ personal.valor }}" required>
+                                </div><br>
+
+                                <!-- Campo Zap -->
+                                <div>
+                                    <label for="zap">Zap:</label>
+                                    <input type="text" name="zap" id="zap" value="{{ personal.zap }}" required>
+                                </div><br>
+
+                                <!-- Campo Email -->
+                                <div>
+                                    <label for="email">Email:</label>
+                                    <input type="email" name="email" id="email" value="{{ personal.email }}" required>
+                                </div><br>
+
+                                <!-- Botão de Submissão -->
+                                <button type="submit" class="btn btn-primary">Atualizar Personal</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,100 @@
+/* Layout */
+.container-fluid {
+    padding: 20px;
+}
+
+.row {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.col-md-4, .col-md-8 {
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.col-md-4 {
+    max-width: 40%;
+}
+
+.col-md-8 {
+    max-width: 55%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Tabela */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f4f4f4;
+}
+
+.table td img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Mensagens */
+.message {
+    margin-bottom: 20px;
+}
+
+/* Outras melhorias de layout */
+p {
+    margin: 0;
+    font-size: 16px;
+}
+
+h3 {
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .col-md-4, .col-md-8 {
+        max-width: 100%;
+    }
+
+    form button {
+        width: auto;
+    }
+}

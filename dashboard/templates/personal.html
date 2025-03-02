@@ -69,7 +69,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Detalhes</th>
+                                            <th scope="col">X</th>
                                             <th scope="col">Foto</th>
                                             <th scope="col">Nome</th>
                                             <th scope="col">Descrição</th>
@@ -81,7 +81,7 @@
                                     <tbody>
                                         {% for personal in todos_personais %}
                                             <tr>
-                                                <td><a href="#">Editar</a></td>
+                                                <td><a href="{% url 'atualizar_personal' personal.pk %}">Editar</a></td>
                                                 <td><img src="{{ personal.foto.url }}" alt="{{ personal.nome }}" width="100"></td>
                                                 <td>{{ personal.nome }}</td>
                                                 <td>{{ personal.descricao }}</td>
