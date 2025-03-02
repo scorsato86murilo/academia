@@ -1,0 +1,78 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block titulo %}
+    Editar Produto
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'dashboard/css/editar_personal.css' %}">
+{% endblock %}
+
+{% block h1 %}
+    DASHBOARD - EDITAR PRODUTO
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 p-5" style="background-color: #F0FFFF;">
+
+                <!-- Exibindo mensagens de sucesso ou erro -->
+                <div class="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                <center>{{ message }}</center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <h3>Editar Produto: {{ produto.titulo }}</h3>
+
+                <!-- Formulário de Exclusão -->
+                <form action="{% url 'excluir_produto' pk=produto.id %}" method="post" onsubmit="return confirm('Você tem certeza que deseja excluir este produto?');">
+                    {% csrf_token %}
+                    <button type="submit" name="btn-excluir-produto" class="btn btn-danger">Excluir Produto</button>
+                </form>
+
+                <form action="{% url 'editar_produtos' pk=produto.id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Campo Foto -->
+                    <div>
+                        <label for="foto">Imagem:</label>
+                        <input type="file" name="foto" id="foto">
+                        {% if produto.foto %}
+                            <div>
+                                <img src="{{ produto.foto.url }}" alt="Imagem do produto" width="100">
+                            </div>
+                        {% endif %}
+                    </div><br>
+
+                    <!-- Campo Título -->
+                    <div>
+                        <label for="titulo">Título:</label>
+                        <input type="text" name="titulo" id="titulo" value="{{ produto.titulo }}" required>
+                    </div><br>
+
+                    <!-- Campo Descrição -->
+                    <div>
+                        <label for="descricao">Descrição:</label>
+                        <textarea name="descricao" id="descricao" required>{{ produto.descricao }}</textarea>
+                    </div><br>
+
+                    <!-- Campo Valor -->
+                    <div>
+                        <label for="valor">Valor:</label>
+                        <input type="number" name="valor" id="valor" value="{{ produto.valor }}" step="0.01" required>
+                    </div><br>
+
+                    <button type="submit" name="btn-atualizar-produto">Atualizar Produto</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

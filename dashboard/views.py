@@ -449,6 +449,53 @@ def nossos_produtos(request):
     return redirect('nossos_produtos')
 
 
+def editar_produtos(request, pk):
+    # Tenta pegar o objeto ou dá um erro 404
+    produto = get_object_or_404(NossosProdutos, pk=pk)
+
+    if request.method == 'POST':
+        # Atualizando os dados do produto com base no que foi enviado no formulário
+        produto.titulo = request.POST.get('titulo')
+        produto.descricao = request.POST.get('descricao')
+        produto.valor = request.POST.get('valor')
+
+        # Se o campo de foto for preenchido, atualiza a foto
+        if request.FILES.get('foto'):
+            produto.foto = request.FILES['foto']
+
+        # Salva as alterações no banco de dados
+        produto.save()
+
+        # Adiciona uma mensagem de sucesso
+        messages.success(request, 'Produto atualizado com sucesso!')
+
+        # Redireciona para uma outra página (aqui é a página de lista de produtos)
+        return redirect('nossos_produtos')  # Alterar para a URL desejada
+
+    # Se a requisição for GET, preenche o formulário com os dados do produto atual
+    return render(request, 'editar_produtos.html', {'produto': produto})
+
+
+def excluir_produto(request, pk):
+    # Recupera o produto ou retorna um erro 404 se não encontrado
+    produto = get_object_or_404(NossosProdutos, pk=pk)
+
+    if request.method == 'POST':
+        # Deleta o produto
+        produto.delete()
+
+        # Adiciona uma mensagem de sucesso
+        messages.success(request, 'Produto excluído com sucesso!')
+
+        # Redireciona para a página de listagem de produtos
+        return redirect('nossos_produtos')  # Alterar para a URL da sua lista de produtos
+
+    # Se não for um POST, você pode renderizar uma página de confirmação de exclusão
+    return render(request, 'confirmar_exclusao.html', {'produto': produto})
+
+
+
+
 def deleta_obj_academia(request, id):
     if request.method == 'POST':
 

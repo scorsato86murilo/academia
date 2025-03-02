@@ -61,27 +61,25 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-
-                                            <th scope="col">X</th>
+                                            <th scope="col">Detalhes</th>
                                             <th scope="col">Imagem</th>
                                             <th scope="col">Título</th>
                                             <th scope="col">Descrição</th>
                                             <th scope="col">Valor</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for produto in produtos %}
                                             <tr>
-
-                                                <td>Excluir</td>
+                                                <td>
+                                                    <a href="{% url 'editar_produtos' pk=produto.id %}">Editar</a>
+                                                </td>
                                                 <td>
                                                     <img src="{{ produto.foto.url }}" alt="{{ produto.titulo }}" width="100">
                                                 </td>
                                                 <td>{{ produto.titulo }}</td>
                                                 <td>{{ produto.descricao }}</td>
                                                 <td>R$ {{ produto.valor }}</td>
-
                                             </tr>
                                         {% endfor %}
                                     </tbody>
